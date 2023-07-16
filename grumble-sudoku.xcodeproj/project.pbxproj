@@ -14,6 +14,7 @@
 		D917F8442A642A7C00DCD0CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D917F8432A642A7C00DCD0CC /* Assets.xcassets */; };
 		D917F8472A642A7C00DCD0CC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D917F8452A642A7C00DCD0CC /* Main.storyboard */; };
 		D917F8492A642A7C00DCD0CC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D917F8482A642A7C00DCD0CC /* main.m */; };
+		D917F86D2A6484F200DCD0CC /* Test.mm in Sources */ = {isa = PBXBuildFile; fileRef = D917F86C2A6484F200DCD0CC /* Test.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		D917F84A2A642A7C00DCD0CC /* grumble_sudoku.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = grumble_sudoku.entitlements; sourceTree = "<group>"; };
 		D917F8502A642AB600DCD0CC /* conanfile.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = conanfile.py; sourceTree = "<group>"; };
 		D917F86B2A6484A700DCD0CC /* conan_config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_config.xcconfig; sourceTree = "<group>"; };
+		D917F86C2A6484F200DCD0CC /* Test.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Test.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 		D917F8362A642A7B00DCD0CC /* grumble-sudoku */ = {
 			isa = PBXGroup;
 			children = (
+				D917F86C2A6484F200DCD0CC /* Test.mm */,
 				D917F8372A642A7B00DCD0CC /* AppDelegate.h */,
 				D917F8382A642A7B00DCD0CC /* AppDelegate.m */,
 				D917F83A2A642A7B00DCD0CC /* Renderer.h */,
@@ -173,7 +176,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/opt/homebrew/bin/conan install $PROJECT_DIR/conanfile.py -s build_type=$CONFIGURATION --output-folder $PROJECT_DIR/conan \n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/opt/homebrew/bin/conan install $PROJECT_DIR/conanfile.py -u -s build_type=$CONFIGURATION --output-folder $PROJECT_DIR/conan \n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -185,6 +188,7 @@
 				D917F8492A642A7C00DCD0CC /* main.m in Sources */,
 				D917F8412A642A7B00DCD0CC /* Shaders.metal in Sources */,
 				D917F83C2A642A7B00DCD0CC /* Renderer.m in Sources */,
+				D917F86D2A6484F200DCD0CC /* Test.mm in Sources */,
 				D917F83F2A642A7B00DCD0CC /* GameViewController.m in Sources */,
 				D917F8392A642A7B00DCD0CC /* AppDelegate.m in Sources */,
 			);
