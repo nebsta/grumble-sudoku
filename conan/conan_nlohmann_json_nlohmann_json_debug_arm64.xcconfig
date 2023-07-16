@@ -1,0 +1,11 @@
+PACKAGE_ROOT_nlohmann_json[config=Debug][arch=arm64][sdk=macosx*] = /Users/bewa/.conan2/p/nlohm552351c8663ae/p
+// Compiler options for nlohmann_json::nlohmann_json
+SYSTEM_HEADER_SEARCH_PATHS_nlohmann_json_nlohmann_json[config=Debug][arch=arm64][sdk=macosx*] = "/Users/bewa/.conan2/p/nlohm552351c8663ae/p/include"
+GCC_PREPROCESSOR_DEFINITIONS_nlohmann_json_nlohmann_json[config=Debug][arch=arm64][sdk=macosx*] = 
+OTHER_CFLAGS_nlohmann_json_nlohmann_json[config=Debug][arch=arm64][sdk=macosx*] = 
+OTHER_CPLUSPLUSFLAGS_nlohmann_json_nlohmann_json[config=Debug][arch=arm64][sdk=macosx*] = 
+FRAMEWORK_SEARCH_PATHS_nlohmann_json_nlohmann_json[config=Debug][arch=arm64][sdk=macosx*] = 
+
+// Link options for nlohmann_json::nlohmann_json
+LIBRARY_SEARCH_PATHS_nlohmann_json_nlohmann_json[config=Debug][arch=arm64][sdk=macosx*] = 
+OTHER_LDFLAGS_nlohmann_json_nlohmann_json[config=Debug][arch=arm64][sdk=macosx*] =    

@@ -31,6 +31,7 @@
 		D917F8482A642A7C00DCD0CC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D917F84A2A642A7C00DCD0CC /* grumble_sudoku.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = grumble_sudoku.entitlements; sourceTree = "<group>"; };
 		D917F8502A642AB600DCD0CC /* conanfile.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = conanfile.py; sourceTree = "<group>"; };
+		D917F86B2A6484A700DCD0CC /* conan_config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +48,7 @@
 		D917F82B2A642A7B00DCD0CC = {
 			isa = PBXGroup;
 			children = (
+				D917F86A2A64847100DCD0CC /* conan */,
 				D917F8502A642AB600DCD0CC /* conanfile.py */,
 				D917F8362A642A7B00DCD0CC /* grumble-sudoku */,
 				D917F8352A642A7B00DCD0CC /* Products */,
@@ -78,6 +80,14 @@
 				D917F84A2A642A7C00DCD0CC /* grumble_sudoku.entitlements */,
 			);
 			path = "grumble-sudoku";
+			sourceTree = "<group>";
+		};
+		D917F86A2A64847100DCD0CC /* conan */ = {
+			isa = PBXGroup;
+			children = (
+				D917F86B2A6484A700DCD0CC /* conan_config.xcconfig */,
+			);
+			path = conan;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -305,6 +315,7 @@
 		};
 		D917F84E2A642A7C00DCD0CC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D917F86B2A6484A700DCD0CC /* conan_config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -331,6 +342,7 @@
 		};
 		D917F84F2A642A7C00DCD0CC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D917F86B2A6484A700DCD0CC /* conan_config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
