@@ -1,0 +1,1 @@
+. "/Users/bewa/Repos/personal/grumble-sudoku/conan/deactivate_conanbuildenv-debug-armv8.sh"

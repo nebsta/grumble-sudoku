@@ -1,0 +1,1 @@
+. "/Users/bewa/Repos/personal/grumble-sudoku/conan/conanrunenv-debug-armv8.sh"

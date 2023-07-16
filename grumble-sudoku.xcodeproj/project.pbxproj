@@ -30,6 +30,7 @@
 		D917F8462A642A7C00DCD0CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D917F8482A642A7C00DCD0CC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D917F84A2A642A7C00DCD0CC /* grumble_sudoku.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = grumble_sudoku.entitlements; sourceTree = "<group>"; };
+		D917F8502A642AB600DCD0CC /* conanfile.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = conanfile.py; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +47,7 @@
 		D917F82B2A642A7B00DCD0CC = {
 			isa = PBXGroup;
 			children = (
+				D917F8502A642AB600DCD0CC /* conanfile.py */,
 				D917F8362A642A7B00DCD0CC /* grumble-sudoku */,
 				D917F8352A642A7B00DCD0CC /* Products */,
 			);
@@ -85,6 +87,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D917F84D2A642A7C00DCD0CC /* Build configuration list for PBXNativeTarget "grumble-sudoku" */;
 			buildPhases = (
+				D917F8522A642D3700DCD0CC /* Conan Install */,
 				D917F8302A642A7B00DCD0CC /* Sources */,
 				D917F8312A642A7B00DCD0CC /* Frameworks */,
 				D917F8322A642A7B00DCD0CC /* Resources */,
@@ -141,6 +144,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D917F8522A642D3700DCD0CC /* Conan Install */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Conan Install";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/opt/homebrew/bin/conan install $PROJECT_DIR/conanfile.py -s build_type=$CONFIGURATION --output-folder $PROJECT_DIR/conan \n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D917F8302A642A7B00DCD0CC /* Sources */ = {
