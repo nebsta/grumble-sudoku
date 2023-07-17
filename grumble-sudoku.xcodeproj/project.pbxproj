@@ -34,6 +34,16 @@
 		D917F8502A642AB600DCD0CC /* conanfile.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = conanfile.py; sourceTree = "<group>"; };
 		D917F86B2A6484A700DCD0CC /* conan_config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_config.xcconfig; sourceTree = "<group>"; };
 		D917F86C2A6484F200DCD0CC /* Test.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Test.mm; sourceTree = "<group>"; };
+		D917F87D2A654DE200DCD0CC /* conan_grumble.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_grumble.xcconfig; sourceTree = "<group>"; };
+		D917F87E2A654DE200DCD0CC /* conan_nlohmann_json_nlohmann_json.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_nlohmann_json_nlohmann_json.xcconfig; sourceTree = "<group>"; };
+		D917F87F2A654DE200DCD0CC /* conan_glm.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_glm.xcconfig; sourceTree = "<group>"; };
+		D917F8802A654DE200DCD0CC /* conan_glm_glm_debug_arm64.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_glm_glm_debug_arm64.xcconfig; sourceTree = "<group>"; };
+		D917F8812A654DE200DCD0CC /* conan_nlohmann_json.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_nlohmann_json.xcconfig; sourceTree = "<group>"; };
+		D917F8822A654DE200DCD0CC /* conan_glm_glm.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_glm_glm.xcconfig; sourceTree = "<group>"; };
+		D917F8832A654DE200DCD0CC /* conan_grumble_grumble.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_grumble_grumble.xcconfig; sourceTree = "<group>"; };
+		D917F8842A654DE200DCD0CC /* conan_grumble_grumble_debug_arm64.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_grumble_grumble_debug_arm64.xcconfig; sourceTree = "<group>"; };
+		D917F8852A654DE200DCD0CC /* conandeps.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conandeps.xcconfig; sourceTree = "<group>"; };
+		D917F8862A654DE200DCD0CC /* conan_nlohmann_json_nlohmann_json_debug_arm64.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_nlohmann_json_nlohmann_json_debug_arm64.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +98,16 @@
 		D917F86A2A64847100DCD0CC /* conan */ = {
 			isa = PBXGroup;
 			children = (
+				D917F8802A654DE200DCD0CC /* conan_glm_glm_debug_arm64.xcconfig */,
+				D917F8822A654DE200DCD0CC /* conan_glm_glm.xcconfig */,
+				D917F87F2A654DE200DCD0CC /* conan_glm.xcconfig */,
+				D917F8842A654DE200DCD0CC /* conan_grumble_grumble_debug_arm64.xcconfig */,
+				D917F8832A654DE200DCD0CC /* conan_grumble_grumble.xcconfig */,
+				D917F87D2A654DE200DCD0CC /* conan_grumble.xcconfig */,
+				D917F8862A654DE200DCD0CC /* conan_nlohmann_json_nlohmann_json_debug_arm64.xcconfig */,
+				D917F87E2A654DE200DCD0CC /* conan_nlohmann_json_nlohmann_json.xcconfig */,
+				D917F8812A654DE200DCD0CC /* conan_nlohmann_json.xcconfig */,
+				D917F8852A654DE200DCD0CC /* conandeps.xcconfig */,
 				D917F86B2A6484A700DCD0CC /* conan_config.xcconfig */,
 			);
 			path = conan;
@@ -210,6 +230,7 @@
 /* Begin XCBuildConfiguration section */
 		D917F84B2A642A7C00DCD0CC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D917F86B2A6484A700DCD0CC /* conan_config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -244,6 +265,10 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*][arch=arm64]" = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_grumble_grumble)",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -268,6 +293,7 @@
 		};
 		D917F84C2A642A7C00DCD0CC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D917F86B2A6484A700DCD0CC /* conan_config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -302,6 +328,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*][arch=arm64]" = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_grumble_grumble)",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -321,6 +351,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D917F86B2A6484A700DCD0CC /* conan_config.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "grumble-sudoku/grumble_sudoku.entitlements";
@@ -329,6 +360,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = AR8DXD677M;
 				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"/Users/bewa/.conan2/p/b/grumbb54a5e0589c8f/p/lib\"";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
@@ -337,10 +369,15 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				"LIBRARY_SEARCH_PATHS[arch=arm64]" = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_grumble_grumble)",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "nebsta.grumble-sudoku";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "\"/Users/bewa/.conan2/p/b/grumbb54a5e0589c8f/p/lib\"";
 			};
 			name = Debug;
 		};
@@ -348,6 +385,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D917F86B2A6484A700DCD0CC /* conan_config.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "grumble-sudoku/grumble_sudoku.entitlements";
@@ -356,6 +394,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = AR8DXD677M;
 				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"/Users/bewa/.conan2/p/b/grumbb54a5e0589c8f/p/lib\"";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
@@ -364,10 +403,15 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				"LIBRARY_SEARCH_PATHS[arch=arm64]" = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_grumble_grumble)",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "nebsta.grumble-sudoku";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "\"/Users/bewa/.conan2/p/b/grumbb54a5e0589c8f/p/lib\"";
 			};
 			name = Release;
 		};
