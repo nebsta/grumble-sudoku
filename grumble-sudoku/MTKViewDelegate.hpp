@@ -11,6 +11,7 @@
 #include <Metal/Metal.hpp>
 #include <AppKit/AppKit.hpp>
 #include <MetalKit/MetalKit.hpp>
+#include <simd/simd.h>
 
 class MTKViewDelegate : public MTK::ViewDelegate {
   public:
@@ -21,4 +22,10 @@ class MTKViewDelegate : public MTK::ViewDelegate {
   private:
     MTL::Device* _device;
     MTL::CommandQueue* _commandQueue;
+    MTL::RenderPipelineState* _pipelineState;
+    MTL::Buffer* _vertexPositionsBuffer;
+    MTL::Buffer* _vertexColorsBuffer;
+  
+    void buildShaders();
+    void buildBuffers();
 };
