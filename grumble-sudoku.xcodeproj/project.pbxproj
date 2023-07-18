@@ -11,6 +11,8 @@
 		D917F90A2A66D18300DCD0CC /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917F8FA2A66832E00DCD0CC /* Metal.framework */; };
 		D917F9102A66D1FB00DCD0CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917F8FE2A66833700DCD0CC /* Foundation.framework */; };
 		D917F9112A66D1FF00DCD0CC /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917F9002A66884E00DCD0CC /* MetalKit.framework */; };
+		D917F9142A66D34600DCD0CC /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D917F9122A66D34600DCD0CC /* AppDelegate.cpp */; };
+		D917F9172A66D40400DCD0CC /* MTKViewDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D917F9152A66D40400DCD0CC /* MTKViewDelegate.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,10 @@
 		D917F9032A66971B00DCD0CC /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		D917F9072A6697D800DCD0CC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		D917F90E2A66D1F600DCD0CC /* JavaNativeFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaNativeFoundation.framework; path = System/Library/Frameworks/JavaNativeFoundation.framework; sourceTree = SDKROOT; };
+		D917F9122A66D34600DCD0CC /* AppDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
+		D917F9132A66D34600DCD0CC /* AppDelegate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AppDelegate.hpp; sourceTree = "<group>"; };
+		D917F9152A66D40400DCD0CC /* MTKViewDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MTKViewDelegate.cpp; sourceTree = "<group>"; };
+		D917F9162A66D40400DCD0CC /* MTKViewDelegate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MTKViewDelegate.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +79,10 @@
 			isa = PBXGroup;
 			children = (
 				D917F9032A66971B00DCD0CC /* main.cpp */,
+				D917F9122A66D34600DCD0CC /* AppDelegate.cpp */,
+				D917F9132A66D34600DCD0CC /* AppDelegate.hpp */,
+				D917F9152A66D40400DCD0CC /* MTKViewDelegate.cpp */,
+				D917F9162A66D40400DCD0CC /* MTKViewDelegate.hpp */,
 				D917F84A2A642A7C00DCD0CC /* grumble_sudoku.entitlements */,
 			);
 			path = "grumble-sudoku";
@@ -198,6 +208,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D917F9172A66D40400DCD0CC /* MTKViewDelegate.cpp in Sources */,
+				D917F9142A66D34600DCD0CC /* AppDelegate.cpp in Sources */,
 				D917F9052A66971C00DCD0CC /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
