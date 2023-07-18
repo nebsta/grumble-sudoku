@@ -18,15 +18,14 @@ MTKViewDelegate::~MTKViewDelegate() {
 }
 
 void MTKViewDelegate::drawInMTKView(MTK::View* pView) {
-  
-  NS::AutoreleasePool* pPool = NS::AutoreleasePool::alloc()->init();
+  NS::AutoreleasePool* pool = NS::AutoreleasePool::alloc()->init();
 
-  MTL::CommandBuffer* pCmd = _commandQueue->commandBuffer();
-  MTL::RenderPassDescriptor* pRpd = pView->currentRenderPassDescriptor();
-  MTL::RenderCommandEncoder* pEnc = pCmd->renderCommandEncoder( pRpd );
-  pEnc->endEncoding();
-  pCmd->presentDrawable( pView->currentDrawable() );
-  pCmd->commit();
+  MTL::CommandBuffer* commandBuffer = _commandQueue->commandBuffer();
+  MTL::RenderPassDescriptor* renderPassDesc = pView->currentRenderPassDescriptor();
+  MTL::RenderCommandEncoder* renderCommEncoder = commandBuffer->renderCommandEncoder(renderPassDesc);
+  renderCommEncoder->endEncoding();
+  commandBuffer->presentDrawable(pView->currentDrawable());
+  commandBuffer->commit();
 
-  pPool->release();
+  pool->release();
 }
