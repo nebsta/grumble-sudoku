@@ -7,12 +7,11 @@
 
 #include "AppDelegate.hpp"
 
-
 AppDelegate::~AppDelegate() {
-  _pMtkView->release();
-  _pWindow->release();
-  _pDevice->release();
-  delete _pViewDelegate;
+  _mtkView->release();
+  _window->release();
+  _device->release();
+  delete _viewDelegate;
 }
 
 NS::Menu* AppDelegate::createMenuBar() {
@@ -66,25 +65,25 @@ void AppDelegate::applicationWillFinishLaunching(NS::Notification* pNotification
 void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification) {
   CGRect frame = (CGRect){ {100.0, 100.0}, {512.0, 512.0} };
 
-  _pWindow = NS::Window::alloc()->init(
+  _window = NS::Window::alloc()->init(
     frame,
     NS::WindowStyleMaskClosable|NS::WindowStyleMaskTitled,
     NS::BackingStoreBuffered,
     false);
 
-  _pDevice = MTL::CreateSystemDefaultDevice();
+  _device = MTL::CreateSystemDefaultDevice();
 
-  _pMtkView = MTK::View::alloc()->init( frame, _pDevice );
-  _pMtkView->setColorPixelFormat( MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB );
-  _pMtkView->setClearColor(MTL::ClearColor::Make( 1.0, 0.0, 0.0, 1.0 ));
+  _mtkView = MTK::View::alloc()->init( frame, _device );
+  _mtkView->setColorPixelFormat( MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB );
+  _mtkView->setClearColor(MTL::ClearColor::Make( 1.0, 0.0, 0.0, 1.0 ));
 
-  _pViewDelegate = new MTKViewDelegate(_pDevice);
-  _pMtkView->setDelegate(_pViewDelegate);
+  _viewDelegate = new MTKViewDelegate(_device);
+  _mtkView->setDelegate(_viewDelegate);
 
-  _pWindow->setContentView(_pMtkView);
-  _pWindow->setTitle(NS::String::string("Grumble Sudoku", NS::StringEncoding::UTF8StringEncoding));
+  _window->setContentView(_mtkView);
+  _window->setTitle(NS::String::string("Grumble Sudoku", NS::StringEncoding::UTF8StringEncoding));
 
-  _pWindow->makeKeyAndOrderFront(nullptr);
+  _window->makeKeyAndOrderFront(nullptr);
 
   NS::Application* pApp = reinterpret_cast<NS::Application*>(pNotification->object());
   pApp->activateIgnoringOtherApps(true);

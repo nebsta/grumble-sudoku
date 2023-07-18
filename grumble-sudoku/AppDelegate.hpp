@@ -21,13 +21,13 @@ class AppDelegate : public NS::ApplicationDelegate
 
     NS::Menu* createMenuBar();
 
-    virtual void applicationWillFinishLaunching(NS::Notification* pNotification) override;
-    virtual void applicationDidFinishLaunching(NS::Notification* pNotification) override;
-    virtual bool applicationShouldTerminateAfterLastWindowClosed(NS::Application* pSender) override;
+    virtual void applicationWillFinishLaunching(NS::Notification* notification) override;
+    virtual void applicationDidFinishLaunching(NS::Notification* notification) override;
+    virtual bool applicationShouldTerminateAfterLastWindowClosed(NS::Application* sender) override;
 
   private:
-    NS::Window* _pWindow;
-    MTK::View* _pMtkView;
-    MTL::Device* _pDevice;
-    MTKViewDelegate* _pViewDelegate = nullptr;
+    NS::Window* _window;
+    MTK::View* _mtkView;
+    MTL::Device* _device;
+    MTKViewDelegate* _viewDelegate = nullptr;
 };
