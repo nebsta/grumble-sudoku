@@ -7,43 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D917F8392A642A7B00DCD0CC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D917F8382A642A7B00DCD0CC /* AppDelegate.m */; };
-		D917F83C2A642A7B00DCD0CC /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = D917F83B2A642A7B00DCD0CC /* Renderer.m */; };
-		D917F83F2A642A7B00DCD0CC /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D917F83E2A642A7B00DCD0CC /* GameViewController.m */; };
-		D917F8412A642A7B00DCD0CC /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = D917F8402A642A7B00DCD0CC /* Shaders.metal */; };
-		D917F8442A642A7C00DCD0CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D917F8432A642A7C00DCD0CC /* Assets.xcassets */; };
-		D917F8472A642A7C00DCD0CC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D917F8452A642A7C00DCD0CC /* Main.storyboard */; };
-		D917F8492A642A7C00DCD0CC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D917F8482A642A7C00DCD0CC /* main.m */; };
-		D917F86D2A6484F200DCD0CC /* Test.mm in Sources */ = {isa = PBXBuildFile; fileRef = D917F86C2A6484F200DCD0CC /* Test.mm */; };
+		D917F9052A66971C00DCD0CC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D917F9032A66971B00DCD0CC /* main.cpp */; };
+		D917F90A2A66D18300DCD0CC /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917F8FA2A66832E00DCD0CC /* Metal.framework */; };
+		D917F9102A66D1FB00DCD0CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917F8FE2A66833700DCD0CC /* Foundation.framework */; };
+		D917F9112A66D1FF00DCD0CC /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D917F9002A66884E00DCD0CC /* MetalKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D917F8342A642A7B00DCD0CC /* grumble-sudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "grumble-sudoku.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D917F8372A642A7B00DCD0CC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		D917F8382A642A7B00DCD0CC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		D917F83A2A642A7B00DCD0CC /* Renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
-		D917F83B2A642A7B00DCD0CC /* Renderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Renderer.m; sourceTree = "<group>"; };
-		D917F83D2A642A7B00DCD0CC /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
-		D917F83E2A642A7B00DCD0CC /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
-		D917F8402A642A7B00DCD0CC /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
-		D917F8422A642A7B00DCD0CC /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
-		D917F8432A642A7C00DCD0CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D917F8462A642A7C00DCD0CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		D917F8482A642A7C00DCD0CC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D917F84A2A642A7C00DCD0CC /* grumble_sudoku.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = grumble_sudoku.entitlements; sourceTree = "<group>"; };
 		D917F8502A642AB600DCD0CC /* conanfile.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = conanfile.py; sourceTree = "<group>"; };
 		D917F86B2A6484A700DCD0CC /* conan_config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_config.xcconfig; sourceTree = "<group>"; };
-		D917F86C2A6484F200DCD0CC /* Test.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Test.mm; sourceTree = "<group>"; };
-		D917F87D2A654DE200DCD0CC /* conan_grumble.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_grumble.xcconfig; sourceTree = "<group>"; };
-		D917F87E2A654DE200DCD0CC /* conan_nlohmann_json_nlohmann_json.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_nlohmann_json_nlohmann_json.xcconfig; sourceTree = "<group>"; };
-		D917F87F2A654DE200DCD0CC /* conan_glm.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_glm.xcconfig; sourceTree = "<group>"; };
-		D917F8802A654DE200DCD0CC /* conan_glm_glm_debug_arm64.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_glm_glm_debug_arm64.xcconfig; sourceTree = "<group>"; };
-		D917F8812A654DE200DCD0CC /* conan_nlohmann_json.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_nlohmann_json.xcconfig; sourceTree = "<group>"; };
-		D917F8822A654DE200DCD0CC /* conan_glm_glm.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_glm_glm.xcconfig; sourceTree = "<group>"; };
-		D917F8832A654DE200DCD0CC /* conan_grumble_grumble.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_grumble_grumble.xcconfig; sourceTree = "<group>"; };
-		D917F8842A654DE200DCD0CC /* conan_grumble_grumble_debug_arm64.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_grumble_grumble_debug_arm64.xcconfig; sourceTree = "<group>"; };
-		D917F8852A654DE200DCD0CC /* conandeps.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conandeps.xcconfig; sourceTree = "<group>"; };
-		D917F8862A654DE200DCD0CC /* conan_nlohmann_json_nlohmann_json_debug_arm64.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_nlohmann_json_nlohmann_json_debug_arm64.xcconfig; sourceTree = "<group>"; };
+		D917F88A2A6588DB00DCD0CC /* conan_nlohmann_json_nlohmann_json_debug_arm64.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_nlohmann_json_nlohmann_json_debug_arm64.xcconfig; sourceTree = "<group>"; };
+		D917F88B2A6588DB00DCD0CC /* conan_grumble_grumble.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_grumble_grumble.xcconfig; sourceTree = "<group>"; };
+		D917F88C2A6588DB00DCD0CC /* conan_grumble.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_grumble.xcconfig; sourceTree = "<group>"; };
+		D917F88D2A6588DB00DCD0CC /* conan_glm_glm.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_glm_glm.xcconfig; sourceTree = "<group>"; };
+		D917F88E2A6588DB00DCD0CC /* conan_grumble_grumble_debug_arm64.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_grumble_grumble_debug_arm64.xcconfig; sourceTree = "<group>"; };
+		D917F88F2A6588DB00DCD0CC /* conan_glm.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_glm.xcconfig; sourceTree = "<group>"; };
+		D917F8902A6588DB00DCD0CC /* conan_nlohmann_json_nlohmann_json.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_nlohmann_json_nlohmann_json.xcconfig; sourceTree = "<group>"; };
+		D917F8912A6588DB00DCD0CC /* conan_nlohmann_json.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conan_nlohmann_json.xcconfig; sourceTree = "<group>"; };
+		D917F8922A6588DB00DCD0CC /* conandeps.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = conandeps.xcconfig; sourceTree = "<group>"; };
+		D917F8FA2A66832E00DCD0CC /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		D917F8FC2A66833200DCD0CC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D917F8FE2A66833700DCD0CC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D917F9002A66884E00DCD0CC /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		D917F9032A66971B00DCD0CC /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		D917F9072A6697D800DCD0CC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		D917F90E2A66D1F600DCD0CC /* JavaNativeFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaNativeFoundation.framework; path = System/Library/Frameworks/JavaNativeFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +41,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D917F9112A66D1FF00DCD0CC /* MetalKit.framework in Frameworks */,
+				D917F90A2A66D18300DCD0CC /* Metal.framework in Frameworks */,
+				D917F9102A66D1FB00DCD0CC /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +57,7 @@
 				D917F8502A642AB600DCD0CC /* conanfile.py */,
 				D917F8362A642A7B00DCD0CC /* grumble-sudoku */,
 				D917F8352A642A7B00DCD0CC /* Products */,
+				D917F8F92A66832E00DCD0CC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,18 +72,7 @@
 		D917F8362A642A7B00DCD0CC /* grumble-sudoku */ = {
 			isa = PBXGroup;
 			children = (
-				D917F86C2A6484F200DCD0CC /* Test.mm */,
-				D917F8372A642A7B00DCD0CC /* AppDelegate.h */,
-				D917F8382A642A7B00DCD0CC /* AppDelegate.m */,
-				D917F83A2A642A7B00DCD0CC /* Renderer.h */,
-				D917F83B2A642A7B00DCD0CC /* Renderer.m */,
-				D917F83D2A642A7B00DCD0CC /* GameViewController.h */,
-				D917F83E2A642A7B00DCD0CC /* GameViewController.m */,
-				D917F8402A642A7B00DCD0CC /* Shaders.metal */,
-				D917F8422A642A7B00DCD0CC /* ShaderTypes.h */,
-				D917F8432A642A7C00DCD0CC /* Assets.xcassets */,
-				D917F8452A642A7C00DCD0CC /* Main.storyboard */,
-				D917F8482A642A7C00DCD0CC /* main.m */,
+				D917F9032A66971B00DCD0CC /* main.cpp */,
 				D917F84A2A642A7C00DCD0CC /* grumble_sudoku.entitlements */,
 			);
 			path = "grumble-sudoku";
@@ -98,19 +81,31 @@
 		D917F86A2A64847100DCD0CC /* conan */ = {
 			isa = PBXGroup;
 			children = (
-				D917F8802A654DE200DCD0CC /* conan_glm_glm_debug_arm64.xcconfig */,
-				D917F8822A654DE200DCD0CC /* conan_glm_glm.xcconfig */,
-				D917F87F2A654DE200DCD0CC /* conan_glm.xcconfig */,
-				D917F8842A654DE200DCD0CC /* conan_grumble_grumble_debug_arm64.xcconfig */,
-				D917F8832A654DE200DCD0CC /* conan_grumble_grumble.xcconfig */,
-				D917F87D2A654DE200DCD0CC /* conan_grumble.xcconfig */,
-				D917F8862A654DE200DCD0CC /* conan_nlohmann_json_nlohmann_json_debug_arm64.xcconfig */,
-				D917F87E2A654DE200DCD0CC /* conan_nlohmann_json_nlohmann_json.xcconfig */,
-				D917F8812A654DE200DCD0CC /* conan_nlohmann_json.xcconfig */,
-				D917F8852A654DE200DCD0CC /* conandeps.xcconfig */,
+				D917F88D2A6588DB00DCD0CC /* conan_glm_glm.xcconfig */,
+				D917F88F2A6588DB00DCD0CC /* conan_glm.xcconfig */,
+				D917F88E2A6588DB00DCD0CC /* conan_grumble_grumble_debug_arm64.xcconfig */,
+				D917F88B2A6588DB00DCD0CC /* conan_grumble_grumble.xcconfig */,
+				D917F88C2A6588DB00DCD0CC /* conan_grumble.xcconfig */,
+				D917F88A2A6588DB00DCD0CC /* conan_nlohmann_json_nlohmann_json_debug_arm64.xcconfig */,
+				D917F8902A6588DB00DCD0CC /* conan_nlohmann_json_nlohmann_json.xcconfig */,
+				D917F8912A6588DB00DCD0CC /* conan_nlohmann_json.xcconfig */,
+				D917F8922A6588DB00DCD0CC /* conandeps.xcconfig */,
 				D917F86B2A6484A700DCD0CC /* conan_config.xcconfig */,
 			);
 			path = conan;
+			sourceTree = "<group>";
+		};
+		D917F8F92A66832E00DCD0CC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D917F90E2A66D1F600DCD0CC /* JavaNativeFoundation.framework */,
+				D917F9072A6697D800DCD0CC /* AppKit.framework */,
+				D917F9002A66884E00DCD0CC /* MetalKit.framework */,
+				D917F8FE2A66833700DCD0CC /* Foundation.framework */,
+				D917F8FC2A66833200DCD0CC /* QuartzCore.framework */,
+				D917F8FA2A66832E00DCD0CC /* Metal.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,8 +166,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D917F8442A642A7C00DCD0CC /* Assets.xcassets in Resources */,
-				D917F8472A642A7C00DCD0CC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,27 +198,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D917F8492A642A7C00DCD0CC /* main.m in Sources */,
-				D917F8412A642A7B00DCD0CC /* Shaders.metal in Sources */,
-				D917F83C2A642A7B00DCD0CC /* Renderer.m in Sources */,
-				D917F86D2A6484F200DCD0CC /* Test.mm in Sources */,
-				D917F83F2A642A7B00DCD0CC /* GameViewController.m in Sources */,
-				D917F8392A642A7B00DCD0CC /* AppDelegate.m in Sources */,
+				D917F9052A66971C00DCD0CC /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		D917F8452A642A7C00DCD0CC /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D917F8462A642A7C00DCD0CC /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		D917F84B2A642A7C00DCD0CC /* Debug */ = {
@@ -235,7 +212,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -283,6 +260,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/metal-cpp";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -298,7 +276,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -340,6 +318,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/metal-cpp";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -362,6 +341,10 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "\"/Users/bewa/.conan2/p/b/grumbb54a5e0589c8f/p/lib\"";
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/metal-cpp",
+					"$(PROJECT_DIR)/metal-cpp-extensions",
+				);
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -396,6 +379,10 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "\"/Users/bewa/.conan2/p/b/grumbb54a5e0589c8f/p/lib\"";
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/metal-cpp",
+					"$(PROJECT_DIR)/metal-cpp-extensions",
+				);
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
