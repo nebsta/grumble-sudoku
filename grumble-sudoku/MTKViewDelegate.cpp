@@ -27,6 +27,7 @@ MTKViewDelegate::~MTKViewDelegate() {
   _pipelineState->release();
   _vertexPositionsBuffer->release();
   _vertexColorsBuffer->release();
+  _shaderLibrary->release();
 }
 
 void MTKViewDelegate::buildShaders() {
@@ -52,10 +53,11 @@ void MTKViewDelegate::buildShaders() {
     assert(false);
   }
 
-  library->release();
   vertexFunction->release();
   fragFunction->release();
   pipelineDescriptors->release();
+  
+  _shaderLibrary = library;
 }
 
 void MTKViewDelegate::buildBuffers() {
@@ -89,6 +91,18 @@ void MTKViewDelegate::buildBuffers() {
 
   _vertexPositionsBuffer->didModifyRange(NS::Range::Make(0, _vertexPositionsBuffer->length()));
   _vertexColorsBuffer->didModifyRange(NS::Range::Make(0, _vertexColorsBuffer->length()));
+  
+  MTL::Function* vertexFunction = _shaderLibrary->newFunction(NS::String::string("vertexMain", NS::UTF8StringEncoding));
+  MTL::ArgumentEncoder* argumentEncoder = vertexFunction->newArgumentEncoder(0);
+  
+  _argumentBuffer = _device->newBuffer(argumentEncoder->encodedLength(), MTL::ResourceStorageModeManaged);
+  argumentEncoder->setArgumentBuffer(_argumentBuffer, 0);
+  argumentEncoder->setBuffer(_vertexPositionsBuffer, 0, 0);
+  argumentEncoder->setBuffer(_vertexColorsBuffer, 0, 1);
+  _argumentBuffer->didModifyRange(NS::Range::Make(0, _argumentBuffer->length()));
+  
+  vertexFunction->release();
+  argumentEncoder->release();
 }
 
 void MTKViewDelegate::drawInMTKView(MTK::View* pView) {
@@ -101,11 +115,13 @@ void MTKViewDelegate::drawInMTKView(MTK::View* pView) {
   MTL::RenderPassDescriptor* renderPassDesc = pView->currentRenderPassDescriptor();
   MTL::RenderCommandEncoder* renderCommEncoder = commandBuffer->renderCommandEncoder(renderPassDesc);
   
-  _game->rootView()->render();
+//  _game->rootView()->render();
   
   renderCommEncoder->setRenderPipelineState(_pipelineState);
-  renderCommEncoder->setVertexBuffer(_vertexPositionsBuffer, 0, 0);
-  renderCommEncoder->setVertexBuffer(_vertexColorsBuffer, 0, 1);
+  renderCommEncoder->setVertexBuffer(_argumentBuffer, 0, 0);
+  renderCommEncoder->useResource(_vertexPositionsBuffer, MTL::ResourceUsageRead);
+  renderCommEncoder->useResource(_vertexColorsBuffer, MTL::ResourceUsageRead);
+  
   renderCommEncoder->drawPrimitives(MTL::PrimitiveType::PrimitiveTypeTriangle, NS::UInteger(0), NS::UInteger(3));
   
   

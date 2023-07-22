@@ -35,6 +35,9 @@ class MTKViewDelegate : public MTK::ViewDelegate {
     MTL::Device* _device;
     MTL::CommandQueue* _commandQueue;
     MTL::RenderPipelineState* _pipelineState;
+    MTL::Library* _shaderLibrary;
+  
+    MTL::Buffer* _argumentBuffer;
     MTL::Buffer* _vertexPositionsBuffer;
     MTL::Buffer* _vertexColorsBuffer;
   
