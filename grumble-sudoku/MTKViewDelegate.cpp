@@ -7,9 +7,16 @@
 
 #include "MTKViewDelegate.hpp"
 
-MTKViewDelegate::MTKViewDelegate(MTL::Device* device): MTK::ViewDelegate() {
+#define MAX_FRAMES_IN_FLIGHT 3
+
+MTKViewDelegate::MTKViewDelegate(MTL::Device* device, std::shared_ptr<grumble::Game> game, std::shared_ptr<MetalScreenManager> metalScreenManager): MTK::ViewDelegate() {
   _device = device->retain();
   _commandQueue = _device->newCommandQueue();
+  _game = game;
+  _screenManager = metalScreenManager;
+  _drawSemaphore = dispatch_semaphore_create(MAX_FRAMES_IN_FLIGHT);
+  _activeFrame = 0;
+  
   buildShaders();
   buildBuffers();
 }
@@ -24,8 +31,6 @@ MTKViewDelegate::~MTKViewDelegate() {
 
 void MTKViewDelegate::buildShaders() {
   NS::Error* error = nullptr;
-
-//  NS::AutoreleasePool* pool = NS::AutoreleasePool::alloc()->init();
   
   MTL::Library* library = _device->newDefaultLibrary();
   if (!library) {
@@ -89,16 +94,33 @@ void MTKViewDelegate::buildBuffers() {
 void MTKViewDelegate::drawInMTKView(MTK::View* pView) {
   NS::AutoreleasePool* pool = NS::AutoreleasePool::alloc()->init();
 
+//  _activeFrame = (_activeFrame + 1) % MAX_FRAMES_IN_FLIGHT;
+//  dispatch_semaphore_wait(_drawSemaphore, DISPATCH_TIME_FOREVER);
+  
   MTL::CommandBuffer* commandBuffer = _commandQueue->commandBuffer();
   MTL::RenderPassDescriptor* renderPassDesc = pView->currentRenderPassDescriptor();
   MTL::RenderCommandEncoder* renderCommEncoder = commandBuffer->renderCommandEncoder(renderPassDesc);
+  
+  _game->rootView()->render();
+  
   renderCommEncoder->setRenderPipelineState(_pipelineState);
   renderCommEncoder->setVertexBuffer(_vertexPositionsBuffer, 0, 0);
   renderCommEncoder->setVertexBuffer(_vertexColorsBuffer, 0, 1);
   renderCommEncoder->drawPrimitives(MTL::PrimitiveType::PrimitiveTypeTriangle, NS::UInteger(0), NS::UInteger(3));
+  
+  
   renderCommEncoder->endEncoding();
   commandBuffer->presentDrawable(pView->currentDrawable());
   commandBuffer->commit();
 
   pool->release();
+}
+
+void update() {
+  
+}
+
+void MTKViewDelegate::drawableSizeWillChange(MTK::View* pView, CGSize size) {
+  grumble::Logger::debug("drawableSizeWillChange: " + iosutils::to_string(size));
+  _screenManager->updateScreenSize(size);
 }

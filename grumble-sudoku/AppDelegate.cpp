@@ -7,10 +7,18 @@
 
 #include "AppDelegate.hpp"
 
+AppDelegate::AppDelegate() {
+  _metalScreenManager = std::make_unique<MetalScreenManager>(MetalScreenManager());
+  
+  std::shared_ptr<grumble::RendererManager> metalRendererManager = std::make_shared<MetalRendererManager>(MetalRendererManager());
+  _game = std::make_shared<grumble::Game>(grumble::Game(_metalScreenManager, metalRendererManager));
+}
+
 AppDelegate::~AppDelegate() {
   _mtkView->release();
   _window->release();
   _device->release();
+  
   delete _viewDelegate;
 }
 
@@ -67,17 +75,19 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
 
   _window = NS::Window::alloc()->init(
     frame,
-    NS::WindowStyleMaskClosable|NS::WindowStyleMaskTitled,
+    NS::WindowStyleMaskClosable|NS::WindowStyleMaskTitled|NS::WindowStyleMaskResizable,
     NS::BackingStoreBuffered,
     false);
 
+  
+  
   _device = MTL::CreateSystemDefaultDevice();
 
   _mtkView = MTK::View::alloc()->init( frame, _device );
   _mtkView->setColorPixelFormat( MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB );
   _mtkView->setClearColor(MTL::ClearColor::Make( 1.0, 0.0, 0.0, 1.0 ));
 
-  _viewDelegate = new MTKViewDelegate(_device);
+  _viewDelegate = new MTKViewDelegate(_device, _game, _metalScreenManager);
   _mtkView->setDelegate(_viewDelegate);
 
   _window->setContentView(_mtkView);
