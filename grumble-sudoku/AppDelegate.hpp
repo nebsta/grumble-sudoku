@@ -18,7 +18,6 @@
 #include <grumble/render/RendererManager.hpp>
 
 #include "MTKViewDelegate.hpp"
-#include "MetalScreenManager.hpp"
 #include "MetalRendererManager.hpp"
 
 class AppDelegate : public NS::ApplicationDelegate
@@ -35,10 +34,9 @@ class AppDelegate : public NS::ApplicationDelegate
 
   private:
     std::shared_ptr<grumble::Game> _game;
-    std::shared_ptr<MetalScreenManager> _metalScreenManager;
   
     NS::Window* _window;
     MTK::View* _mtkView;
     MTL::Device* _device;
-    MTKViewDelegate* _viewDelegate = nullptr;
+    MTKViewDelegate* _viewDelegate;
 };

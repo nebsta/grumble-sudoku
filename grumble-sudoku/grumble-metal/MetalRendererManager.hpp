@@ -16,27 +16,24 @@
 
 #include <grumble/render/RendererManager.hpp>
 
-#include "MetalRenderer.hpp"
-#include "BufferInstanceData.hpp"
+#include "Buffers/UniformData.hpp"
 #include "MetalUtils.hpp"
 
 #define MAX_FRAMES_IN_FLIGHT 3
-#define MAX_INSTANCES 100
 
 class MetalRendererManager: public grumble::RendererManager {
+  
 public:
-  MetalRendererManager(MTL::Device* device);
+  MetalRendererManager(MTL::Device* device, MTK::View *mtkView);
   ~MetalRendererManager() override;
   
   void buildShaders();
   void buildBuffers();
   
-  MTL::CommandQueue* commandQueue();
   MTL::CommandBuffer* commandBuffer();
   
-  void frameSetup(MTK::View* mtkView, MTL::CommandBuffer* commandBuffer);
-  
   void render(std::shared_ptr<grumble::View> view) override;
+  void screenSizeUpdated(CGSize size);
   
 private:
   MTK::View* _mtkView;
@@ -47,8 +44,11 @@ private:
   MTL::RenderPipelineState* _pipelineState;
   MTL::Library* _shaderLibrary;
 
-  MTL::Buffer* _argumentBuffer;
   MTL::Buffer* _vertexPositionsBuffer;
   MTL::Buffer* _vertexColorsBuffer;
-  MTL::Buffer* _instanceDataBuffer[MAX_FRAMES_IN_FLIGHT];
+  
+  std::array<MTL::Buffer*, MAX_FRAMES_IN_FLIGHT> _uniformBuffers;
+  
+  int _activeFrameIndex;
+  simd::float4x4 _projectionMatrix;
 };

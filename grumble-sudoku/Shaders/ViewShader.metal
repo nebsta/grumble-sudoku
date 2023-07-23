@@ -9,7 +9,9 @@
 using namespace metal;
 
 struct VertexUniforms {
-  float4x4 projectionTransform;
+  float4x4 projectionMatrix;
+  float4x4 modelMatrix;
+  float4 tint;
 };
 
 struct v2f {
@@ -17,17 +19,18 @@ struct v2f {
   half3 color;
 };
 
-struct VertexData
-{
-    device float3* positions [[id(0)]];
-    device float3* colors [[id(1)]];
+struct VertexData {
+  float3 position;
 };
 
-v2f vertex vertexMain(uint vertexId [[vertex_id]],
-                      device const VertexData* vertexData [[buffer(0)]]) {
+v2f vertex vertexMain(device const VertexData* vertexData [[buffer(0)]],
+                      constant VertexUniforms &uniforms [[buffer(1)]],
+                      uint vertexId [[vertex_id]]) {
   v2f o;
-  o.position = float4(vertexData->positions[vertexId], 1.0);
-  o.color = half3(vertexData->colors[vertexId]);
+  
+  float4 pos = float4(vertexData[vertexId].position, 1.0);
+  o.position = uniforms.projectionMatrix * uniforms.modelMatrix * pos;
+  o.color = half3(uniforms.tint.rgb);
   return o;
 }
 

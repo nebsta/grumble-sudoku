@@ -7,8 +7,9 @@
 
 #include "MetalRendererManager.hpp"
 
-MetalRendererManager::MetalRendererManager(MTL::Device* device) {
+MetalRendererManager::MetalRendererManager(MTL::Device* device, MTK::View* mtkView) {
   _device = device->retain();
+  _mtkView = mtkView->retain();
   _commandQueue = _device->newCommandQueue();
   
   buildShaders();
@@ -17,6 +18,7 @@ MetalRendererManager::MetalRendererManager(MTL::Device* device) {
 
 MetalRendererManager::~MetalRendererManager() {
   _device->release();
+  _mtkView->release();
   _commandQueue->release();
   _pipelineState->release();
   _vertexPositionsBuffer->release();
@@ -24,8 +26,9 @@ MetalRendererManager::~MetalRendererManager() {
   _shaderLibrary->release();
 }
 
-MTL::CommandQueue* MetalRendererManager::commandQueue() {
-  return _commandQueue;
+MTL::CommandBuffer* MetalRendererManager::commandBuffer() {
+  _commandBuffer = _commandQueue->commandBuffer();
+  return _commandBuffer;
 }
 
 void MetalRendererManager::buildShaders() {
@@ -79,6 +82,7 @@ void MetalRendererManager::buildBuffers() {
 
   const size_t positionsDataSize = NumVertices * sizeof(simd::float3);
   const size_t colorDataSize = NumVertices * sizeof(simd::float3);
+  const size_t uniformDataSize = sizeof(UniformData);
 
   MTL::Buffer* pVertexPositionsBuffer = _device->newBuffer(positionsDataSize, MTL::ResourceStorageModeManaged);
   MTL::Buffer* pVertexColorsBuffer = _device->newBuffer(colorDataSize, MTL::ResourceStorageModeManaged);
@@ -86,9 +90,8 @@ void MetalRendererManager::buildBuffers() {
   _vertexPositionsBuffer = pVertexPositionsBuffer;
   _vertexColorsBuffer = pVertexColorsBuffer;
   
-  const size_t instanceDataSize = MAX_FRAMES_IN_FLIGHT * MAX_INSTANCES * sizeof(BufferInstanceData);
   for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i) {
-    _instanceDataBuffer[i] = _device->newBuffer(instanceDataSize, MTL::ResourceStorageModeManaged);
+    _uniformBuffers[i] = _device->newBuffer(uniformDataSize, MTL::ResourceStorageModeManaged);
   }
 
   memcpy(_vertexPositionsBuffer->contents(), positions, positionsDataSize);
@@ -96,46 +99,34 @@ void MetalRendererManager::buildBuffers() {
 
   _vertexPositionsBuffer->didModifyRange(NS::Range::Make(0, _vertexPositionsBuffer->length()));
   _vertexColorsBuffer->didModifyRange(NS::Range::Make(0, _vertexColorsBuffer->length()));
-  
-  MTL::Function* vertexFunction = _shaderLibrary->newFunction(NS::String::string("vertexMain", NS::UTF8StringEncoding));
-  MTL::ArgumentEncoder* argumentEncoder = vertexFunction->newArgumentEncoder(0);
-  
-  _argumentBuffer = _device->newBuffer(argumentEncoder->encodedLength(), MTL::ResourceStorageModeManaged);
-  argumentEncoder->setArgumentBuffer(_argumentBuffer, 0);
-  argumentEncoder->setBuffer(_vertexPositionsBuffer, 0, 0);
-  argumentEncoder->setBuffer(_vertexColorsBuffer, 0, 1);
-  _argumentBuffer->didModifyRange(NS::Range::Make(0, _argumentBuffer->length()));
-  
-  vertexFunction->release();
-  argumentEncoder->release();
-}
-
-void MetalRendererManager::frameSetup(MTK::View* mtkView, MTL::CommandBuffer* commandBuffer) {
-  _mtkView = mtkView;
-  _commandBuffer = commandBuffer;
 }
 
 void MetalRendererManager::render(std::shared_ptr<grumble::View> view) {
-  if (_mtkView == nullptr || _commandQueue == nullptr) {
-    grumble::Logger::error("Trying to render without setting the mtkView or commandQueue!");
-    exit(1);
-    return;
-  }
+  _activeFrameIndex = (_activeFrameIndex + 1) % MAX_FRAMES_IN_FLIGHT;
+  MTL::Buffer* uniformBuffer = _uniformBuffers[_activeFrameIndex];
+  
+  UniformData* uniformData = reinterpret_cast<UniformData*>(uniformBuffer->contents());
+  
+  uniformData->modelMatrix = MetalUtil::to_simd_float4x4(view->transform().modelMatrix());
+  uniformData->projectionMatrix = _projectionMatrix;
+  uniformBuffer->didModifyRange(NS::Range::Make(0, uniformBuffer->length()));
   
   MTL::PrimitiveType primitiveType = MetalUtil::to_mtl_primitive_type(view->renderer().renderMethod());
   
   MTL::RenderPassDescriptor* renderPassDesc = _mtkView->currentRenderPassDescriptor();
   MTL::RenderCommandEncoder* renderCommEncoder = _commandBuffer->renderCommandEncoder(renderPassDesc);
-
+  
   renderCommEncoder->setRenderPipelineState(_pipelineState);
-  renderCommEncoder->setVertexBuffer(_argumentBuffer, 0, 0);
-  renderCommEncoder->useResource(_vertexPositionsBuffer, MTL::ResourceUsageRead);
-  renderCommEncoder->useResource(_vertexColorsBuffer, MTL::ResourceUsageRead);
+  renderCommEncoder->setVertexBuffer(_vertexPositionsBuffer, 0, 0);
+  renderCommEncoder->setVertexBuffer(uniformBuffer, 0, 1);
 
   renderCommEncoder->drawPrimitives(primitiveType, NS::UInteger(0), NS::UInteger(4));
   renderCommEncoder->endEncoding();
+  
+  _commandBuffer->presentDrawable(_mtkView->currentDrawable());
 }
 
-MTL::CommandBuffer* MetalRendererManager::commandBuffer() {
-  return _commandBuffer;
+void MetalRendererManager::screenSizeUpdated(CGSize size) {
+  glm::mat4 glmOrtho = glm::ortho(0.0f, float(size.width), 0.0f, float(size.height));
+  _projectionMatrix = MetalUtil::to_simd_float4x4(glmOrtho);
 }

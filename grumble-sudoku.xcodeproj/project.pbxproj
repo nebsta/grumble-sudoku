@@ -14,9 +14,7 @@
 		D917F9142A66D34600DCD0CC /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D917F9122A66D34600DCD0CC /* AppDelegate.cpp */; };
 		D917F9172A66D40400DCD0CC /* MTKViewDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D917F9152A66D40400DCD0CC /* MTKViewDelegate.cpp */; };
 		D917F91A2A66D9EA00DCD0CC /* ViewShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = D917F9192A66D9EA00DCD0CC /* ViewShader.metal */; };
-		D91D8A3A2A69381200E5B2A8 /* MetalScreenManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D91D8A382A69381200E5B2A8 /* MetalScreenManager.cpp */; };
 		D91D8A422A694A4D00E5B2A8 /* IOSUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D91D8A402A694A4D00E5B2A8 /* IOSUtils.cpp */; };
-		D91D8A502A6A8BCC00E5B2A8 /* MetalRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D91D8A4E2A6A8BCC00E5B2A8 /* MetalRenderer.cpp */; };
 		D927AA8C2A6C5E81002D5F0D /* MetalRendererManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D927AA8A2A6C5E81002D5F0D /* MetalRendererManager.cpp */; };
 /* End PBXBuildFile section */
 
@@ -46,15 +44,11 @@
 		D917F9152A66D40400DCD0CC /* MTKViewDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MTKViewDelegate.cpp; sourceTree = "<group>"; };
 		D917F9162A66D40400DCD0CC /* MTKViewDelegate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MTKViewDelegate.hpp; sourceTree = "<group>"; };
 		D917F9192A66D9EA00DCD0CC /* ViewShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ViewShader.metal; sourceTree = "<group>"; };
-		D91D8A382A69381200E5B2A8 /* MetalScreenManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MetalScreenManager.cpp; sourceTree = "<group>"; };
-		D91D8A392A69381200E5B2A8 /* MetalScreenManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalScreenManager.hpp; sourceTree = "<group>"; };
 		D91D8A402A694A4D00E5B2A8 /* IOSUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IOSUtils.cpp; sourceTree = "<group>"; };
 		D91D8A412A694A4D00E5B2A8 /* IOSUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IOSUtils.hpp; sourceTree = "<group>"; };
-		D91D8A4E2A6A8BCC00E5B2A8 /* MetalRenderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MetalRenderer.cpp; sourceTree = "<group>"; };
-		D91D8A4F2A6A8BCC00E5B2A8 /* MetalRenderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalRenderer.hpp; sourceTree = "<group>"; };
 		D927AA8A2A6C5E81002D5F0D /* MetalRendererManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MetalRendererManager.cpp; sourceTree = "<group>"; };
 		D927AA8B2A6C5E81002D5F0D /* MetalRendererManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalRendererManager.hpp; sourceTree = "<group>"; };
-		D9CE62932A6D431F00D9477F /* BufferInstanceData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BufferInstanceData.hpp; sourceTree = "<group>"; };
+		D92D77C52A6D82C100E5F178 /* UniformData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UniformData.hpp; sourceTree = "<group>"; };
 		D9CE629C2A6D60A300D9477F /* MetalUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalUtils.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -154,14 +148,18 @@
 			path = utils;
 			sourceTree = "<group>";
 		};
+		D92D77C42A6D82A000E5F178 /* Buffers */ = {
+			isa = PBXGroup;
+			children = (
+				D92D77C52A6D82C100E5F178 /* UniformData.hpp */,
+			);
+			path = Buffers;
+			sourceTree = "<group>";
+		};
 		D9CE62972A6D4E8500D9477F /* grumble-metal */ = {
 			isa = PBXGroup;
 			children = (
-				D9CE62932A6D431F00D9477F /* BufferInstanceData.hpp */,
-				D91D8A392A69381200E5B2A8 /* MetalScreenManager.hpp */,
-				D91D8A382A69381200E5B2A8 /* MetalScreenManager.cpp */,
-				D91D8A4F2A6A8BCC00E5B2A8 /* MetalRenderer.hpp */,
-				D91D8A4E2A6A8BCC00E5B2A8 /* MetalRenderer.cpp */,
+				D92D77C42A6D82A000E5F178 /* Buffers */,
 				D927AA8B2A6C5E81002D5F0D /* MetalRendererManager.hpp */,
 				D927AA8A2A6C5E81002D5F0D /* MetalRendererManager.cpp */,
 				D9CE629C2A6D60A300D9477F /* MetalUtils.hpp */,
@@ -264,9 +262,7 @@
 				D917F9172A66D40400DCD0CC /* MTKViewDelegate.cpp in Sources */,
 				D917F9142A66D34600DCD0CC /* AppDelegate.cpp in Sources */,
 				D917F9052A66971C00DCD0CC /* main.cpp in Sources */,
-				D91D8A3A2A69381200E5B2A8 /* MetalScreenManager.cpp in Sources */,
 				D927AA8C2A6C5E81002D5F0D /* MetalRendererManager.cpp in Sources */,
-				D91D8A502A6A8BCC00E5B2A8 /* MetalRenderer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +426,8 @@
 					"$(OTHER_CPLUSPLUSFLAGS_grumble_grumble)",
 					"-D",
 					GRUMBLE_LOG_DEBUG,
+					"-D",
+					GLM_FORCE_DEPTH_ZERO_TO_ONE,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "nebsta.grumble-sudoku";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -474,6 +472,8 @@
 					"$(OTHER_CPLUSPLUSFLAGS_grumble_grumble)",
 					"-D",
 					GRUMBLE_LOG_DEBUG,
+					"-D",
+					GLM_FORCE_DEPTH_ZERO_TO_ONE,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "nebsta.grumble-sudoku";
 				PRODUCT_NAME = "$(TARGET_NAME)";
