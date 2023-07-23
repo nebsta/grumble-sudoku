@@ -9,6 +9,7 @@
 
 #include <Metal/Metal.hpp>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include <grumble/ui/ScreenManager.hpp>
 #include <grumble/logging/Logger.hpp>
@@ -25,4 +26,6 @@ public:
   glm::vec2 screenSize() const override;
   
   void updateScreenSize(CGSize size);
+  
+  const glm::mat4 projectionMatrix() const override;
 };

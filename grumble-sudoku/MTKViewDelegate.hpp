@@ -19,11 +19,16 @@
 #include <grumble/ui/ScreenManager.hpp>
 
 #include "MetalScreenManager.hpp"
+#include "MetalRendererManager.hpp"
+#include "BufferInstanceData.hpp"
 #include "utils/IOSUtils.hpp"
 
 class MTKViewDelegate : public MTK::ViewDelegate {
   public:
-    MTKViewDelegate(MTL::Device* pDevice, std::shared_ptr<grumble::Game> game, std::shared_ptr<MetalScreenManager> metalScreenManager);
+    MTKViewDelegate(MTL::Device* pDevice,
+                    std::shared_ptr<grumble::Game> game,
+                    std::shared_ptr<MetalScreenManager> metalScreenManager,
+                    std::shared_ptr<MetalRendererManager> metalRendererManager);
     virtual ~MTKViewDelegate() override;
     virtual void drawInMTKView(MTK::View* pView) override;
     virtual void drawableSizeWillChange(MTK::View* pView, CGSize size) override;
@@ -31,19 +36,12 @@ class MTKViewDelegate : public MTK::ViewDelegate {
   private:
     std::shared_ptr<grumble::Game> _game;
     std::shared_ptr<MetalScreenManager> _screenManager;
+    std::shared_ptr<MetalRendererManager> _rendererManager;
+  
+    std::unique_ptr<grumble::View> _testView;
   
     MTL::Device* _device;
-    MTL::CommandQueue* _commandQueue;
-    MTL::RenderPipelineState* _pipelineState;
-    MTL::Library* _shaderLibrary;
-  
-    MTL::Buffer* _argumentBuffer;
-    MTL::Buffer* _vertexPositionsBuffer;
-    MTL::Buffer* _vertexColorsBuffer;
   
     dispatch_semaphore_t _drawSemaphore;
     int _activeFrame;
-  
-    void buildShaders();
-    void buildBuffers();
 };

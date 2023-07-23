@@ -54,6 +54,8 @@
 		D91D8A4F2A6A8BCC00E5B2A8 /* MetalRenderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalRenderer.hpp; sourceTree = "<group>"; };
 		D927AA8A2A6C5E81002D5F0D /* MetalRendererManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MetalRendererManager.cpp; sourceTree = "<group>"; };
 		D927AA8B2A6C5E81002D5F0D /* MetalRendererManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalRendererManager.hpp; sourceTree = "<group>"; };
+		D9CE62932A6D431F00D9477F /* BufferInstanceData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BufferInstanceData.hpp; sourceTree = "<group>"; };
+		D9CE629C2A6D60A300D9477F /* MetalUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalUtils.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 		D917F8362A642A7B00DCD0CC /* grumble-sudoku */ = {
 			isa = PBXGroup;
 			children = (
+				D9CE62972A6D4E8500D9477F /* grumble-metal */,
 				D917F84A2A642A7C00DCD0CC /* grumble_sudoku.entitlements */,
 				D91D8A3F2A694A2B00E5B2A8 /* utils */,
 				D917F9182A66D9D800DCD0CC /* Shaders */,
@@ -100,12 +103,6 @@
 				D917F9122A66D34600DCD0CC /* AppDelegate.cpp */,
 				D917F9162A66D40400DCD0CC /* MTKViewDelegate.hpp */,
 				D917F9152A66D40400DCD0CC /* MTKViewDelegate.cpp */,
-				D91D8A392A69381200E5B2A8 /* MetalScreenManager.hpp */,
-				D91D8A382A69381200E5B2A8 /* MetalScreenManager.cpp */,
-				D91D8A4F2A6A8BCC00E5B2A8 /* MetalRenderer.hpp */,
-				D91D8A4E2A6A8BCC00E5B2A8 /* MetalRenderer.cpp */,
-				D927AA8B2A6C5E81002D5F0D /* MetalRendererManager.hpp */,
-				D927AA8A2A6C5E81002D5F0D /* MetalRendererManager.cpp */,
 			);
 			path = "grumble-sudoku";
 			sourceTree = "<group>";
@@ -155,6 +152,21 @@
 				D91D8A402A694A4D00E5B2A8 /* IOSUtils.cpp */,
 			);
 			path = utils;
+			sourceTree = "<group>";
+		};
+		D9CE62972A6D4E8500D9477F /* grumble-metal */ = {
+			isa = PBXGroup;
+			children = (
+				D9CE62932A6D431F00D9477F /* BufferInstanceData.hpp */,
+				D91D8A392A69381200E5B2A8 /* MetalScreenManager.hpp */,
+				D91D8A382A69381200E5B2A8 /* MetalScreenManager.cpp */,
+				D91D8A4F2A6A8BCC00E5B2A8 /* MetalRenderer.hpp */,
+				D91D8A4E2A6A8BCC00E5B2A8 /* MetalRenderer.cpp */,
+				D927AA8B2A6C5E81002D5F0D /* MetalRendererManager.hpp */,
+				D927AA8A2A6C5E81002D5F0D /* MetalRendererManager.cpp */,
+				D9CE629C2A6D60A300D9477F /* MetalUtils.hpp */,
+			);
+			path = "grumble-metal";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

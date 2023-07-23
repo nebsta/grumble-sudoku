@@ -8,6 +8,10 @@
 #include <metal_stdlib>
 using namespace metal;
 
+struct VertexUniforms {
+  float4x4 projectionTransform;
+};
+
 struct v2f {
   float4 position [[position]];
   half3 color;

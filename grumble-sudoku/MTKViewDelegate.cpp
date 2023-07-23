@@ -7,102 +7,23 @@
 
 #include "MTKViewDelegate.hpp"
 
-#define MAX_FRAMES_IN_FLIGHT 3
 
-MTKViewDelegate::MTKViewDelegate(MTL::Device* device, std::shared_ptr<grumble::Game> game, std::shared_ptr<MetalScreenManager> metalScreenManager): MTK::ViewDelegate() {
+MTKViewDelegate::MTKViewDelegate(MTL::Device* device,
+                                 std::shared_ptr<grumble::Game> game,
+                                 std::shared_ptr<MetalScreenManager> metalScreenManager,
+                                 std::shared_ptr<MetalRendererManager> metalRendererManager): MTK::ViewDelegate() {
   _device = device->retain();
-  _commandQueue = _device->newCommandQueue();
   _game = game;
   _screenManager = metalScreenManager;
+  _rendererManager = metalRendererManager;
   _drawSemaphore = dispatch_semaphore_create(MAX_FRAMES_IN_FLIGHT);
   _activeFrame = 0;
   
-  buildShaders();
-  buildBuffers();
+  _testView = std::make_unique<grumble::View>(grumble::View({0, 0}, { 10, 10 }));
 }
 
 MTKViewDelegate::~MTKViewDelegate() {
   _device->release();
-  _commandQueue->release();
-  _pipelineState->release();
-  _vertexPositionsBuffer->release();
-  _vertexColorsBuffer->release();
-  _shaderLibrary->release();
-}
-
-void MTKViewDelegate::buildShaders() {
-  NS::Error* error = nullptr;
-  
-  MTL::Library* library = _device->newDefaultLibrary();
-  if (!library) {
-    __builtin_printf("library load failed: %s", error->localizedDescription()->utf8String());
-    assert(false);
-  }
-
-  MTL::Function* vertexFunction = library->newFunction(NS::String::string("vertexMain", NS::UTF8StringEncoding));
-  MTL::Function* fragFunction = library->newFunction(NS::String::string("fragmentMain", NS::UTF8StringEncoding));
-
-  MTL::RenderPipelineDescriptor* pipelineDescriptors = MTL::RenderPipelineDescriptor::alloc()->init();
-  pipelineDescriptors->setVertexFunction(vertexFunction);
-  pipelineDescriptors->setFragmentFunction(fragFunction);
-  pipelineDescriptors->colorAttachments()->object(0)->setPixelFormat(MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB);
-
-  _pipelineState = _device->newRenderPipelineState(pipelineDescriptors, &error);
-  if (!_pipelineState) {
-    __builtin_printf("pipeline state creation failed: %s", error->localizedDescription()->utf8String());
-    assert(false);
-  }
-
-  vertexFunction->release();
-  fragFunction->release();
-  pipelineDescriptors->release();
-  
-  _shaderLibrary = library;
-}
-
-void MTKViewDelegate::buildBuffers() {
-  const size_t NumVertices = 3;
-
-  simd::float3 positions[NumVertices] =
-  {
-      { -0.8f,  0.8f, 0.0f },
-      {  0.0f, -0.8f, 0.0f },
-      { +0.8f,  0.8f, 0.0f }
-  };
-
-  simd::float3 colors[NumVertices] =
-  {
-      {  1.0, 0.3f, 0.2f },
-      {  0.8f, 1.0, 0.0f },
-      {  0.8f, 0.0f, 1.0 }
-  };
-
-  const size_t positionsDataSize = NumVertices * sizeof(simd::float3);
-  const size_t colorDataSize = NumVertices * sizeof(simd::float3);
-
-  MTL::Buffer* pVertexPositionsBuffer = _device->newBuffer(positionsDataSize, MTL::ResourceStorageModeManaged);
-  MTL::Buffer* pVertexColorsBuffer = _device->newBuffer(colorDataSize, MTL::ResourceStorageModeManaged);
-
-  _vertexPositionsBuffer = pVertexPositionsBuffer;
-  _vertexColorsBuffer = pVertexColorsBuffer;
-
-  memcpy(_vertexPositionsBuffer->contents(), positions, positionsDataSize);
-  memcpy(_vertexColorsBuffer->contents(), colors, colorDataSize);
-
-  _vertexPositionsBuffer->didModifyRange(NS::Range::Make(0, _vertexPositionsBuffer->length()));
-  _vertexColorsBuffer->didModifyRange(NS::Range::Make(0, _vertexColorsBuffer->length()));
-  
-  MTL::Function* vertexFunction = _shaderLibrary->newFunction(NS::String::string("vertexMain", NS::UTF8StringEncoding));
-  MTL::ArgumentEncoder* argumentEncoder = vertexFunction->newArgumentEncoder(0);
-  
-  _argumentBuffer = _device->newBuffer(argumentEncoder->encodedLength(), MTL::ResourceStorageModeManaged);
-  argumentEncoder->setArgumentBuffer(_argumentBuffer, 0);
-  argumentEncoder->setBuffer(_vertexPositionsBuffer, 0, 0);
-  argumentEncoder->setBuffer(_vertexColorsBuffer, 0, 1);
-  _argumentBuffer->didModifyRange(NS::Range::Make(0, _argumentBuffer->length()));
-  
-  vertexFunction->release();
-  argumentEncoder->release();
 }
 
 void MTKViewDelegate::drawInMTKView(MTK::View* pView) {
@@ -111,22 +32,9 @@ void MTKViewDelegate::drawInMTKView(MTK::View* pView) {
 //  _activeFrame = (_activeFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 //  dispatch_semaphore_wait(_drawSemaphore, DISPATCH_TIME_FOREVER);
   
-  MTL::CommandBuffer* commandBuffer = _commandQueue->commandBuffer();
-  MTL::RenderPassDescriptor* renderPassDesc = pView->currentRenderPassDescriptor();
-  MTL::RenderCommandEncoder* renderCommEncoder = commandBuffer->renderCommandEncoder(renderPassDesc);
+  MTL::CommandBuffer* commandBuffer = _rendererManager->commandBuffer();
+  _game->render();
   
-//  _game->rootView()->render();
-  
-  renderCommEncoder->setRenderPipelineState(_pipelineState);
-  renderCommEncoder->setVertexBuffer(_argumentBuffer, 0, 0);
-  renderCommEncoder->useResource(_vertexPositionsBuffer, MTL::ResourceUsageRead);
-  renderCommEncoder->useResource(_vertexColorsBuffer, MTL::ResourceUsageRead);
-  
-  renderCommEncoder->drawPrimitives(MTL::PrimitiveType::PrimitiveTypeTriangle, NS::UInteger(0), NS::UInteger(3));
-  
-  
-  renderCommEncoder->endEncoding();
-  commandBuffer->presentDrawable(pView->currentDrawable());
   commandBuffer->commit();
 
   pool->release();
