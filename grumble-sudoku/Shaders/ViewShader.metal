@@ -9,14 +9,14 @@
 using namespace metal;
 
 struct VertexUniforms {
-  float3 tint;
+  float4 tint;
   float4x4 modelMatrix;
   float4x4 projectionMatrix;
 };
 
 struct v2f {
   float4 position [[position]];
-  half3 color;
+  half4 color;
 };
 
 struct VertexData {
@@ -30,10 +30,10 @@ v2f vertex vertexMain(device const VertexData* vertexData [[buffer(0)]],
   
   float4 pos = float4(vertexData[vertexId].position, 1.0);
   o.position = uniforms.projectionMatrix * uniforms.modelMatrix * pos;
-  o.color = half3(uniforms.tint.rgb);
+  o.color = half4(uniforms.tint.rgba);
   return o;
 }
 
 half4 fragment fragmentMain(v2f in [[stage_in]]) {
-  return half4(in.color, 1.0);
+  return half4(in.color);
 }

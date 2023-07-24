@@ -34,6 +34,7 @@ class MTKViewDelegate : public MTK::ViewDelegate {
     std::shared_ptr<MetalRendererManager> _rendererManager;
   
     MTL::Device* _device;
+    int _activeFrameIndex;
   
     dispatch_semaphore_t _drawSemaphore;
 };

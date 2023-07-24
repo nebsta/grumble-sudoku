@@ -7,7 +7,6 @@
 
 #include "MTKViewDelegate.hpp"
 
-
 MTKViewDelegate::MTKViewDelegate(MTL::Device* device,
                                  std::shared_ptr<grumble::Game> game,
                                  std::shared_ptr<MetalRendererManager> metalRendererManager): MTK::ViewDelegate() {
@@ -24,6 +23,9 @@ MTKViewDelegate::~MTKViewDelegate() {
 void MTKViewDelegate::drawInMTKView(MTK::View* pView) {
   NS::AutoreleasePool* pool = NS::AutoreleasePool::alloc()->init();
   
+  int activeFrameIndex = (_activeFrameIndex + 1) % MAX_FRAMES_IN_FLIGHT;
+  _activeFrameIndex = activeFrameIndex;
+  
   MTL::CommandBuffer* commandBuffer = _rendererManager->commandBuffer();
   dispatch_semaphore_wait(_drawSemaphore, DISPATCH_TIME_FOREVER);
   MTKViewDelegate *delegateInstance = this;
@@ -31,6 +33,7 @@ void MTKViewDelegate::drawInMTKView(MTK::View* pView) {
     dispatch_semaphore_signal(delegateInstance->_drawSemaphore);
   });
   
+  _rendererManager->setActiveFrame(activeFrameIndex);
   _game->render();
 
   commandBuffer->commit();

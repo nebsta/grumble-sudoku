@@ -32,6 +32,7 @@ public:
   
   MTL::CommandBuffer* commandBuffer();
   
+  void setActiveFrame(int index);
   void render(std::shared_ptr<grumble::View> view) override;
   void screenSizeUpdated(CGSize size);
   

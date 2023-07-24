@@ -72,7 +72,7 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
 
   _window = NS::Window::alloc()->init(
     frame,
-    NS::WindowStyleMaskClosable|NS::WindowStyleMaskTitled|NS::WindowStyleMaskResizable,
+    NS::WindowStyleMaskClosable|NS::WindowStyleMaskTitled,//|NS::WindowStyleMaskResizable,
     NS::BackingStoreBuffered,
     false);
   
@@ -82,9 +82,16 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   
   std::shared_ptr<MetalRendererManager> metalRendererManager = std::make_shared<MetalRendererManager>(_device, _mtkView);
   _game = std::make_shared<grumble::Game>(metalRendererManager);
-  std::shared_ptr<grumble::View> rootView = _game->viewFactory()->createView({512.0, 512.0}, {100.0, 100.0});
+  std::shared_ptr<grumble::View> rootView = _game->viewFactory()->createView({64.0, 64.0}, {32.0, 32.0});
+  rootView->setId(10);
+  rootView->renderer().setTint(COLOR_RANDOM);
+  std::shared_ptr<grumble::View> subView = _game->viewFactory()->createView({128.0, 64}, {32.0, 32.0});
+  subView->renderer().setTint(COLOR_RANDOM);
+  subView->setId(20);
+  rootView->addChild(subView);
   _game->setRootView(rootView);
-
+  
+  
   _mtkView->setColorPixelFormat( MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB );
   _mtkView->setClearColor(MTL::ClearColor::Make(1.0, 0.0, 0.0, 1.0));
 

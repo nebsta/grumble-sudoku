@@ -29,4 +29,15 @@ public:
                           simd::make_float4(matrix[2][0], matrix[2][1], matrix[2][2], matrix[2][3]),
                           simd::make_float4(matrix[3][0], matrix[3][1], matrix[3][2], matrix[3][3]));
   }
+  
+  static simd::float4 to_simd_float4(glm::vec4 vector) {
+    return simd::make_float4(vector.x, vector.y, vector.z, vector.w);
+  }
+  
+  static simd::float4x4 ortho_matrix(float left, float right, float bottom, float top, float near, float far) {
+      return simd::float4x4(simd::make_float4(2.0f / (right - left), 0, 0, 0),
+                            simd::make_float4(0, 2.0f / (top - bottom), 0, 0),
+                            simd::make_float4(0, 0, 1.0f  / (far - near), 0),
+                            simd::make_float4((left + right) / (left - right), (top + bottom) / (bottom - top), near / (near - far), 1.0f));
+  }
 };

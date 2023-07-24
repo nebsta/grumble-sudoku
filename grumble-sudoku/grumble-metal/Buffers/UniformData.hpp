@@ -10,7 +10,7 @@
 #include <simd/simd.h>
 
 struct UniformData {
-  simd::float3 tint;
+  simd::float4 tint;
   simd::float4x4 modelMatrix;
   simd::float4x4 projectionMatrix;
 };

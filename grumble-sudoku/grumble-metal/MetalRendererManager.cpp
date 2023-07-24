@@ -92,16 +92,18 @@ void MetalRendererManager::buildBuffers() {
   _vertexPositionsBuffer->didModifyRange(NS::Range::Make(0, _vertexPositionsBuffer->length()));
 }
 
+void MetalRendererManager::setActiveFrame(int index) {
+  _activeFrameIndex = index;
+}
+
 void MetalRendererManager::render(std::shared_ptr<grumble::View> view) {
-  _activeFrameIndex = (_activeFrameIndex + 1) % MAX_FRAMES_IN_FLIGHT;
-  
   MTL::Buffer* uniformBuffer = _uniformBuffers[_activeFrameIndex];
   
   UniformData* uniformData = reinterpret_cast<UniformData*>(uniformBuffer->contents());
   simd::float4x4 modelMatrix = MetalUtil::to_simd_float4x4(view->transform().modelMatrix());
   uniformData->modelMatrix = modelMatrix;
   uniformData->projectionMatrix = _projectionMatrix;
-  uniformData->tint = simd::make_float3(0.0f, 0.0f, 1.0f);
+  uniformData->tint = MetalUtil::to_simd_float4(view->renderer().tint());
   uniformBuffer->didModifyRange(NS::Range::Make(0, sizeof(UniformData)));
   
   MTL::PrimitiveType primitiveType = MetalUtil::to_mtl_primitive_type(view->renderer().renderMethod());
@@ -116,10 +118,13 @@ void MetalRendererManager::render(std::shared_ptr<grumble::View> view) {
   renderCommEncoder->drawPrimitives(primitiveType, NS::UInteger(0), NS::UInteger(4));
   renderCommEncoder->endEncoding();
   
-  _commandBuffer->presentDrawable(_mtkView->currentDrawable());
+  commandBuffer->presentDrawable(_mtkView->currentDrawable());
+  commandBuffer->commit();
 }
 
 void MetalRendererManager::screenSizeUpdated(CGSize size) {
-  glm::mat4 glmOrtho =  glm::ortho(0.0f, float(size.width), float(size.height), 0.0f);
+  glm::mat4 glmOrtho =  glm::ortho(0.0f, 512.0f, 512.0f, 0.0f);
   _projectionMatrix = MetalUtil::to_simd_float4x4(glmOrtho);
+//  _projectionMatrix = MetalUtil::ortho_matrix(0.0f, float(size.width), float(size.height), 0.0f, -1.0f, 1.0f);
+  
 }
