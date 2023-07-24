@@ -72,7 +72,7 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
 
   _window = NS::Window::alloc()->init(
     frame,
-    NS::WindowStyleMaskClosable|NS::WindowStyleMaskTitled,//|NS::WindowStyleMaskResizable,
+    NS::WindowStyleMaskClosable|NS::WindowStyleMaskTitled|NS::WindowStyleMaskResizable,
     NS::BackingStoreBuffered,
     false);
   
@@ -82,13 +82,18 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   
   std::shared_ptr<MetalRendererManager> metalRendererManager = std::make_shared<MetalRendererManager>(_device, _mtkView);
   _game = std::make_shared<grumble::Game>(metalRendererManager);
-  std::shared_ptr<grumble::View> rootView = _game->viewFactory()->createView({64.0, 64.0}, {32.0, 32.0});
-  rootView->setId(10);
+  
+  glm::vec2 cellSize = { 16.0f, 16.0f };
+  float initialOffset = 16.0f;
+  float xOffset = 32.0f;
+  std::shared_ptr<grumble::View> rootView = _game->viewFactory()->createView({initialOffset, 64.0}, cellSize);
   rootView->renderer().setTint(COLOR_RANDOM);
-  std::shared_ptr<grumble::View> subView = _game->viewFactory()->createView({128.0, 64}, {32.0, 32.0});
-  subView->renderer().setTint(COLOR_RANDOM);
-  subView->setId(20);
-  rootView->addChild(subView);
+  for (int i = 1; i < 16; i++) {
+    std::shared_ptr<grumble::View> subView = _game->viewFactory()->createView({initialOffset + (xOffset * i), 64}, cellSize);
+    subView->renderer().setTint(COLOR_RANDOM);
+    rootView->addChild(subView);
+  }
+  
   _game->setRootView(rootView);
   
   

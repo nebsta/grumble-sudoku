@@ -21,7 +21,7 @@ MTKViewDelegate::~MTKViewDelegate() {
 }
 
 void MTKViewDelegate::drawInMTKView(MTK::View* pView) {
-  grumble::Logger::info("Frame Start: " + std::to_string(_activeFrameIndex));
+//  grumble::Logger::info("Frame Start: " + std::to_string(_activeFrameIndex));
   
   NS::AutoreleasePool* pool = NS::AutoreleasePool::alloc()->init();
   
@@ -41,7 +41,7 @@ void MTKViewDelegate::drawInMTKView(MTK::View* pView) {
   _rendererManager->finishFrame();
 
   pool->release();
-  grumble::Logger::info("Frame END\n\n");
+//  grumble::Logger::info("Frame END\n\n");
 }
 
 void MTKViewDelegate::drawableSizeWillChange(MTK::View* pView, CGSize size) {

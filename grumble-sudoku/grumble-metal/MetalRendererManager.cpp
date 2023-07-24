@@ -109,7 +109,7 @@ void MetalRendererManager::setActiveFrame(int index) {
 void MetalRendererManager::render(std::shared_ptr<grumble::View> view) {
   MTL::Buffer* uniformBuffer = _uniformBuffers[_activeFrameIndex][_instanceIndex];
   
-  grumble::Logger::info("Rendering: " + std::to_string(view->id()));
+//  grumble::Logger::info("Rendering: " + std::to_string(view->id()));
   
   UniformData* uniformData = reinterpret_cast<UniformData*>(uniformBuffer->contents());
   simd::float4x4 modelMatrix = MetalUtil::to_simd_float4x4(view->transform().modelMatrix());
