@@ -25,8 +25,10 @@ MetalRendererManager::~MetalRendererManager() {
   _vertexPositionsBuffer->release();
   _shaderLibrary->release();
   
-  for (int i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i) {
-    _uniformBuffers[i]->release();
+  for (int i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
+    for (int j = 0; i < MAX_INSTANCES; j++) {
+      _uniformBuffers[i][j]->release();
+    }
   }
 }
 
@@ -35,6 +37,9 @@ MTL::CommandBuffer* MetalRendererManager::generateCommandBuffer() {
   
   MTL::RenderPassDescriptor* renderPassDesc = _mtkView->currentRenderPassDescriptor();
   _currentCommandEncoder = _currentCommandBuffer->renderCommandEncoder(renderPassDesc);
+  _currentCommandEncoder->setRenderPipelineState(_pipelineState);
+  _instanceIndex = 0;
+  
   return _currentCommandBuffer;
 }
 
@@ -87,7 +92,9 @@ void MetalRendererManager::buildBuffers() {
   _vertexPositionsBuffer = pVertexPositionsBuffer;
   
   for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i) {
-    _uniformBuffers[i] = _device->newBuffer(uniformDataSize, MTL::ResourceStorageModeManaged);
+    for (size_t j = 0; j < MAX_INSTANCES; j++) {
+      _uniformBuffers[i][j] = _device->newBuffer(uniformDataSize, MTL::ResourceStorageModeManaged);
+    }
   }
 
   memcpy(_vertexPositionsBuffer->contents(), positions, positionsDataSize);
@@ -100,7 +107,9 @@ void MetalRendererManager::setActiveFrame(int index) {
 }
 
 void MetalRendererManager::render(std::shared_ptr<grumble::View> view) {
-  MTL::Buffer* uniformBuffer = _uniformBuffers[_activeFrameIndex];
+  MTL::Buffer* uniformBuffer = _uniformBuffers[_activeFrameIndex][_instanceIndex];
+  
+  grumble::Logger::info("Rendering: " + std::to_string(view->id()));
   
   UniformData* uniformData = reinterpret_cast<UniformData*>(uniformBuffer->contents());
   simd::float4x4 modelMatrix = MetalUtil::to_simd_float4x4(view->transform().modelMatrix());
@@ -110,11 +119,12 @@ void MetalRendererManager::render(std::shared_ptr<grumble::View> view) {
   uniformBuffer->didModifyRange(NS::Range::Make(0, sizeof(UniformData)));
   
   MTL::PrimitiveType primitiveType = MetalUtil::to_mtl_primitive_type(view->renderer().renderMethod());
-  _currentCommandEncoder->setRenderPipelineState(_pipelineState);
   _currentCommandEncoder->setVertexBuffer(_vertexPositionsBuffer, 0, 0);
   _currentCommandEncoder->setVertexBuffer(uniformBuffer, 0, 1);
 
   _currentCommandEncoder->drawPrimitives(primitiveType, NS::UInteger(0), NS::UInteger(4));
+  
+  _instanceIndex++;
 }
 
 void MetalRendererManager::screenSizeUpdated(CGSize size) {

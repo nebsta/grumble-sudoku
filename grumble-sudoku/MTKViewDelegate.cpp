@@ -21,6 +21,8 @@ MTKViewDelegate::~MTKViewDelegate() {
 }
 
 void MTKViewDelegate::drawInMTKView(MTK::View* pView) {
+  grumble::Logger::info("Frame Start: " + std::to_string(_activeFrameIndex));
+  
   NS::AutoreleasePool* pool = NS::AutoreleasePool::alloc()->init();
   
   int activeFrameIndex = (_activeFrameIndex + 1) % MAX_FRAMES_IN_FLIGHT;
@@ -29,7 +31,7 @@ void MTKViewDelegate::drawInMTKView(MTK::View* pView) {
   MTL::CommandBuffer* commandBuffer = _rendererManager->generateCommandBuffer();
   dispatch_semaphore_wait(_drawSemaphore, DISPATCH_TIME_FOREVER);
   MTKViewDelegate *delegateInstance = this;
-  commandBuffer->addCompletedHandler(^void( MTL::CommandBuffer* pCmd ){
+  commandBuffer->addCompletedHandler(^void(MTL::CommandBuffer* pCmd){
     dispatch_semaphore_signal(delegateInstance->_drawSemaphore);
   });
   
@@ -39,6 +41,7 @@ void MTKViewDelegate::drawInMTKView(MTK::View* pView) {
   _rendererManager->finishFrame();
 
   pool->release();
+  grumble::Logger::info("Frame END\n\n");
 }
 
 void MTKViewDelegate::drawableSizeWillChange(MTK::View* pView, CGSize size) {

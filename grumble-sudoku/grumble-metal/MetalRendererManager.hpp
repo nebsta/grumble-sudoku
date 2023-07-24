@@ -20,8 +20,10 @@
 #include "MetalUtils.hpp"
 
 #define MAX_FRAMES_IN_FLIGHT 3
+#define MAX_INSTANCES 500
 
 class MetalRendererManager: public grumble::RendererManager {
+  typedef std::array<MTL::Buffer*, MAX_INSTANCES> UniformInstanceBuffers;
   
 public:
   MetalRendererManager(MTL::Device* device, MTK::View *mtkView);
@@ -49,8 +51,9 @@ private:
 
   MTL::Buffer* _vertexPositionsBuffer;
   
-  std::array<MTL::Buffer*, MAX_FRAMES_IN_FLIGHT> _uniformBuffers;
+  std::array<UniformInstanceBuffers, MAX_FRAMES_IN_FLIGHT> _uniformBuffers;
   
   int _activeFrameIndex;
+  int _instanceIndex;
   simd::float4x4 _projectionMatrix;
 };
