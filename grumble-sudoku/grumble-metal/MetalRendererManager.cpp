@@ -112,7 +112,7 @@ void MetalRendererManager::render(std::shared_ptr<grumble::View> view) {
 //  grumble::Logger::info("Rendering: " + std::to_string(view->id()));
   
   UniformData* uniformData = reinterpret_cast<UniformData*>(uniformBuffer->contents());
-  simd::float4x4 modelMatrix = MetalUtil::to_simd_float4x4(view->transform().modelMatrix());
+  simd::float4x4 modelMatrix = MetalUtil::to_simd_float4x4(view->transform().modelMatrix(renderScale()));
   uniformData->modelMatrix = modelMatrix;
   uniformData->projectionMatrix = _projectionMatrix;
   uniformData->tint = MetalUtil::to_simd_float4(view->renderer().tint());
@@ -128,7 +128,7 @@ void MetalRendererManager::render(std::shared_ptr<grumble::View> view) {
 }
 
 void MetalRendererManager::screenSizeUpdated(CGSize size) {
-  glm::mat4 glmOrtho =  glm::ortho(0.0f, 512.0f, 512.0f, 0.0f);
+  glm::mat4 glmOrtho =  glm::ortho(0.0f, float(size.width), float(size.height), 0.0f);
   _projectionMatrix = MetalUtil::to_simd_float4x4(glmOrtho);
 //  _projectionMatrix = MetalUtil::ortho_matrix(0.0f, float(size.width), float(size.height), 0.0f, -1.0f, 1.0f);
   
