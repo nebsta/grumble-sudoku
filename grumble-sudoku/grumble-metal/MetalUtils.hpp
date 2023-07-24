@@ -28,4 +28,14 @@ public:
                           simd::make_float4(matrix[0][2], matrix[1][2], matrix[2][2], matrix[3][2]),
                           simd::make_float4(matrix[0][3], matrix[1][3], matrix[2][3], matrix[3][3]));
   }
+  
+  
+  static simd_float4x4 makeTranslationMatrix(simd_float1 tx, simd_float1 ty) {
+    simd_float4x4 matrix = matrix_identity_float4x4;
+    
+    matrix.columns[3][0] = tx;
+    matrix.columns[3][1] = ty;
+    
+    return matrix;
+  }
 };

@@ -98,7 +98,7 @@ void MetalRendererManager::render(std::shared_ptr<grumble::View> view) {
   MTL::Buffer* uniformBuffer = _uniformBuffers[_activeFrameIndex];
   
   UniformData* uniformData = reinterpret_cast<UniformData*>(uniformBuffer->contents());
-  simd::float4x4 modelMatrix = MetalUtil::to_simd_float4x4(view->transform().modelMatrix());
+  simd::float4x4 modelMatrix = MetalUtil::makeTranslationMatrix(0.5f, 0.5f);// MetalUtil::to_simd_float4x4(view->transform().modelMatrix());
   uniformData->modelMatrix = modelMatrix;
   uniformData->projectionMatrix = _projectionMatrix;
   uniformData->tint = simd::make_float3(0.0f, 0.0f, 1.0f);
