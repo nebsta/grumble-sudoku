@@ -45,7 +45,6 @@ private:
   MTL::Library* _shaderLibrary;
 
   MTL::Buffer* _vertexPositionsBuffer;
-  MTL::Buffer* _vertexColorsBuffer;
   
   std::array<MTL::Buffer*, MAX_FRAMES_IN_FLIGHT> _uniformBuffers;
   

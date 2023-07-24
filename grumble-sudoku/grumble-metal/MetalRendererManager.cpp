@@ -12,6 +12,7 @@ MetalRendererManager::MetalRendererManager(MTL::Device* device, MTK::View* mtkVi
   _mtkView = mtkView->retain();
   _commandQueue = _device->newCommandQueue();
   
+  screenSizeUpdated(mtkView->drawableSize());
   buildShaders();
   buildBuffers();
 }
@@ -22,8 +23,11 @@ MetalRendererManager::~MetalRendererManager() {
   _commandQueue->release();
   _pipelineState->release();
   _vertexPositionsBuffer->release();
-  _vertexColorsBuffer->release();
   _shaderLibrary->release();
+  
+  for (int i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i) {
+    _uniformBuffers[i]->release();
+  }
 }
 
 MTL::CommandBuffer* MetalRendererManager::commandBuffer() {
@@ -66,50 +70,39 @@ void MetalRendererManager::buildBuffers() {
 
   simd::float3 positions[NumVertices] =
   {
-      { -0.8f,  0.8f, 0.0f },
-      { -0.8f,  -0.8f, 0.0f },
-      {  +0.8f, +0.8f, 0.0f },
-      { +0.8f,  -0.8f, 0.0f }
-  };
-
-  simd::float3 colors[NumVertices] =
-  {
-    {  1.0, 0.3f, 0.2f },
-    {  0.8f, 1.0, 0.0f },
-    {  0.8f, 0.0f, 1.0 },
-    {  0.8f, 0.0f, 1.0 }
+      { -1.0f,  1.0f, 0.0f },
+      { -1.0f,  -1.0f, 0.0f },
+      {  +1.0f, +1.0f, 0.0f },
+      { +1.0f,  -1.0f, 0.0f }
   };
 
   const size_t positionsDataSize = NumVertices * sizeof(simd::float3);
-  const size_t colorDataSize = NumVertices * sizeof(simd::float3);
   const size_t uniformDataSize = sizeof(UniformData);
 
   MTL::Buffer* pVertexPositionsBuffer = _device->newBuffer(positionsDataSize, MTL::ResourceStorageModeManaged);
-  MTL::Buffer* pVertexColorsBuffer = _device->newBuffer(colorDataSize, MTL::ResourceStorageModeManaged);
 
   _vertexPositionsBuffer = pVertexPositionsBuffer;
-  _vertexColorsBuffer = pVertexColorsBuffer;
   
   for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i) {
     _uniformBuffers[i] = _device->newBuffer(uniformDataSize, MTL::ResourceStorageModeManaged);
   }
 
   memcpy(_vertexPositionsBuffer->contents(), positions, positionsDataSize);
-  memcpy(_vertexColorsBuffer->contents(), colors, colorDataSize);
 
   _vertexPositionsBuffer->didModifyRange(NS::Range::Make(0, _vertexPositionsBuffer->length()));
-  _vertexColorsBuffer->didModifyRange(NS::Range::Make(0, _vertexColorsBuffer->length()));
 }
 
 void MetalRendererManager::render(std::shared_ptr<grumble::View> view) {
   _activeFrameIndex = (_activeFrameIndex + 1) % MAX_FRAMES_IN_FLIGHT;
+  
   MTL::Buffer* uniformBuffer = _uniformBuffers[_activeFrameIndex];
   
   UniformData* uniformData = reinterpret_cast<UniformData*>(uniformBuffer->contents());
-  
-  uniformData->modelMatrix = MetalUtil::to_simd_float4x4(view->transform().modelMatrix());
+  simd::float4x4 modelMatrix = MetalUtil::to_simd_float4x4(view->transform().modelMatrix());
+  uniformData->modelMatrix = modelMatrix;
   uniformData->projectionMatrix = _projectionMatrix;
-  uniformBuffer->didModifyRange(NS::Range::Make(0, uniformBuffer->length()));
+  uniformData->tint = simd::make_float3(0.0f, 0.0f, 1.0f);
+  uniformBuffer->didModifyRange(NS::Range::Make(0, sizeof(UniformData)));
   
   MTL::PrimitiveType primitiveType = MetalUtil::to_mtl_primitive_type(view->renderer().renderMethod());
   
@@ -127,6 +120,6 @@ void MetalRendererManager::render(std::shared_ptr<grumble::View> view) {
 }
 
 void MetalRendererManager::screenSizeUpdated(CGSize size) {
-  glm::mat4 glmOrtho = glm::ortho(0.0f, float(size.width), 0.0f, float(size.height));
+  glm::mat4 glmOrtho = glm::ortho(0.0f, float(size.width), 0.0f, float(size.height), 0.0f, 1000.0f);
   _projectionMatrix = MetalUtil::to_simd_float4x4(glmOrtho);
 }
