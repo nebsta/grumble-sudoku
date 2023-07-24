@@ -26,7 +26,7 @@ void MTKViewDelegate::drawInMTKView(MTK::View* pView) {
   int activeFrameIndex = (_activeFrameIndex + 1) % MAX_FRAMES_IN_FLIGHT;
   _activeFrameIndex = activeFrameIndex;
   
-  MTL::CommandBuffer* commandBuffer = _rendererManager->commandBuffer();
+  MTL::CommandBuffer* commandBuffer = _rendererManager->generateCommandBuffer();
   dispatch_semaphore_wait(_drawSemaphore, DISPATCH_TIME_FOREVER);
   MTKViewDelegate *delegateInstance = this;
   commandBuffer->addCompletedHandler(^void( MTL::CommandBuffer* pCmd ){
@@ -36,7 +36,7 @@ void MTKViewDelegate::drawInMTKView(MTK::View* pView) {
   _rendererManager->setActiveFrame(activeFrameIndex);
   _game->render();
 
-  commandBuffer->commit();
+  _rendererManager->finishFrame();
 
   pool->release();
 }

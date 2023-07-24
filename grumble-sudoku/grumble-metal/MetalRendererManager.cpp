@@ -30,9 +30,12 @@ MetalRendererManager::~MetalRendererManager() {
   }
 }
 
-MTL::CommandBuffer* MetalRendererManager::commandBuffer() {
-  _commandBuffer = _commandQueue->commandBuffer();
-  return _commandBuffer;
+MTL::CommandBuffer* MetalRendererManager::generateCommandBuffer() {
+  _currentCommandBuffer = _commandQueue->commandBuffer();
+  
+  MTL::RenderPassDescriptor* renderPassDesc = _mtkView->currentRenderPassDescriptor();
+  _currentCommandEncoder = _currentCommandBuffer->renderCommandEncoder(renderPassDesc);
+  return _currentCommandBuffer;
 }
 
 void MetalRendererManager::buildShaders() {
@@ -107,19 +110,11 @@ void MetalRendererManager::render(std::shared_ptr<grumble::View> view) {
   uniformBuffer->didModifyRange(NS::Range::Make(0, sizeof(UniformData)));
   
   MTL::PrimitiveType primitiveType = MetalUtil::to_mtl_primitive_type(view->renderer().renderMethod());
-  
-  MTL::RenderPassDescriptor* renderPassDesc = _mtkView->currentRenderPassDescriptor();
-  MTL::RenderCommandEncoder* renderCommEncoder = _commandBuffer->renderCommandEncoder(renderPassDesc);
-  
-  renderCommEncoder->setRenderPipelineState(_pipelineState);
-  renderCommEncoder->setVertexBuffer(_vertexPositionsBuffer, 0, 0);
-  renderCommEncoder->setVertexBuffer(uniformBuffer, 0, 1);
+  _currentCommandEncoder->setRenderPipelineState(_pipelineState);
+  _currentCommandEncoder->setVertexBuffer(_vertexPositionsBuffer, 0, 0);
+  _currentCommandEncoder->setVertexBuffer(uniformBuffer, 0, 1);
 
-  renderCommEncoder->drawPrimitives(primitiveType, NS::UInteger(0), NS::UInteger(4));
-  renderCommEncoder->endEncoding();
-  
-  commandBuffer->presentDrawable(_mtkView->currentDrawable());
-  commandBuffer->commit();
+  _currentCommandEncoder->drawPrimitives(primitiveType, NS::UInteger(0), NS::UInteger(4));
 }
 
 void MetalRendererManager::screenSizeUpdated(CGSize size) {
@@ -127,4 +122,10 @@ void MetalRendererManager::screenSizeUpdated(CGSize size) {
   _projectionMatrix = MetalUtil::to_simd_float4x4(glmOrtho);
 //  _projectionMatrix = MetalUtil::ortho_matrix(0.0f, float(size.width), float(size.height), 0.0f, -1.0f, 1.0f);
   
+}
+
+void MetalRendererManager::finishFrame() {
+  _currentCommandEncoder->endEncoding();
+  _currentCommandBuffer->presentDrawable(_mtkView->currentDrawable());
+  _currentCommandBuffer->commit();
 }

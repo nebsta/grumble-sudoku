@@ -30,7 +30,8 @@ public:
   void buildShaders();
   void buildBuffers();
   
-  MTL::CommandBuffer* commandBuffer();
+  MTL::CommandBuffer* generateCommandBuffer();
+  void finishFrame();
   
   void setActiveFrame(int index);
   void render(std::shared_ptr<grumble::View> view) override;
@@ -38,7 +39,8 @@ public:
   
 private:
   MTK::View* _mtkView;
-  MTL::CommandBuffer* _commandBuffer;
+  MTL::CommandBuffer* _currentCommandBuffer;
+  MTL::RenderCommandEncoder* _currentCommandEncoder;
   
   MTL::Device* _device;
   MTL::CommandQueue* _commandQueue;
