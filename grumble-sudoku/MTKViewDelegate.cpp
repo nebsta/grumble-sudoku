@@ -45,6 +45,5 @@ void MTKViewDelegate::drawInMTKView(MTK::View* pView) {
 }
 
 void MTKViewDelegate::drawableSizeWillChange(MTK::View* pView, CGSize size) {
-  grumble::Logger::debug("drawableSizeWillChange: " + iosutils::to_string(size));
   _rendererManager->screenSizeUpdated(size);
 }

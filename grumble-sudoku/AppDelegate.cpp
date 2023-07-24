@@ -84,21 +84,19 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   _game = std::make_shared<grumble::Game>(metalRendererManager);
   _game->setup(2.0f); // Should eventually be read/updated from AppKit/UIKit
   
-  glm::vec2 cellSize = { 32.0f, 32.0f };
-  grumble::TransformOrigin origin = grumble::TransformOrigin::TopLeft;
-  float xOffset = 32.0f;
-  float yOffset = 0.0f;// 16.0f;
-  float initialOffset = 0.0f;// 16.0f;
-  std::shared_ptr<grumble::View> rootView = _game->viewFactory()->createView({initialOffset, yOffset}, cellSize, origin);
-  rootView->renderer().setTint(COLOR_RANDOM);
-  for (int i = 1; i < 16; i++) {
-    std::shared_ptr<grumble::View> subView = _game->viewFactory()->createView({initialOffset + (xOffset * i), yOffset}, cellSize, origin);
-    subView->renderer().setTint(COLOR_RANDOM);
-    rootView->addChild(subView);
-  }
-  
-  _game->setRootView(rootView);
-  
+  // color square sample
+//  glm::vec2 cellSize = { 32.0f, 32.0f };
+//  grumble::TransformOrigin origin = grumble::TransformOrigin::TopLeft;
+//  float xOffset = 32.0f;
+//  float yOffset = 32.0f;
+//  std::shared_ptr<grumble::View> rootView = _game->viewFactory()->createView({0, 0}, cellSize, origin);
+//  for (int i = 0; i < 16; i++) {
+//    for (int j = 0; j < 16; j++) {
+//      std::shared_ptr<grumble::View> subView = _game->viewFactory()->createView({xOffset * i, yOffset * j}, cellSize, origin);
+//      subView->renderer().setTint(COLOR_RANDOM);
+//      rootView->addChild(subView);
+//    }
+//  }
   
   _mtkView->setColorPixelFormat( MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB );
   _mtkView->setClearColor(MTL::ClearColor::Make(1.0, 0.0, 0.0, 1.0));
