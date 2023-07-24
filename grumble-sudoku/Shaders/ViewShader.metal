@@ -29,8 +29,7 @@ v2f vertex vertexMain(device const VertexData* vertexData [[buffer(0)]],
   v2f o;
   
   float4 pos = float4(vertexData[vertexId].position, 1.0);
-  o.position = uniforms.modelMatrix * pos;
-//  o.position = uniforms.projectionMatrix * uniforms.modelMatrix * pos;
+  o.position = uniforms.projectionMatrix * uniforms.modelMatrix * pos;
   o.color = half3(uniforms.tint.rgb);
   return o;
 }

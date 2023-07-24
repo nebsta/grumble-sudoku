@@ -82,7 +82,7 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   
   std::shared_ptr<MetalRendererManager> metalRendererManager = std::make_shared<MetalRendererManager>(_device, _mtkView);
   _game = std::make_shared<grumble::Game>(metalRendererManager);
-  std::shared_ptr<grumble::View> rootView = _game->viewFactory()->createView({0.5, 0.5}, {1.0, 1.0});
+  std::shared_ptr<grumble::View> rootView = _game->viewFactory()->createView({512.0, 512.0}, {100.0, 100.0});
   _game->setRootView(rootView);
 
   _mtkView->setColorPixelFormat( MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB );

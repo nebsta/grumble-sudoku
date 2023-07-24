@@ -120,6 +120,6 @@ void MetalRendererManager::render(std::shared_ptr<grumble::View> view) {
 }
 
 void MetalRendererManager::screenSizeUpdated(CGSize size) {
-  glm::mat4 glmOrtho = glm::ortho(0.0f, float(size.width), 0.0f, float(size.height), 0.0f, 1000.0f);
+  glm::mat4 glmOrtho =  glm::ortho(0.0f, float(size.width), float(size.height), 0.0f);
   _projectionMatrix = MetalUtil::to_simd_float4x4(glmOrtho);
 }
