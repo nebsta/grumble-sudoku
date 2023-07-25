@@ -89,14 +89,28 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
 //  grumble::TransformOrigin origin = grumble::TransformOrigin::TopLeft;
 //  float xOffset = 32.0f;
 //  float yOffset = 32.0f;
-//  std::shared_ptr<grumble::View> rootView = _game->viewFactory()->createView({0, 0}, cellSize, origin);
 //  for (int i = 0; i < 16; i++) {
 //    for (int j = 0; j < 16; j++) {
 //      std::shared_ptr<grumble::View> subView = _game->viewFactory()->createView({xOffset * i, yOffset * j}, cellSize, origin);
 //      subView->renderer().setTint(COLOR_RANDOM);
-//      rootView->addChild(subView);
+//      _game->rootView()->addChild(subView);
 //    }
 //  }
+  
+  // relative sizing sample
+  float relativeCellSize = 0.0625f;
+  grumble::TransformOrigin origin = grumble::TransformOrigin::TopLeft;
+  float xOffset = 64.0f;
+  float yOffset = 64.0f;
+  for (int i = 0; i < 16; i++) {
+    for (int j = 0; j < 16; j++) {
+      std::shared_ptr<grumble::View> subView = _game->viewFactory()->createView({xOffset * i, yOffset * j}, {0, 0}, origin);
+      subView->transform().setRelativeWidth(relativeCellSize);
+      subView->transform().setRelativeHeight(relativeCellSize);
+      subView->renderer().setTint(COLOR_RANDOM);
+      _game->rootView()->addChild(subView);
+    }
+  }
   
   _mtkView->setColorPixelFormat( MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB );
   _mtkView->setClearColor(MTL::ClearColor::Make(1.0, 0.0, 0.0, 1.0));
