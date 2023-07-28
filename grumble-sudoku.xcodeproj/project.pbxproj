@@ -16,6 +16,7 @@
 		D917F91A2A66D9EA00DCD0CC /* ViewShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = D917F9192A66D9EA00DCD0CC /* ViewShader.metal */; };
 		D91D8A422A694A4D00E5B2A8 /* IOSUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D91D8A402A694A4D00E5B2A8 /* IOSUtils.cpp */; };
 		D927AA8C2A6C5E81002D5F0D /* MetalRendererManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D927AA8A2A6C5E81002D5F0D /* MetalRendererManager.cpp */; };
+		D9A08D252A6FE20C00DBA3E5 /* waltographUI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9A08D242A6FE20C00DBA3E5 /* waltographUI.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,18 @@
 		D927AA8A2A6C5E81002D5F0D /* MetalRendererManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MetalRendererManager.cpp; sourceTree = "<group>"; };
 		D927AA8B2A6C5E81002D5F0D /* MetalRendererManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalRendererManager.hpp; sourceTree = "<group>"; };
 		D92D77C52A6D82C100E5F178 /* UniformData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UniformData.hpp; sourceTree = "<group>"; };
+		D93D0B962A7436EF00828E07 /* NSMenuItem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NSMenuItem.hpp; sourceTree = "<group>"; };
+		D93D0B972A7436EF00828E07 /* NSWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NSWindow.hpp; sourceTree = "<group>"; };
+		D93D0B982A7436EF00828E07 /* AppKit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AppKit.hpp; sourceTree = "<group>"; };
+		D93D0B992A7436EF00828E07 /* NSRunningApplication.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NSRunningApplication.hpp; sourceTree = "<group>"; };
+		D93D0B9A2A7436EF00828E07 /* NSView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NSView.hpp; sourceTree = "<group>"; };
+		D93D0B9B2A7436EF00828E07 /* NSApplication.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NSApplication.hpp; sourceTree = "<group>"; };
+		D93D0B9C2A7436EF00828E07 /* NSMenu.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NSMenu.hpp; sourceTree = "<group>"; };
+		D93D0B9D2A7436EF00828E07 /* AppKitPrivate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AppKitPrivate.hpp; sourceTree = "<group>"; };
+		D93D0B9F2A7436EF00828E07 /* MTKView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MTKView.hpp; sourceTree = "<group>"; };
+		D93D0BA02A7436EF00828E07 /* MetalKit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalKit.hpp; sourceTree = "<group>"; };
+		D93D0BA12A7436EF00828E07 /* MetalKitPrivate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalKitPrivate.hpp; sourceTree = "<group>"; };
+		D9A08D242A6FE20C00DBA3E5 /* waltographUI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = waltographUI.ttf; sourceTree = "<group>"; };
 		D9CE629C2A6D60A300D9477F /* MetalUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalUtils.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,6 +85,7 @@
 				D917F86A2A64847100DCD0CC /* conan */,
 				D917F8502A642AB600DCD0CC /* conanfile.py */,
 				D917F8362A642A7B00DCD0CC /* grumble-sudoku */,
+				D93D0B932A7436EF00828E07 /* metal-cpp-extensions */,
 				D917F8352A642A7B00DCD0CC /* Products */,
 				D917F8F92A66832E00DCD0CC /* Frameworks */,
 			);
@@ -88,6 +102,7 @@
 		D917F8362A642A7B00DCD0CC /* grumble-sudoku */ = {
 			isa = PBXGroup;
 			children = (
+				D9A08D202A6FE1C900DBA3E5 /* Resources */,
 				D9CE62972A6D4E8500D9477F /* grumble-metal */,
 				D917F84A2A642A7C00DCD0CC /* grumble_sudoku.entitlements */,
 				D91D8A3F2A694A2B00E5B2A8 /* utils */,
@@ -154,6 +169,56 @@
 				D92D77C52A6D82C100E5F178 /* UniformData.hpp */,
 			);
 			path = Buffers;
+			sourceTree = "<group>";
+		};
+		D93D0B932A7436EF00828E07 /* metal-cpp-extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D93D0B952A7436EF00828E07 /* AppKit */,
+				D93D0B9E2A7436EF00828E07 /* MetalKit */,
+			);
+			path = "metal-cpp-extensions";
+			sourceTree = "<group>";
+		};
+		D93D0B952A7436EF00828E07 /* AppKit */ = {
+			isa = PBXGroup;
+			children = (
+				D93D0B962A7436EF00828E07 /* NSMenuItem.hpp */,
+				D93D0B972A7436EF00828E07 /* NSWindow.hpp */,
+				D93D0B982A7436EF00828E07 /* AppKit.hpp */,
+				D93D0B992A7436EF00828E07 /* NSRunningApplication.hpp */,
+				D93D0B9A2A7436EF00828E07 /* NSView.hpp */,
+				D93D0B9B2A7436EF00828E07 /* NSApplication.hpp */,
+				D93D0B9C2A7436EF00828E07 /* NSMenu.hpp */,
+				D93D0B9D2A7436EF00828E07 /* AppKitPrivate.hpp */,
+			);
+			path = AppKit;
+			sourceTree = "<group>";
+		};
+		D93D0B9E2A7436EF00828E07 /* MetalKit */ = {
+			isa = PBXGroup;
+			children = (
+				D93D0B9F2A7436EF00828E07 /* MTKView.hpp */,
+				D93D0BA02A7436EF00828E07 /* MetalKit.hpp */,
+				D93D0BA12A7436EF00828E07 /* MetalKitPrivate.hpp */,
+			);
+			path = MetalKit;
+			sourceTree = "<group>";
+		};
+		D9A08D202A6FE1C900DBA3E5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D9A08D212A6FE1D100DBA3E5 /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D9A08D212A6FE1D100DBA3E5 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D9A08D242A6FE20C00DBA3E5 /* waltographUI.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		D9CE62972A6D4E8500D9477F /* grumble-metal */ = {
@@ -225,6 +290,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9A08D252A6FE20C00DBA3E5 /* waltographUI.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,10 +495,13 @@
 					"-D",
 					GLM_FORCE_DEPTH_ZERO_TO_ONE,
 				);
+				"OTHER_LDFLAGS[arch=*]" = (
+					"$(inherited)",
+					"$(OTHER_LDFLAGS_grumble_grumble)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "nebsta.grumble-sudoku";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SYSTEM_FRAMEWORK_SEARCH_PATHS = "\"/Users/bewa/.conan2/p/b/grumbb54a5e0589c8f/p/lib\"";
 			};
 			name = Debug;
 		};
@@ -475,10 +544,13 @@
 					"-D",
 					GLM_FORCE_DEPTH_ZERO_TO_ONE,
 				);
+				"OTHER_LDFLAGS[arch=*]" = (
+					"$(inherited)",
+					"$(OTHER_LDFLAGS_grumble_grumble)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "nebsta.grumble-sudoku";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SYSTEM_FRAMEWORK_SEARCH_PATHS = "\"/Users/bewa/.conan2/p/b/grumbb54a5e0589c8f/p/lib\"";
 			};
 			name = Release;
 		};
