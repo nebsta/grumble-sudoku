@@ -69,7 +69,7 @@ void AppDelegate::applicationWillFinishLaunching(NS::Notification* pNotification
 
 void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification) {
   CGRect frame = (CGRect){ {100.0, 100.0}, {512.0, 512.0} };
-
+  
   _window = NS::Window::alloc()->init(
     frame,
     NS::WindowStyleMaskClosable|NS::WindowStyleMaskTitled|NS::WindowStyleMaskResizable,
@@ -80,8 +80,10 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   
   _mtkView = MTK::View::alloc()->init(frame, _device);
   
+  std::string rootFilePath = NS::Bundle::mainBundle()->resourcePath()->cString(NS::StringEncoding::ASCIIStringEncoding);
   std::shared_ptr<MetalRendererManager> metalRendererManager = std::make_shared<MetalRendererManager>(_device, _mtkView);
-  _game = std::make_shared<grumble::Game>(metalRendererManager);
+  std::shared_ptr<grumble::FileManager> fileManager = std::make_shared<grumble::FileManager>(rootFilePath);
+  _game = std::make_shared<grumble::Game>(metalRendererManager, fileManager, "waltographUI.ttf");
   _game->setup(2.0f); // Should eventually be read/updated from AppKit/UIKit
   
   // color square sample
@@ -122,6 +124,7 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   _window->setTitle(NS::String::string("Grumble Sudoku", NS::StringEncoding::UTF8StringEncoding));
 
   _window->makeKeyAndOrderFront(nullptr);
+  
 
   NS::Application* pApp = reinterpret_cast<NS::Application*>(pNotification->object());
   pApp->activateIgnoringOtherApps(true);

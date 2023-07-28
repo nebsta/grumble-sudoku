@@ -16,6 +16,7 @@
 #include <grumble/core/Game.hpp>
 #include <grumble/ui/View.hpp>
 #include <grumble/render/RendererManager.hpp>
+#include <grumble/io/FileManager.hpp>
 
 #include "MTKViewDelegate.hpp"
 #include "MetalRendererManager.hpp"
