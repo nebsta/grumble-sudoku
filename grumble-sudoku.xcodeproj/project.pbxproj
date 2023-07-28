@@ -16,6 +16,7 @@
 		D917F91A2A66D9EA00DCD0CC /* ViewShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = D917F9192A66D9EA00DCD0CC /* ViewShader.metal */; };
 		D91D8A422A694A4D00E5B2A8 /* IOSUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D91D8A402A694A4D00E5B2A8 /* IOSUtils.cpp */; };
 		D927AA8C2A6C5E81002D5F0D /* MetalRendererManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D927AA8A2A6C5E81002D5F0D /* MetalRendererManager.cpp */; };
+		D93D0BA62A74599C00828E07 /* sanic.png in Resources */ = {isa = PBXBuildFile; fileRef = D93D0BA52A74599C00828E07 /* sanic.png */; };
 		D9A08D252A6FE20C00DBA3E5 /* waltographUI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9A08D242A6FE20C00DBA3E5 /* waltographUI.ttf */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		D93D0B9F2A7436EF00828E07 /* MTKView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MTKView.hpp; sourceTree = "<group>"; };
 		D93D0BA02A7436EF00828E07 /* MetalKit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalKit.hpp; sourceTree = "<group>"; };
 		D93D0BA12A7436EF00828E07 /* MetalKitPrivate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalKitPrivate.hpp; sourceTree = "<group>"; };
+		D93D0BA52A74599C00828E07 /* sanic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sanic.png; sourceTree = "<group>"; };
 		D9A08D242A6FE20C00DBA3E5 /* waltographUI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = waltographUI.ttf; sourceTree = "<group>"; };
 		D9CE629C2A6D60A300D9477F /* MetalUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalUtils.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -205,9 +207,18 @@
 			path = MetalKit;
 			sourceTree = "<group>";
 		};
+		D93D0BA42A74599300828E07 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				D93D0BA52A74599C00828E07 /* sanic.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		D9A08D202A6FE1C900DBA3E5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D93D0BA42A74599300828E07 /* Images */,
 				D9A08D212A6FE1D100DBA3E5 /* Fonts */,
 			);
 			path = Resources;
@@ -290,6 +301,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D93D0BA62A74599C00828E07 /* sanic.png in Resources */,
 				D9A08D252A6FE20C00DBA3E5 /* waltographUI.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
