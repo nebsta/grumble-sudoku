@@ -7,7 +7,10 @@
 
 #include "MetalRendererManager.hpp"
 
-MetalRendererManager::MetalRendererManager(MTL::Device* device, MTK::View* mtkView) {
+MetalRendererManager::MetalRendererManager(MTL::Device* device,
+                                           MTK::View* mtkView,
+                                           std::shared_ptr<grumble::SpriteManager> spriteManager) :
+  _spriteManager(spriteManager) {
   _device = device->retain();
   _mtkView = mtkView->retain();
   _commandQueue = _device->newCommandQueue();
@@ -15,6 +18,7 @@ MetalRendererManager::MetalRendererManager(MTL::Device* device, MTK::View* mtkVi
   screenSizeUpdated(mtkView->drawableSize());
   buildShaders();
   buildBuffers();
+  buildTextures();
 }
 
 MetalRendererManager::~MetalRendererManager() {
@@ -24,6 +28,7 @@ MetalRendererManager::~MetalRendererManager() {
   _pipelineState->release();
   _vertexPositionsBuffer->release();
   _shaderLibrary->release();
+  _texture->release();
   
   for (int i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
     for (int j = 0; i < MAX_INSTANCES; j++) {
@@ -100,6 +105,29 @@ void MetalRendererManager::buildBuffers() {
   memcpy(_vertexPositionsBuffer->contents(), positions, positionsDataSize);
 
   _vertexPositionsBuffer->didModifyRange(NS::Range::Make(0, _vertexPositionsBuffer->length()));
+}
+
+
+void MetalRendererManager::buildTextures() {
+  const uint32_t tw = 920;
+  const uint32_t th = 1003;
+
+  MTL::TextureDescriptor* textureDesc = MTL::TextureDescriptor::alloc()->init();
+  textureDesc->setWidth(tw);
+  textureDesc->setHeight(th);
+  textureDesc->setPixelFormat(MTL::PixelFormatRGBA8Unorm);
+  textureDesc->setTextureType(MTL::TextureType2D);
+  textureDesc->setStorageMode(MTL::StorageModeManaged);
+  textureDesc->setUsage(MTL::ResourceUsageSample | MTL::ResourceUsageRead);
+
+  _texture = _device->newTexture(textureDesc);
+
+  MTL::Region region = MTL::Region(0, 0, 0, tw, th, 1);
+  
+  auto data = _spriteManager->getAtlasData("MainAtlas");
+  _texture->replaceRegion(region, 0, data.data(), tw * 4);
+
+  textureDesc->release();
 }
 
 void MetalRendererManager::setActiveFrame(int index) {

@@ -15,6 +15,7 @@
 #include <simd/simd.h>
 
 #include <grumble/render/RendererManager.hpp>
+#include <grumble/sprite/SpriteManager.hpp>
 
 #include "Buffers/UniformData.hpp"
 #include "MetalUtils.hpp"
@@ -26,11 +27,14 @@ class MetalRendererManager: public grumble::RendererManager {
   typedef std::array<MTL::Buffer*, MAX_INSTANCES> UniformInstanceBuffers;
   
 public:
-  MetalRendererManager(MTL::Device* device, MTK::View *mtkView);
+  MetalRendererManager(MTL::Device* device,
+                       MTK::View *mtkView,
+                       std::shared_ptr<grumble::SpriteManager> spriteManager);
   ~MetalRendererManager() override;
   
   void buildShaders();
   void buildBuffers();
+  void buildTextures();
   
   MTL::CommandBuffer* generateCommandBuffer();
   void finishFrame();
@@ -40,6 +44,8 @@ public:
   void screenSizeUpdated(CGSize size);
   
 private:
+  std::shared_ptr<grumble::SpriteManager> _spriteManager;
+  
   MTK::View* _mtkView;
   MTL::CommandBuffer* _currentCommandBuffer;
   MTL::RenderCommandEncoder* _currentCommandEncoder;
@@ -48,6 +54,7 @@ private:
   MTL::CommandQueue* _commandQueue;
   MTL::RenderPipelineState* _pipelineState;
   MTL::Library* _shaderLibrary;
+  MTL::Texture* _texture;
 
   MTL::Buffer* _vertexPositionsBuffer;
   

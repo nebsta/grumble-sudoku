@@ -81,9 +81,10 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   _mtkView = MTK::View::alloc()->init(frame, _device);
   
   std::string rootFilePath = NS::Bundle::mainBundle()->resourcePath()->cString(NS::StringEncoding::ASCIIStringEncoding);
-  std::shared_ptr<MetalRendererManager> metalRendererManager = std::make_shared<MetalRendererManager>(_device, _mtkView);
   std::shared_ptr<grumble::FileManager> fileManager = std::make_shared<grumble::FileManager>(rootFilePath);
   std::shared_ptr<grumble::SpriteManager> spriteManager = std::make_shared<grumble::SpriteManager>(fileManager, "");
+  std::shared_ptr<MetalRendererManager> metalRendererManager = std::make_shared<MetalRendererManager>(_device, _mtkView, spriteManager);
+
   _game = std::make_shared<grumble::Game>(metalRendererManager, fileManager, spriteManager, "waltographUI.ttf");
   _game->setup(2.0f); // Should eventually be read/updated from AppKit/UIKit
   
