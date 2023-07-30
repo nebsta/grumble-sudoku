@@ -19,6 +19,7 @@
 
 #include "Buffers/UniformData.hpp"
 #include "MetalUtils.hpp"
+#include "VertexData.hpp"
 
 #define MAX_FRAMES_IN_FLIGHT 3
 #define MAX_INSTANCES 500
@@ -39,6 +40,8 @@ public:
   MTL::CommandBuffer* generateCommandBuffer();
   void finishFrame();
   
+  void setup() override;
+  
   void setActiveFrame(int index);
   void render(std::shared_ptr<grumble::View> view) override;
   void screenSizeUpdated(CGSize size);
@@ -56,7 +59,7 @@ private:
   MTL::Library* _shaderLibrary;
   MTL::Texture* _texture;
 
-  MTL::Buffer* _vertexPositionsBuffer;
+  MTL::Buffer* _vertexBuffer;
   
   std::array<UniformInstanceBuffers, MAX_FRAMES_IN_FLIGHT> _uniformBuffers;
   

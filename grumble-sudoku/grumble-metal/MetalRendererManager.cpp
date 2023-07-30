@@ -16,9 +16,6 @@ MetalRendererManager::MetalRendererManager(MTL::Device* device,
   _commandQueue = _device->newCommandQueue();
   
   screenSizeUpdated(mtkView->drawableSize());
-  buildShaders();
-  buildBuffers();
-  buildTextures();
 }
 
 MetalRendererManager::~MetalRendererManager() {
@@ -26,7 +23,7 @@ MetalRendererManager::~MetalRendererManager() {
   _mtkView->release();
   _commandQueue->release();
   _pipelineState->release();
-  _vertexPositionsBuffer->release();
+  _vertexBuffer->release();
   _shaderLibrary->release();
   _texture->release();
   
@@ -35,6 +32,12 @@ MetalRendererManager::~MetalRendererManager() {
       _uniformBuffers[i][j]->release();
     }
   }
+}
+
+void MetalRendererManager::setup() {
+  buildShaders();
+  buildBuffers();
+  buildTextures();
 }
 
 MTL::CommandBuffer* MetalRendererManager::generateCommandBuffer() {
@@ -81,20 +84,19 @@ void MetalRendererManager::buildShaders() {
 void MetalRendererManager::buildBuffers() {
   const size_t NumVertices = 4;
 
-  simd::float3 positions[NumVertices] =
+  VertexData vertexData[NumVertices] =
   {
-      { -1.0f,  1.0f, 0.0f },
-      { -1.0f,  -1.0f, 0.0f },
-      {  +1.0f, +1.0f, 0.0f },
-      { +1.0f,  -1.0f, 0.0f }
+    {{ -1.0f,  1.0f, 0.0f }, { 0.0f, 1.0f }},
+    {{ -1.0f,  -1.0f, 0.0f }, { 1.0f, 1.0f }},
+    {{  +1.0f, +1.0f, 0.0f }, { 1.0f, 0.0f }},
+    {{ +1.0f,  -1.0f, 0.0f }, { 0.0f, 0.0f }}
   };
 
-  const size_t positionsDataSize = NumVertices * sizeof(simd::float3);
+  const size_t vertexDataSize = NumVertices * sizeof(VertexData);
   const size_t uniformDataSize = sizeof(UniformData);
 
-  MTL::Buffer* pVertexPositionsBuffer = _device->newBuffer(positionsDataSize, MTL::ResourceStorageModeManaged);
-
-  _vertexPositionsBuffer = pVertexPositionsBuffer;
+  MTL::Buffer* vertexBuffer = _device->newBuffer(vertexDataSize, MTL::ResourceStorageModeManaged);
+  _vertexBuffer = vertexBuffer;
   
   for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i) {
     for (size_t j = 0; j < MAX_INSTANCES; j++) {
@@ -102,11 +104,10 @@ void MetalRendererManager::buildBuffers() {
     }
   }
 
-  memcpy(_vertexPositionsBuffer->contents(), positions, positionsDataSize);
+  memcpy(_vertexBuffer->contents(), vertexData, vertexDataSize);
 
-  _vertexPositionsBuffer->didModifyRange(NS::Range::Make(0, _vertexPositionsBuffer->length()));
+  _vertexBuffer->didModifyRange(NS::Range::Make(0, _vertexBuffer->length()));
 }
-
 
 void MetalRendererManager::buildTextures() {
   const uint32_t tw = 920;
@@ -145,7 +146,8 @@ void MetalRendererManager::render(std::shared_ptr<grumble::View> view) {
   uniformBuffer->didModifyRange(NS::Range::Make(0, sizeof(UniformData)));
   
   MTL::PrimitiveType primitiveType = MetalUtil::to_mtl_primitive_type(view->renderer().renderMethod());
-  _currentCommandEncoder->setVertexBuffer(_vertexPositionsBuffer, 0, 0);
+  _currentCommandEncoder->setFragmentTexture(_texture, 0);
+  _currentCommandEncoder->setVertexBuffer(_vertexBuffer, 0, 0);
   _currentCommandEncoder->setVertexBuffer(uniformBuffer, 0, 1);
 
   _currentCommandEncoder->drawPrimitives(primitiveType, NS::UInteger(0), NS::UInteger(4));

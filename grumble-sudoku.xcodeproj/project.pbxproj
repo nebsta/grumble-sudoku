@@ -69,6 +69,7 @@
 		D9975B492A76C53D00286822 /* MainAtlas.tps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MainAtlas.tps; sourceTree = "<group>"; };
 		D9975B4A2A76C53D00286822 /* MainAtlas-data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "MainAtlas-data.json"; sourceTree = "<group>"; };
 		D9975B4B2A76C53D00286822 /* MainAtlas-sheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MainAtlas-sheet.png"; sourceTree = "<group>"; };
+		D9975B542A76DA9A00286822 /* VertexData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VertexData.hpp; sourceTree = "<group>"; };
 		D9A08D242A6FE20C00DBA3E5 /* waltographUI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = waltographUI.ttf; sourceTree = "<group>"; };
 		D9CE629C2A6D60A300D9477F /* MetalUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalUtils.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -255,6 +256,7 @@
 				D92D77C42A6D82A000E5F178 /* Buffers */,
 				D927AA8B2A6C5E81002D5F0D /* MetalRendererManager.hpp */,
 				D927AA8A2A6C5E81002D5F0D /* MetalRendererManager.cpp */,
+				D9975B542A76DA9A00286822 /* VertexData.hpp */,
 				D9CE629C2A6D60A300D9477F /* MetalUtils.hpp */,
 			);
 			path = "grumble-metal";
