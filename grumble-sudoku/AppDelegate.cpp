@@ -83,8 +83,12 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   std::string rootFilePath = NS::Bundle::mainBundle()->resourcePath()->cString(NS::StringEncoding::ASCIIStringEncoding);
   std::shared_ptr<MetalRendererManager> metalRendererManager = std::make_shared<MetalRendererManager>(_device, _mtkView);
   std::shared_ptr<grumble::FileManager> fileManager = std::make_shared<grumble::FileManager>(rootFilePath);
-  _game = std::make_shared<grumble::Game>(metalRendererManager, fileManager, "waltographUI.ttf");
+  std::shared_ptr<grumble::SpriteManager> spriteManager = std::make_shared<grumble::SpriteManager>(fileManager, "");
+  _game = std::make_shared<grumble::Game>(metalRendererManager, fileManager, spriteManager, "waltographUI.ttf");
   _game->setup(2.0f); // Should eventually be read/updated from AppKit/UIKit
+  
+  auto sprite = _game->spriteManager()->getSprite("sanic.png", "MainAtlas");
+  std::cout << sprite->name() << ", " << sprite->region().w << "\n";
   
   // color square sample
 //  glm::vec2 cellSize = { 32.0f, 32.0f };
