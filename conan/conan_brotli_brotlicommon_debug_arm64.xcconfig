@@ -1,0 +1,11 @@
+PACKAGE_ROOT_brotli[config=Debug][arch=arm64][sdk=macosx*] = /Users/bewa/.conan2/p/b/brotl15a734345b9f7/p
+// Compiler options for brotli::brotlicommon
+SYSTEM_HEADER_SEARCH_PATHS_brotli_brotlicommon[config=Debug][arch=arm64][sdk=macosx*] = 
+GCC_PREPROCESSOR_DEFINITIONS_brotli_brotlicommon[config=Debug][arch=arm64][sdk=macosx*] = 
+OTHER_CFLAGS_brotli_brotlicommon[config=Debug][arch=arm64][sdk=macosx*] = 
+OTHER_CPLUSPLUSFLAGS_brotli_brotlicommon[config=Debug][arch=arm64][sdk=macosx*] = 
+FRAMEWORK_SEARCH_PATHS_brotli_brotlicommon[config=Debug][arch=arm64][sdk=macosx*] = 
+
+// Link options for brotli::brotlicommon
+LIBRARY_SEARCH_PATHS_brotli_brotlicommon[config=Debug][arch=arm64][sdk=macosx*] = "/Users/bewa/.conan2/p/b/brotl15a734345b9f7/p/lib"
+OTHER_LDFLAGS_brotli_brotlicommon[config=Debug][arch=arm64][sdk=macosx*] =  -lbrotlicommon-static  

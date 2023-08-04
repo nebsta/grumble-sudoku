@@ -1,0 +1,16 @@
+// Conan XcodeDeps generated file for libpng::libpng
+// Includes all configurations for each dependency
+
+#include "conan_zlib.xcconfig"
+
+#include "conan_libpng_libpng_debug_arm64.xcconfig"
+
+SYSTEM_HEADER_SEARCH_PATHS = $(inherited) $(SYSTEM_HEADER_SEARCH_PATHS_libpng_libpng)
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) $(GCC_PREPROCESSOR_DEFINITIONS_libpng_libpng)
+OTHER_CFLAGS = $(inherited) $(OTHER_CFLAGS_libpng_libpng)
+OTHER_CPLUSPLUSFLAGS = $(inherited) $(OTHER_CPLUSPLUSFLAGS_libpng_libpng)
+FRAMEWORK_SEARCH_PATHS = $(inherited) $(FRAMEWORK_SEARCH_PATHS_libpng_libpng)
+
+// Link options for libpng_libpng
+LIBRARY_SEARCH_PATHS = $(inherited) $(LIBRARY_SEARCH_PATHS_libpng_libpng)
+OTHER_LDFLAGS = $(inherited) $(OTHER_LDFLAGS_libpng_libpng)

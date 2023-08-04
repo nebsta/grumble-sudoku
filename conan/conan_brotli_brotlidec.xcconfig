@@ -1,0 +1,14 @@
+// Conan XcodeDeps generated file for brotli::brotlidec
+// Includes all configurations for each dependency
+
+#include "conan_brotli_brotlidec_debug_arm64.xcconfig"
+
+SYSTEM_HEADER_SEARCH_PATHS = $(inherited) $(SYSTEM_HEADER_SEARCH_PATHS_brotli_brotlidec)
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) $(GCC_PREPROCESSOR_DEFINITIONS_brotli_brotlidec)
+OTHER_CFLAGS = $(inherited) $(OTHER_CFLAGS_brotli_brotlidec)
+OTHER_CPLUSPLUSFLAGS = $(inherited) $(OTHER_CPLUSPLUSFLAGS_brotli_brotlidec)
+FRAMEWORK_SEARCH_PATHS = $(inherited) $(FRAMEWORK_SEARCH_PATHS_brotli_brotlidec)
+
+// Link options for brotli_brotlidec
+LIBRARY_SEARCH_PATHS = $(inherited) $(LIBRARY_SEARCH_PATHS_brotli_brotlidec)
+OTHER_LDFLAGS = $(inherited) $(OTHER_LDFLAGS_brotli_brotlidec)

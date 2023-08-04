@@ -17,10 +17,14 @@
 		D91D8A422A694A4D00E5B2A8 /* IOSUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D91D8A402A694A4D00E5B2A8 /* IOSUtils.cpp */; };
 		D927AA8C2A6C5E81002D5F0D /* MetalRendererManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D927AA8A2A6C5E81002D5F0D /* MetalRendererManager.cpp */; };
 		D93D0BA62A74599C00828E07 /* sanic.png in Resources */ = {isa = PBXBuildFile; fileRef = D93D0BA52A74599C00828E07 /* sanic.png */; };
+		D956B9E42A7D5FAF005C353C /* red-color.png in Resources */ = {isa = PBXBuildFile; fileRef = D956B9E32A7D5FAF005C353C /* red-color.png */; };
+		D956B9E62A7D7CB5005C353C /* apple.png in Resources */ = {isa = PBXBuildFile; fileRef = D956B9E52A7D7CB5005C353C /* apple.png */; };
+		D956B9E82A7D7D44005C353C /* apple-big.png in Resources */ = {isa = PBXBuildFile; fileRef = D956B9E72A7D7D44005C353C /* apple-big.png */; };
 		D9975B4C2A76C53D00286822 /* MainAtlas.tps in Resources */ = {isa = PBXBuildFile; fileRef = D9975B492A76C53D00286822 /* MainAtlas.tps */; };
 		D9975B4D2A76C53D00286822 /* MainAtlas-data.json in Resources */ = {isa = PBXBuildFile; fileRef = D9975B4A2A76C53D00286822 /* MainAtlas-data.json */; };
 		D9975B4E2A76C53D00286822 /* MainAtlas-sheet.png in Resources */ = {isa = PBXBuildFile; fileRef = D9975B4B2A76C53D00286822 /* MainAtlas-sheet.png */; };
 		D9A08D252A6FE20C00DBA3E5 /* waltographUI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9A08D242A6FE20C00DBA3E5 /* waltographUI.ttf */; };
+		D9A6EE6D2A7A43E4003F9D6D /* blue-color.png in Resources */ = {isa = PBXBuildFile; fileRef = D9A6EE6C2A7A43E4003F9D6D /* blue-color.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,11 +70,15 @@
 		D93D0BA02A7436EF00828E07 /* MetalKit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalKit.hpp; sourceTree = "<group>"; };
 		D93D0BA12A7436EF00828E07 /* MetalKitPrivate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalKitPrivate.hpp; sourceTree = "<group>"; };
 		D93D0BA52A74599C00828E07 /* sanic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sanic.png; sourceTree = "<group>"; };
+		D956B9E32A7D5FAF005C353C /* red-color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-color.png"; sourceTree = "<group>"; };
+		D956B9E52A7D7CB5005C353C /* apple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apple.png; sourceTree = "<group>"; };
+		D956B9E72A7D7D44005C353C /* apple-big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-big.png"; sourceTree = "<group>"; };
 		D9975B492A76C53D00286822 /* MainAtlas.tps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MainAtlas.tps; sourceTree = "<group>"; };
 		D9975B4A2A76C53D00286822 /* MainAtlas-data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "MainAtlas-data.json"; sourceTree = "<group>"; };
 		D9975B4B2A76C53D00286822 /* MainAtlas-sheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MainAtlas-sheet.png"; sourceTree = "<group>"; };
 		D9975B542A76DA9A00286822 /* VertexData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VertexData.hpp; sourceTree = "<group>"; };
 		D9A08D242A6FE20C00DBA3E5 /* waltographUI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = waltographUI.ttf; sourceTree = "<group>"; };
+		D9A6EE6C2A7A43E4003F9D6D /* blue-color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blue-color.png"; sourceTree = "<group>"; };
 		D9CE629C2A6D60A300D9477F /* MetalUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalUtils.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -217,6 +225,10 @@
 		D93D0BA42A74599300828E07 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D956B9E72A7D7D44005C353C /* apple-big.png */,
+				D956B9E52A7D7CB5005C353C /* apple.png */,
+				D956B9E32A7D5FAF005C353C /* red-color.png */,
+				D9A6EE6C2A7A43E4003F9D6D /* blue-color.png */,
 				D93D0BA52A74599C00828E07 /* sanic.png */,
 			);
 			path = Images;
@@ -321,10 +333,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9975B4D2A76C53D00286822 /* MainAtlas-data.json in Resources */,
+				D956B9E42A7D5FAF005C353C /* red-color.png in Resources */,
 				D93D0BA62A74599C00828E07 /* sanic.png in Resources */,
+				D956B9E82A7D7D44005C353C /* apple-big.png in Resources */,
 				D9A08D252A6FE20C00DBA3E5 /* waltographUI.ttf in Resources */,
 				D9975B4C2A76C53D00286822 /* MainAtlas.tps in Resources */,
 				D9975B4E2A76C53D00286822 /* MainAtlas-sheet.png in Resources */,
+				D956B9E62A7D7CB5005C353C /* apple.png in Resources */,
+				D9A6EE6D2A7A43E4003F9D6D /* blue-color.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

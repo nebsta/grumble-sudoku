@@ -1,0 +1,26 @@
+// Conan XcodeDeps generated file for freetype::freetype
+// Includes all configurations for each dependency
+
+#include "conan_libpng.xcconfig"
+
+#include "conan_zlib.xcconfig"
+
+#include "conan_bzip2.xcconfig"
+
+#include "conan_brotli_brotlicommon.xcconfig"
+
+#include "conan_brotli_brotlidec.xcconfig"
+
+#include "conan_brotli_brotlienc.xcconfig"
+
+#include "conan_freetype_freetype_debug_arm64.xcconfig"
+
+SYSTEM_HEADER_SEARCH_PATHS = $(inherited) $(SYSTEM_HEADER_SEARCH_PATHS_freetype_freetype)
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) $(GCC_PREPROCESSOR_DEFINITIONS_freetype_freetype)
+OTHER_CFLAGS = $(inherited) $(OTHER_CFLAGS_freetype_freetype)
+OTHER_CPLUSPLUSFLAGS = $(inherited) $(OTHER_CPLUSPLUSFLAGS_freetype_freetype)
+FRAMEWORK_SEARCH_PATHS = $(inherited) $(FRAMEWORK_SEARCH_PATHS_freetype_freetype)
+
+// Link options for freetype_freetype
+LIBRARY_SEARCH_PATHS = $(inherited) $(LIBRARY_SEARCH_PATHS_freetype_freetype)
+OTHER_LDFLAGS = $(inherited) $(OTHER_LDFLAGS_freetype_freetype)

@@ -1,0 +1,8 @@
+// Conan XcodeDeps generated file
+// Includes all components for the package
+
+#include "conan_brotli_brotlicommon.xcconfig"
+
+#include "conan_brotli_brotlidec.xcconfig"
+
+#include "conan_brotli_brotlienc.xcconfig"

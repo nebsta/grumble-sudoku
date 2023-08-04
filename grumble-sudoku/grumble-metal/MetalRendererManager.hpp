@@ -13,6 +13,7 @@
 #include <AppKit/AppKit.hpp>
 #include <MetalKit/MetalKit.hpp>
 #include <simd/simd.h>
+#include <png.h>
 
 #include <grumble/render/RendererManager.hpp>
 #include <grumble/sprite/SpriteManager.hpp>
@@ -30,6 +31,7 @@ class MetalRendererManager: public grumble::RendererManager {
 public:
   MetalRendererManager(MTL::Device* device,
                        MTK::View *mtkView,
+                       png_byte* imageData,
                        std::shared_ptr<grumble::SpriteManager> spriteManager);
   ~MetalRendererManager() override;
   
@@ -48,6 +50,7 @@ public:
   
 private:
   std::shared_ptr<grumble::SpriteManager> _spriteManager;
+  png_byte* _imageData;
   
   MTK::View* _mtkView;
   MTL::CommandBuffer* _currentCommandBuffer;

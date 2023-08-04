@@ -9,8 +9,10 @@
 
 MetalRendererManager::MetalRendererManager(MTL::Device* device,
                                            MTK::View* mtkView,
+                                           png_byte* imageData,
                                            std::shared_ptr<grumble::SpriteManager> spriteManager) :
-  _spriteManager(spriteManager) {
+  _spriteManager(spriteManager),
+  _imageData(imageData) {
   _device = device->retain();
   _mtkView = mtkView->retain();
   _commandQueue = _device->newCommandQueue();
@@ -26,6 +28,8 @@ MetalRendererManager::~MetalRendererManager() {
   _vertexBuffer->release();
   _shaderLibrary->release();
   _texture->release();
+  
+  delete[] _imageData;
   
   for (int i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
     for (int j = 0; i < MAX_INSTANCES; j++) {
@@ -86,10 +90,10 @@ void MetalRendererManager::buildBuffers() {
 
   VertexData vertexData[NumVertices] =
   {
-    {{ -1.0f,  1.0f, 0.0f }, { 0.0f, 1.0f }},
-    {{ -1.0f,  -1.0f, 0.0f }, { 1.0f, 1.0f }},
-    {{  +1.0f, +1.0f, 0.0f }, { 1.0f, 0.0f }},
-    {{ +1.0f,  -1.0f, 0.0f }, { 0.0f, 0.0f }}
+    {{ -1.0f,  1.0f, 0.0f }, { 0.0f, 0.0f }},
+    {{ 1.0f,  1.0f, 0.0f }, { 1.0f, 0.0f }},
+    {{  -1.0f, -1.0f, 0.0f }, { 0.0f, 1.0f }},
+    {{ 1.0f,  -1.0f, 0.0f }, { 1.0f, 1.0f }}
   };
 
   const size_t vertexDataSize = NumVertices * sizeof(VertexData);
@@ -110,8 +114,8 @@ void MetalRendererManager::buildBuffers() {
 }
 
 void MetalRendererManager::buildTextures() {
-  const uint32_t tw = 920;
-  const uint32_t th = 1003;
+  const uint32_t tw = 500;
+  const uint32_t th = 500;
 
   MTL::TextureDescriptor* textureDesc = MTL::TextureDescriptor::alloc()->init();
   textureDesc->setWidth(tw);
@@ -125,8 +129,7 @@ void MetalRendererManager::buildTextures() {
 
   MTL::Region region = MTL::Region(0, 0, 0, tw, th, 1);
   
-  auto data = _spriteManager->getAtlasData("MainAtlas");
-  _texture->replaceRegion(region, 0, data.data(), tw * 4);
+  _texture->replaceRegion(region, 0, _imageData, tw * 4);
 
   textureDesc->release();
 }

@@ -1,0 +1,11 @@
+PACKAGE_ROOT_freetype[config=Debug][arch=arm64][sdk=macosx*] = /Users/bewa/.conan2/p/b/freet885ba0b3988d8/p
+// Compiler options for freetype::freetype
+SYSTEM_HEADER_SEARCH_PATHS_freetype_freetype[config=Debug][arch=arm64][sdk=macosx*] = "/Users/bewa/.conan2/p/b/freet885ba0b3988d8/p/include" "/Users/bewa/.conan2/p/b/freet885ba0b3988d8/p/include/freetype2"
+GCC_PREPROCESSOR_DEFINITIONS_freetype_freetype[config=Debug][arch=arm64][sdk=macosx*] = 
+OTHER_CFLAGS_freetype_freetype[config=Debug][arch=arm64][sdk=macosx*] = 
+OTHER_CPLUSPLUSFLAGS_freetype_freetype[config=Debug][arch=arm64][sdk=macosx*] = 
+FRAMEWORK_SEARCH_PATHS_freetype_freetype[config=Debug][arch=arm64][sdk=macosx*] = 
+
+// Link options for freetype::freetype
+LIBRARY_SEARCH_PATHS_freetype_freetype[config=Debug][arch=arm64][sdk=macosx*] = "/Users/bewa/.conan2/p/b/freet885ba0b3988d8/p/lib"
+OTHER_LDFLAGS_freetype_freetype[config=Debug][arch=arm64][sdk=macosx*] =  -lfreetyped  

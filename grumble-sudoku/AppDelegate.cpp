@@ -83,15 +83,18 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   std::string rootFilePath = NS::Bundle::mainBundle()->resourcePath()->cString(NS::StringEncoding::ASCIIStringEncoding);
   std::shared_ptr<grumble::FileManager> fileManager = std::make_shared<grumble::FileManager>(rootFilePath);
   std::shared_ptr<grumble::SpriteManager> spriteManager = std::make_shared<grumble::SpriteManager>(fileManager, "");
-  std::shared_ptr<MetalRendererManager> metalRendererManager = std::make_shared<MetalRendererManager>(_device, _mtkView, spriteManager);
+  
+  auto data = fileManager->loadPNG("apple-big.png");
+  std::shared_ptr<MetalRendererManager> metalRendererManager = std::make_shared<MetalRendererManager>(_device, _mtkView, data, spriteManager);
 
   _game = std::make_shared<grumble::Game>(metalRendererManager, fileManager, spriteManager, "waltographUI.ttf");
   _game->setup(2.0f); // Should eventually be read/updated from AppKit/UIKit
   
-  auto sprite = _game->spriteManager()->getSprite("sanic.png", "MainAtlas");
-  std::cout << sprite->name() << ", " << sprite->region().w << "\n";
   
-  // color square sample
+//  auto sprite = _game->spriteManager()->getSprite("sanic.png", "MainAtlas");
+//  std::cout << sprite->name() << ", " << sprite->region().w << "\n";
+  
+  // color square samplexb
 //  glm::vec2 cellSize = { 32.0f, 32.0f };
 //  grumble::TransformOrigin origin = grumble::TransformOrigin::TopLeft;
 //  float xOffset = 32.0f;
@@ -105,19 +108,24 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
 //  }
   
   // relative sizing sample
-  float relativeCellSize = 0.0625f;
-  grumble::TransformOrigin origin = grumble::TransformOrigin::TopLeft;
-  float xOffset = 64.0f;
-  float yOffset = 64.0f;
-  for (int i = 0; i < 16; i++) {
-    for (int j = 0; j < 16; j++) {
-      std::shared_ptr<grumble::View> subView = _game->viewFactory()->createView({xOffset * i, yOffset * j}, {0, 0}, origin);
-      subView->transform().setRelativeWidth(relativeCellSize);
-      subView->transform().setRelativeHeight(relativeCellSize);
-      subView->renderer().setTint(COLOR_RANDOM);
-      _game->rootView()->addChild(subView);
-    }
-  }
+//  float relativeCellSize = 0.0625f;
+//  grumble::TransformOrigin origin = grumble::TransformOrigin::TopLeft;
+//  float xOffset = 64.0f;
+//  float yOffset = 64.0f;
+//  for (int i = 0; i < 16; i++) {
+//    for (int j = 0; j < 16; j++) {
+//      std::shared_ptr<grumble::View> subView = _game->viewFactory()->createView({xOffset * i, yOffset * j}, {0, 0}, origin);
+//      subView->transform().setRelativeWidth(relativeCellSize);
+//      subView->transform().setRelativeHeight(relativeCellSize);
+//      subView->renderer().setTint(COLOR_RANDOM);
+//      _game->rootView()->addChild(subView);
+//    }
+//  }
+  
+  // image rendering sample
+//  float relativeCellSize = 0.0625f;
+//  grumble::TransformOrigin origin = grumble::TransformOrigin::TopLeft;
+  
   
   _mtkView->setColorPixelFormat( MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB );
   _mtkView->setClearColor(MTL::ClearColor::Make(1.0, 0.0, 0.0, 1.0));

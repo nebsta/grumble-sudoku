@@ -5,4 +5,14 @@
 
 #include "conan_nlohmann_json.xcconfig"
 
+#include "conan_freetype.xcconfig"
+
+#include "conan_libpng.xcconfig"
+
+#include "conan_bzip2.xcconfig"
+
+#include "conan_brotli.xcconfig"
+
+#include "conan_zlib.xcconfig"
+
 #include "conan_grumble.xcconfig"

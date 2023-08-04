@@ -1,0 +1,11 @@
+PACKAGE_ROOT_libpng[config=Debug][arch=arm64][sdk=macosx*] = /Users/bewa/.conan2/p/b/libpnf8758ec6065c8/p
+// Compiler options for libpng::libpng
+SYSTEM_HEADER_SEARCH_PATHS_libpng_libpng[config=Debug][arch=arm64][sdk=macosx*] = "/Users/bewa/.conan2/p/b/libpnf8758ec6065c8/p/include"
+GCC_PREPROCESSOR_DEFINITIONS_libpng_libpng[config=Debug][arch=arm64][sdk=macosx*] = 
+OTHER_CFLAGS_libpng_libpng[config=Debug][arch=arm64][sdk=macosx*] = 
+OTHER_CPLUSPLUSFLAGS_libpng_libpng[config=Debug][arch=arm64][sdk=macosx*] = 
+FRAMEWORK_SEARCH_PATHS_libpng_libpng[config=Debug][arch=arm64][sdk=macosx*] = 
+
+// Link options for libpng::libpng
+LIBRARY_SEARCH_PATHS_libpng_libpng[config=Debug][arch=arm64][sdk=macosx*] = "/Users/bewa/.conan2/p/b/libpnf8758ec6065c8/p/lib"
+OTHER_LDFLAGS_libpng_libpng[config=Debug][arch=arm64][sdk=macosx*] =  -lpng  
