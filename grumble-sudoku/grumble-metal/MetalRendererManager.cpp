@@ -9,7 +9,7 @@
 
 MetalRendererManager::MetalRendererManager(MTL::Device* device,
                                            MTK::View* mtkView,
-                                           png_byte* imageData,
+                                           std::shared_ptr<grumble::ImageFile> imageData,
                                            std::shared_ptr<grumble::SpriteManager> spriteManager) :
   _spriteManager(spriteManager),
   _imageData(imageData) {
@@ -28,8 +28,6 @@ MetalRendererManager::~MetalRendererManager() {
   _vertexBuffer->release();
   _shaderLibrary->release();
   _texture->release();
-  
-  delete[] _imageData;
   
   for (int i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
     for (int j = 0; i < MAX_INSTANCES; j++) {
@@ -114,12 +112,9 @@ void MetalRendererManager::buildBuffers() {
 }
 
 void MetalRendererManager::buildTextures() {
-  const uint32_t tw = 500;
-  const uint32_t th = 500;
-
   MTL::TextureDescriptor* textureDesc = MTL::TextureDescriptor::alloc()->init();
-  textureDesc->setWidth(tw);
-  textureDesc->setHeight(th);
+  textureDesc->setWidth(_imageData->width());
+  textureDesc->setHeight(_imageData->height());
   textureDesc->setPixelFormat(MTL::PixelFormatRGBA8Unorm);
   textureDesc->setTextureType(MTL::TextureType2D);
   textureDesc->setStorageMode(MTL::StorageModeManaged);
@@ -127,9 +122,9 @@ void MetalRendererManager::buildTextures() {
 
   _texture = _device->newTexture(textureDesc);
 
-  MTL::Region region = MTL::Region(0, 0, 0, tw, th, 1);
+  MTL::Region region = MTL::Region(0, 0, 0, _imageData->width(), _imageData->height(), 1);
   
-  _texture->replaceRegion(region, 0, _imageData, tw * 4);
+  _texture->replaceRegion(region, 0, _imageData->data(), _imageData->width() * 4);
 
   textureDesc->release();
 }

@@ -17,6 +17,7 @@
 
 #include <grumble/render/RendererManager.hpp>
 #include <grumble/sprite/SpriteManager.hpp>
+#include <grumble/io/ImageFile.hpp>
 
 #include "Buffers/UniformData.hpp"
 #include "MetalUtils.hpp"
@@ -31,7 +32,7 @@ class MetalRendererManager: public grumble::RendererManager {
 public:
   MetalRendererManager(MTL::Device* device,
                        MTK::View *mtkView,
-                       png_byte* imageData,
+                       std::shared_ptr<grumble::ImageFile> imageData,
                        std::shared_ptr<grumble::SpriteManager> spriteManager);
   ~MetalRendererManager() override;
   
@@ -50,7 +51,7 @@ public:
   
 private:
   std::shared_ptr<grumble::SpriteManager> _spriteManager;
-  png_byte* _imageData;
+  std::shared_ptr<grumble::ImageFile> _imageData;
   
   MTK::View* _mtkView;
   MTL::CommandBuffer* _currentCommandBuffer;

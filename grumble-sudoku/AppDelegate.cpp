@@ -84,7 +84,7 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   std::shared_ptr<grumble::FileManager> fileManager = std::make_shared<grumble::FileManager>(rootFilePath);
   std::shared_ptr<grumble::SpriteManager> spriteManager = std::make_shared<grumble::SpriteManager>(fileManager, "");
   
-  auto data = fileManager->loadPNG("apple-big.png");
+  auto data = fileManager->loadPNG("blue-color.png");
   std::shared_ptr<MetalRendererManager> metalRendererManager = std::make_shared<MetalRendererManager>(_device, _mtkView, data, spriteManager);
 
   _game = std::make_shared<grumble::Game>(metalRendererManager, fileManager, spriteManager, "waltographUI.ttf");
