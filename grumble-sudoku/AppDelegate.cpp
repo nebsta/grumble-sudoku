@@ -71,10 +71,10 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   CGRect frame = (CGRect){ {100.0, 100.0}, {512.0, 512.0} };
   
   _window = NS::Window::alloc()->init(
-    frame,
-    NS::WindowStyleMaskClosable|NS::WindowStyleMaskTitled|NS::WindowStyleMaskResizable,
-    NS::BackingStoreBuffered,
-    false);
+                                      frame,
+                                      NS::WindowStyleMaskClosable|NS::WindowStyleMaskTitled|NS::WindowStyleMaskResizable,
+                                      NS::BackingStoreBuffered,
+                                      false);
   
   _device = MTL::CreateSystemDefaultDevice();
   
@@ -82,10 +82,11 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   
   std::string rootFilePath = NS::Bundle::mainBundle()->resourcePath()->cString(NS::StringEncoding::ASCIIStringEncoding);
   std::shared_ptr<grumble::FileManager> fileManager = std::make_shared<grumble::FileManager>(rootFilePath);
-  std::shared_ptr<grumble::SpriteManager> spriteManager = std::make_shared<grumble::SpriteManager>(fileManager, "");
   
-  auto data = fileManager->loadPNG("blue-color.png");
-  std::shared_ptr<MetalRendererManager> metalRendererManager = std::make_shared<MetalRendererManager>(_device, _mtkView, data, spriteManager);
+  grumble::SpriteManagerConfiguration config = { "", { "MainAtlas" } };
+  std::shared_ptr<grumble::SpriteManager> spriteManager = std::make_shared<grumble::SpriteManager>(config, fileManager);
+  
+  std::shared_ptr<MetalRendererManager> metalRendererManager = std::make_shared<MetalRendererManager>(_device, _mtkView, spriteManager);
 
   _game = std::make_shared<grumble::Game>(metalRendererManager, fileManager, spriteManager, "waltographUI.ttf");
   _game->setup(2.0f); // Should eventually be read/updated from AppKit/UIKit
@@ -94,7 +95,7 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
 //  auto sprite = _game->spriteManager()->getSprite("sanic.png", "MainAtlas");
 //  std::cout << sprite->name() << ", " << sprite->region().w << "\n";
   
-  // color square samplexb
+  // color square sample
 //  glm::vec2 cellSize = { 32.0f, 32.0f };
 //  grumble::TransformOrigin origin = grumble::TransformOrigin::TopLeft;
 //  float xOffset = 32.0f;

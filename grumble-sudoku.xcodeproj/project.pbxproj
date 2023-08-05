@@ -16,6 +16,7 @@
 		D917F91A2A66D9EA00DCD0CC /* ViewShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = D917F9192A66D9EA00DCD0CC /* ViewShader.metal */; };
 		D91D8A422A694A4D00E5B2A8 /* IOSUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D91D8A402A694A4D00E5B2A8 /* IOSUtils.cpp */; };
 		D927AA8C2A6C5E81002D5F0D /* MetalRendererManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D927AA8A2A6C5E81002D5F0D /* MetalRendererManager.cpp */; };
+		D930446D2A7D932100D5E04D /* cat.png in Resources */ = {isa = PBXBuildFile; fileRef = D930446C2A7D932100D5E04D /* cat.png */; };
 		D93D0BA62A74599C00828E07 /* sanic.png in Resources */ = {isa = PBXBuildFile; fileRef = D93D0BA52A74599C00828E07 /* sanic.png */; };
 		D956B9E42A7D5FAF005C353C /* red-color.png in Resources */ = {isa = PBXBuildFile; fileRef = D956B9E32A7D5FAF005C353C /* red-color.png */; };
 		D956B9E62A7D7CB5005C353C /* apple.png in Resources */ = {isa = PBXBuildFile; fileRef = D956B9E52A7D7CB5005C353C /* apple.png */; };
@@ -58,6 +59,7 @@
 		D927AA8A2A6C5E81002D5F0D /* MetalRendererManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MetalRendererManager.cpp; sourceTree = "<group>"; };
 		D927AA8B2A6C5E81002D5F0D /* MetalRendererManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalRendererManager.hpp; sourceTree = "<group>"; };
 		D92D77C52A6D82C100E5F178 /* UniformData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UniformData.hpp; sourceTree = "<group>"; };
+		D930446C2A7D932100D5E04D /* cat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cat.png; sourceTree = "<group>"; };
 		D93D0B962A7436EF00828E07 /* NSMenuItem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NSMenuItem.hpp; sourceTree = "<group>"; };
 		D93D0B972A7436EF00828E07 /* NSWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NSWindow.hpp; sourceTree = "<group>"; };
 		D93D0B982A7436EF00828E07 /* AppKit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AppKit.hpp; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 		D93D0BA42A74599300828E07 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D930446C2A7D932100D5E04D /* cat.png */,
 				D956B9E72A7D7D44005C353C /* apple-big.png */,
 				D956B9E52A7D7CB5005C353C /* apple.png */,
 				D956B9E32A7D5FAF005C353C /* red-color.png */,
@@ -339,6 +342,7 @@
 				D9A08D252A6FE20C00DBA3E5 /* waltographUI.ttf in Resources */,
 				D9975B4C2A76C53D00286822 /* MainAtlas.tps in Resources */,
 				D9975B4E2A76C53D00286822 /* MainAtlas-sheet.png in Resources */,
+				D930446D2A7D932100D5E04D /* cat.png in Resources */,
 				D956B9E62A7D7CB5005C353C /* apple.png in Resources */,
 				D9A6EE6D2A7A43E4003F9D6D /* blue-color.png in Resources */,
 			);

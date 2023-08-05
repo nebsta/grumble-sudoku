@@ -9,10 +9,8 @@
 
 MetalRendererManager::MetalRendererManager(MTL::Device* device,
                                            MTK::View* mtkView,
-                                           std::shared_ptr<grumble::ImageFile> imageData,
                                            std::shared_ptr<grumble::SpriteManager> spriteManager) :
-  _spriteManager(spriteManager),
-  _imageData(imageData) {
+  _spriteManager(spriteManager) {
   _device = device->retain();
   _mtkView = mtkView->retain();
   _commandQueue = _device->newCommandQueue();
@@ -27,7 +25,11 @@ MetalRendererManager::~MetalRendererManager() {
   _pipelineState->release();
   _vertexBuffer->release();
   _shaderLibrary->release();
-  _texture->release();
+  
+  std::map<std::string,MTL::Texture*>::iterator iterator = _textureBuffers.begin();
+  for (; iterator != _textureBuffers.end(); iterator++) {
+    (*iterator).second->release();
+  }
   
   for (int i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
     for (int j = 0; i < MAX_INSTANCES; j++) {
@@ -112,39 +114,67 @@ void MetalRendererManager::buildBuffers() {
 }
 
 void MetalRendererManager::buildTextures() {
-  MTL::TextureDescriptor* textureDesc = MTL::TextureDescriptor::alloc()->init();
-  textureDesc->setWidth(_imageData->width());
-  textureDesc->setHeight(_imageData->height());
-  textureDesc->setPixelFormat(MTL::PixelFormatRGBA8Unorm);
-  textureDesc->setTextureType(MTL::TextureType2D);
-  textureDesc->setStorageMode(MTL::StorageModeManaged);
-  textureDesc->setUsage(MTL::ResourceUsageSample | MTL::ResourceUsageRead);
+  std::vector<std::shared_ptr<grumble::SpriteAtlas>> allAtlases = _spriteManager->allAtlases();
+  grumble::SpriteAtlas::Iterator iterator = allAtlases.begin();
+  for (; iterator != allAtlases.end(); iterator++) {
+    std::shared_ptr<grumble::SpriteAtlas> atlas = (*iterator);
+    
+    MTL::TextureDescriptor* textureDesc = MTL::TextureDescriptor::alloc()->init();
+    textureDesc->setWidth(atlas->file()->width());
+    textureDesc->setHeight(atlas->file()->height());
+    textureDesc->setPixelFormat(MTL::PixelFormatRGBA8Unorm);
+    textureDesc->setTextureType(MTL::TextureType2D);
+    textureDesc->setStorageMode(MTL::StorageModeManaged);
+    textureDesc->setUsage(MTL::ResourceUsageSample | MTL::ResourceUsageRead);
 
-  _texture = _device->newTexture(textureDesc);
+    MTL::Texture* texture = _device->newTexture(textureDesc);
 
-  MTL::Region region = MTL::Region(0, 0, 0, _imageData->width(), _imageData->height(), 1);
-  
-  _texture->replaceRegion(region, 0, _imageData->data(), _imageData->width() * 4);
-
-  textureDesc->release();
+    MTL::Region region = MTL::Region(0, 0, 0, atlas->file()->width(), atlas->file()->height(), 1);
+    
+    texture->replaceRegion(region, 0, atlas->file()->data().get(), atlas->file()->bytesPerRow());
+    
+    textureDesc->release();
+    
+    _textureBuffers[atlas->name()] = texture;
+  }
 }
 
 void MetalRendererManager::setActiveFrame(int index) {
   _activeFrameIndex = index;
 }
 
-void MetalRendererManager::render(std::shared_ptr<grumble::View> view) {
+void MetalRendererManager::renderView(grumble::Transform transform, std::shared_ptr<grumble::Renderer> renderer) {
   MTL::Buffer* uniformBuffer = _uniformBuffers[_activeFrameIndex][_instanceIndex];
   
   UniformData* uniformData = reinterpret_cast<UniformData*>(uniformBuffer->contents());
-  simd::float4x4 modelMatrix = MetalUtil::to_simd_float4x4(view->transform().modelMatrix(renderScale()));
+  simd::float4x4 modelMatrix = MetalUtil::to_simd_float4x4(transform.modelMatrix(renderScale()));
   uniformData->modelMatrix = modelMatrix;
   uniformData->projectionMatrix = _projectionMatrix;
-  uniformData->tint = MetalUtil::to_simd_float4(view->renderer().tint());
+  uniformData->tint = MetalUtil::to_simd_float4(renderer->tint());
   uniformBuffer->didModifyRange(NS::Range::Make(0, sizeof(UniformData)));
   
-  MTL::PrimitiveType primitiveType = MetalUtil::to_mtl_primitive_type(view->renderer().renderMethod());
-  _currentCommandEncoder->setFragmentTexture(_texture, 0);
+  MTL::PrimitiveType primitiveType = MetalUtil::to_mtl_primitive_type(renderer->renderMethod());
+  _currentCommandEncoder->setVertexBuffer(_vertexBuffer, 0, 0);
+  _currentCommandEncoder->setVertexBuffer(uniformBuffer, 0, 1);
+
+  _currentCommandEncoder->drawPrimitives(primitiveType, NS::UInteger(0), NS::UInteger(4));
+  
+  _instanceIndex++;
+}
+
+void MetalRendererManager::renderImageView(grumble::Transform transform, std::shared_ptr<grumble::ImageRenderer> renderer) {
+  MTL::Buffer* uniformBuffer = _uniformBuffers[_activeFrameIndex][_instanceIndex];
+  MTL::Texture* texture = _textureBuffers[renderer->sprite()->atlas()];
+  
+  UniformData* uniformData = reinterpret_cast<UniformData*>(uniformBuffer->contents());
+  simd::float4x4 modelMatrix = MetalUtil::to_simd_float4x4(transform.modelMatrix(renderScale()));
+  uniformData->modelMatrix = modelMatrix;
+  uniformData->projectionMatrix = _projectionMatrix;
+  uniformData->tint = MetalUtil::to_simd_float4(renderer->tint());
+  uniformBuffer->didModifyRange(NS::Range::Make(0, sizeof(UniformData)));
+  
+  MTL::PrimitiveType primitiveType = MetalUtil::to_mtl_primitive_type(renderer->renderMethod());
+  _currentCommandEncoder->setFragmentTexture(texture, 0);
   _currentCommandEncoder->setVertexBuffer(_vertexBuffer, 0, 0);
   _currentCommandEncoder->setVertexBuffer(uniformBuffer, 0, 1);
 

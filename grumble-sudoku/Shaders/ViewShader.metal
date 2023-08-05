@@ -38,8 +38,8 @@ v2f vertex vertexMain(device const VertexData* vertexData [[buffer(0)]],
 }
 
 half4 fragment fragmentMain(v2f in [[stage_in]], texture2d<half, access::sample> tex [[texture(0)]] ) {
-//  return half4(in.color);
+  return half4(in.color);
   
-  constexpr sampler s(coord::normalized, address::repeat, filter::linear);
-  return half4(tex.sample(s, in.texCoord).rgb, 1.0);
+//  constexpr sampler s(coord::normalized, address::repeat, filter::linear);
+//  return half4(tex.sample(s, in.texCoord).rgb, 1.0);
 }
