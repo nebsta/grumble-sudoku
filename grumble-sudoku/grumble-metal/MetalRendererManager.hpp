@@ -21,14 +21,16 @@
 #include <grumble/io/ImageFile.hpp>
 
 #include "Buffers/UniformData.hpp"
+#include "Buffers/VertexData.hpp"
+#include "Buffers/TexCoordData.hpp"
+
 #include "MetalUtils.hpp"
-#include "VertexData.hpp"
 
 #define MAX_FRAMES_IN_FLIGHT 3
 #define MAX_INSTANCES 500
 
 class MetalRendererManager: public grumble::RendererManager {
-  typedef std::array<MTL::Buffer*, MAX_INSTANCES> UniformInstanceBuffers;
+  typedef std::array<MTL::Buffer*, MAX_INSTANCES> InstanceBuffers;
   
 public:
   MetalRendererManager(MTL::Device* device,
@@ -64,7 +66,8 @@ private:
 
   MTL::Buffer* _vertexBuffer;
   
-  std::array<UniformInstanceBuffers, MAX_FRAMES_IN_FLIGHT> _uniformBuffers;
+  std::array<InstanceBuffers, MAX_FRAMES_IN_FLIGHT> _uniformBuffers;
+  std::array<InstanceBuffers, MAX_FRAMES_IN_FLIGHT> _texCoordBuffers;
   std::map<std::string, MTL::Texture*> _textureBuffers;
   
   int _activeFrameIndex;

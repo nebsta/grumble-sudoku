@@ -29,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D913D0932A7FA80B00BE39C9 /* TexCoordData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TexCoordData.hpp; sourceTree = "<group>"; };
 		D917F8342A642A7B00DCD0CC /* grumble-sudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "grumble-sudoku.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D917F84A2A642A7C00DCD0CC /* grumble_sudoku.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = grumble_sudoku.entitlements; sourceTree = "<group>"; };
 		D917F8502A642AB600DCD0CC /* conanfile.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = conanfile.py; sourceTree = "<group>"; };
@@ -185,7 +186,9 @@
 		D92D77C42A6D82A000E5F178 /* Buffers */ = {
 			isa = PBXGroup;
 			children = (
+				D9975B542A76DA9A00286822 /* VertexData.hpp */,
 				D92D77C52A6D82C100E5F178 /* UniformData.hpp */,
+				D913D0932A7FA80B00BE39C9 /* TexCoordData.hpp */,
 			);
 			path = Buffers;
 			sourceTree = "<group>";
@@ -271,7 +274,6 @@
 				D92D77C42A6D82A000E5F178 /* Buffers */,
 				D927AA8B2A6C5E81002D5F0D /* MetalRendererManager.hpp */,
 				D927AA8A2A6C5E81002D5F0D /* MetalRendererManager.cpp */,
-				D9975B542A76DA9A00286822 /* VertexData.hpp */,
 				D9CE629C2A6D60A300D9477F /* MetalUtils.hpp */,
 			);
 			path = "grumble-metal";

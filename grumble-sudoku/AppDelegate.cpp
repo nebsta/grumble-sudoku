@@ -92,10 +92,10 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   _game->setup(2.0f); // Should eventually be read/updated from AppKit/UIKit
 
   // single sprite sample
-//  auto sprite = _game->spriteManager()->getSprite("sanic.png", "MainAtlas");
-//  auto imageView = _game->viewFactory()->createImageView(sprite);
-//  imageView->transform().setSize({500, 500});
-//  _game->rootView()->addChild(imageView);
+  auto sprite = _game->spriteManager()->getSprite("sanic.png", "MainAtlas");
+  auto imageView = _game->viewFactory()->createImageView(sprite);
+  imageView->transform().setSize({500, 500});
+  _game->rootView()->addChild(imageView);
   
   // color square sample
 //  glm::vec2 cellSize = { 32.0f, 32.0f };

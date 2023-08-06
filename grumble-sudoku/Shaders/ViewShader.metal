@@ -22,18 +22,22 @@ struct v2f {
 
 struct VertexData {
   float3 position;
+};
+
+struct TexCoordData {
   float2 texCoord;
 };
 
 v2f vertex vertexMain(device const VertexData* vertexData [[buffer(0)]],
-                      constant VertexUniforms &uniforms [[buffer(1)]],
+                      device const TexCoordData* texCoordData [[buffer(1)]],
+                      constant VertexUniforms &uniforms [[buffer(2)]],
                       uint vertexId [[vertex_id]]) {
   v2f o;
   
   float4 pos = float4(vertexData[vertexId].position, 1.0);
   o.position = uniforms.projectionMatrix * uniforms.modelMatrix * pos;
   o.color = half4(uniforms.tint.rgba);
-  o.texCoord = vertexData[vertexId].texCoord.xy;
+  o.texCoord = texCoordData[vertexId].texCoord.xy;
   return o;
 }
 

@@ -13,6 +13,7 @@
 #include <glm/gtx/string_cast.hpp>
 
 #include <grumble/render/RenderMethod.hpp>
+#include <grumble/sprite/SpriteRegion.hpp>
 
 class MetalUtil {
 public:
@@ -39,5 +40,9 @@ public:
                             simd::make_float4(0, 2.0f / (top - bottom), 0, 0),
                             simd::make_float4(0, 0, 1.0f  / (far - near), 0),
                             simd::make_float4((left + right) / (left - right), (top + bottom) / (bottom - top), near / (near - far), 1.0f));
+  }
+  
+  static simd::float2 to_simd_float2(glm::vec2 vector) {
+    return simd::make_float2(vector.x, vector.y);
   }
 };

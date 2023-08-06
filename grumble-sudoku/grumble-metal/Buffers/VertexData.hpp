@@ -9,5 +9,4 @@
 
 struct VertexData {
   simd::float3 position;
-  simd::float2 texCoord;
 };
