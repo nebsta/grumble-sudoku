@@ -1,0 +1,11 @@
+PACKAGE_ROOT_fmt[config=Debug][arch=arm64][sdk=macosx*] = /Users/bewa/.conan2/p/b/fmta0a98ba962be1/p
+// Compiler options for fmt::_fmt
+SYSTEM_HEADER_SEARCH_PATHS_fmt__fmt[config=Debug][arch=arm64][sdk=macosx*] = "/Users/bewa/.conan2/p/b/fmta0a98ba962be1/p/include"
+GCC_PREPROCESSOR_DEFINITIONS_fmt__fmt[config=Debug][arch=arm64][sdk=macosx*] = 
+OTHER_CFLAGS_fmt__fmt[config=Debug][arch=arm64][sdk=macosx*] = 
+OTHER_CPLUSPLUSFLAGS_fmt__fmt[config=Debug][arch=arm64][sdk=macosx*] = 
+FRAMEWORK_SEARCH_PATHS_fmt__fmt[config=Debug][arch=arm64][sdk=macosx*] = 
+
+// Link options for fmt::_fmt
+LIBRARY_SEARCH_PATHS_fmt__fmt[config=Debug][arch=arm64][sdk=macosx*] = "/Users/bewa/.conan2/p/b/fmta0a98ba962be1/p/lib"
+OTHER_LDFLAGS_fmt__fmt[config=Debug][arch=arm64][sdk=macosx*] =  -lfmtd  

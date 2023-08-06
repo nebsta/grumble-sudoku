@@ -90,10 +90,12 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
 
   _game = std::make_shared<grumble::Game>(metalRendererManager, fileManager, spriteManager, "waltographUI.ttf");
   _game->setup(2.0f); // Should eventually be read/updated from AppKit/UIKit
-  
-  
+
+  // single sprite sample
 //  auto sprite = _game->spriteManager()->getSprite("sanic.png", "MainAtlas");
-//  std::cout << sprite->name() << ", " << sprite->region().w << "\n";
+//  auto imageView = _game->viewFactory()->createImageView(sprite);
+//  imageView->transform().setSize({500, 500});
+//  _game->rootView()->addChild(imageView);
   
   // color square sample
 //  glm::vec2 cellSize = { 32.0f, 32.0f };
@@ -103,7 +105,7 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
 //  for (int i = 0; i < 16; i++) {
 //    for (int j = 0; j < 16; j++) {
 //      std::shared_ptr<grumble::View> subView = _game->viewFactory()->createView({xOffset * i, yOffset * j}, cellSize, origin);
-//      subView->renderer().setTint(COLOR_RANDOM);
+//      subView->renderer()->setTint(COLOR_RANDOM);
 //      _game->rootView()->addChild(subView);
 //    }
 //  }

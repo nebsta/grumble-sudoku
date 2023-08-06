@@ -9,6 +9,8 @@
 
 #include "conan_libpng.xcconfig"
 
+#include "conan_fmt.xcconfig"
+
 #include "conan_bzip2.xcconfig"
 
 #include "conan_brotli.xcconfig"

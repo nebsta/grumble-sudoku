@@ -119,6 +119,8 @@ void MetalRendererManager::buildTextures() {
   for (; iterator != allAtlases.end(); iterator++) {
     std::shared_ptr<grumble::SpriteAtlas> atlas = (*iterator);
     
+    logInfo("Setting up atlas in MetalRenderManager: {}", atlas->toString());
+    
     MTL::TextureDescriptor* textureDesc = MTL::TextureDescriptor::alloc()->init();
     textureDesc->setWidth(atlas->file()->width());
     textureDesc->setHeight(atlas->file()->height());
@@ -154,6 +156,7 @@ void MetalRendererManager::renderView(grumble::Transform transform, std::shared_
   uniformBuffer->didModifyRange(NS::Range::Make(0, sizeof(UniformData)));
   
   MTL::PrimitiveType primitiveType = MetalUtil::to_mtl_primitive_type(renderer->renderMethod());
+  _currentCommandEncoder->setFragmentTexture(nullptr, 0);
   _currentCommandEncoder->setVertexBuffer(_vertexBuffer, 0, 0);
   _currentCommandEncoder->setVertexBuffer(uniformBuffer, 0, 1);
 
