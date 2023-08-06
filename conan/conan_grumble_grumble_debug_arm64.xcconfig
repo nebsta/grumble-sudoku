@@ -1,11 +1,11 @@
-PACKAGE_ROOT_grumble[config=Debug][arch=arm64][sdk=macosx*] = /Users/bewa/.conan2/p/b/grumb1bf89a365ce5a/p
+PACKAGE_ROOT_grumble[config=Debug][arch=arm64][sdk=macosx*] = /Users/bewa/.conan2/p/b/grumbdfecbd4cea792/p
 // Compiler options for grumble::grumble
-SYSTEM_HEADER_SEARCH_PATHS_grumble_grumble[config=Debug][arch=arm64][sdk=macosx*] = "/Users/bewa/.conan2/p/b/grumb1bf89a365ce5a/p/include"
+SYSTEM_HEADER_SEARCH_PATHS_grumble_grumble[config=Debug][arch=arm64][sdk=macosx*] = "/Users/bewa/.conan2/p/b/grumbdfecbd4cea792/p/include"
 GCC_PREPROCESSOR_DEFINITIONS_grumble_grumble[config=Debug][arch=arm64][sdk=macosx*] = 
 OTHER_CFLAGS_grumble_grumble[config=Debug][arch=arm64][sdk=macosx*] = 
 OTHER_CPLUSPLUSFLAGS_grumble_grumble[config=Debug][arch=arm64][sdk=macosx*] = 
 FRAMEWORK_SEARCH_PATHS_grumble_grumble[config=Debug][arch=arm64][sdk=macosx*] = 
 
 // Link options for grumble::grumble
-LIBRARY_SEARCH_PATHS_grumble_grumble[config=Debug][arch=arm64][sdk=macosx*] = "/Users/bewa/.conan2/p/b/grumb1bf89a365ce5a/p/lib"
+LIBRARY_SEARCH_PATHS_grumble_grumble[config=Debug][arch=arm64][sdk=macosx*] = "/Users/bewa/.conan2/p/b/grumbdfecbd4cea792/p/lib"
 OTHER_LDFLAGS_grumble_grumble[config=Debug][arch=arm64][sdk=macosx*] =  -lgrumble  

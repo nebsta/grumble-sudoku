@@ -36,12 +36,12 @@ MetalRendererManager::~MetalRendererManager() {
       _uniformBuffers[i][j]->release();
     }
   }
-  
-  for (int i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-    for (int j = 0; i < MAX_INSTANCES; j++) {
-      _texCoordBuffers[i][j]->release();
-    }
+  std::map<std::string, MTL::Buffer*>::iterator iter = _texCoordBuffers.begin();
+  for (; iter != _texCoordBuffers.end(); ++iter) {
+    (*iter).second->release();
   }
+  
+  _emptyTexCoordBuffer->release();
 }
 
 void MetalRendererManager::setup() {
@@ -92,9 +92,7 @@ void MetalRendererManager::buildShaders() {
 }
 
 void MetalRendererManager::buildBuffers() {
-  const size_t NumVertices = 4;
-
-  VertexData vertexData[NumVertices] =
+  VertexData vertexData[VERTEX_COUNT] =
   {
     {{ -1.0f,  1.0f, 0.0f }},
     {{ 1.0f,  1.0f, 0.0f }},
@@ -102,9 +100,8 @@ void MetalRendererManager::buildBuffers() {
     {{ 1.0f,  -1.0f, 0.0f }}
   };
 
-  const size_t vertexDataSize = NumVertices * sizeof(VertexData);
+  const size_t vertexDataSize = VERTEX_COUNT * sizeof(VertexData);
   const size_t uniformDataSize = sizeof(UniformData);
-  const size_t texCoordDataSize = NumVertices * sizeof(TexCoordData);
 
   MTL::Buffer* vertexBuffer = _device->newBuffer(vertexDataSize, MTL::ResourceStorageModeManaged);
   _vertexBuffer = vertexBuffer;
@@ -114,12 +111,6 @@ void MetalRendererManager::buildBuffers() {
       _uniformBuffers[i][j] = _device->newBuffer(uniformDataSize, MTL::ResourceStorageModeManaged);
     }
   }
-  
-  for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i) {
-    for (size_t j = 0; j < MAX_INSTANCES; j++) {
-      _texCoordBuffers[i][j] = _device->newBuffer(texCoordDataSize, MTL::ResourceStorageModeManaged);
-    }
-  }
 
   memcpy(_vertexBuffer->contents(), vertexData, vertexDataSize);
 
@@ -127,6 +118,13 @@ void MetalRendererManager::buildBuffers() {
 }
 
 void MetalRendererManager::buildTextures() {
+  const size_t texCoordDataSize = VERTEX_COUNT * sizeof(TexCoordData);
+  
+  _emptyTexCoordBuffer = _device->newBuffer(texCoordDataSize, MTL::ResourceStorageModeManaged);
+  simd::float2 emptyTexCoords[VERTEX_COUNT] = { { 0.0, 0.0}, { 0.0, 0.0 }, { 0.0, 0.0 }, { 0.0, 0.0 } };
+  memcpy(_emptyTexCoordBuffer->contents(), emptyTexCoords, texCoordDataSize);
+  _emptyTexCoordBuffer->didModifyRange(NS::Range::Make(0, _emptyTexCoordBuffer->length()));
+  
   std::vector<std::shared_ptr<grumble::SpriteAtlas>> allAtlases = _spriteManager->allAtlases();
   grumble::SpriteAtlas::Iterator iterator = allAtlases.begin();
   for (; iterator != allAtlases.end(); iterator++) {
@@ -151,6 +149,26 @@ void MetalRendererManager::buildTextures() {
     textureDesc->release();
     
     _textureBuffers[atlas->name()] = texture;
+    
+    grumble::Sprite::vector sprites = atlas->allSprites();
+    grumble::Sprite::iterator spriteIter = sprites.begin();
+    for (; spriteIter != sprites.end(); spriteIter++) {
+      grumble::Sprite::shared_ptr sprite = (*spriteIter);
+      MTL::Buffer* texCoordBuffer = _device->newBuffer(texCoordDataSize, MTL::ResourceStorageModeManaged);
+
+      simd::float2 texCoords[VERTEX_COUNT] = {
+        MetalUtil::to_simd_float2(sprite->region().topLeft),
+        MetalUtil::to_simd_float2(sprite->region().topRight),
+        MetalUtil::to_simd_float2(sprite->region().bottomLeft),
+        MetalUtil::to_simd_float2(sprite->region().bottomRight)
+      };
+      
+      memcpy(texCoordBuffer->contents(), texCoords, texCoordDataSize);
+      texCoordBuffer->didModifyRange(NS::Range::Make(0, texCoordBuffer->length()));
+      
+      std::pair<std::string,MTL::Buffer*> item = { sprite->id(), texCoordBuffer };
+      _texCoordBuffers.insert(item);
+    }
   }
 }
 
@@ -160,7 +178,6 @@ void MetalRendererManager::setActiveFrame(int index) {
 
 void MetalRendererManager::renderView(grumble::Transform transform, std::shared_ptr<grumble::Renderer> renderer) {
   MTL::Buffer* uniformBuffer = _uniformBuffers[_activeFrameIndex][_instanceIndex];
-  MTL::Buffer* texCoordBuffer = _texCoordBuffers[_activeFrameIndex][_instanceIndex];
   
   UniformData* uniformData = reinterpret_cast<UniformData*>(uniformBuffer->contents());
   simd::float4x4 modelMatrix = MetalUtil::to_simd_float4x4(transform.modelMatrix(renderScale()));
@@ -172,7 +189,7 @@ void MetalRendererManager::renderView(grumble::Transform transform, std::shared_
   MTL::PrimitiveType primitiveType = MetalUtil::to_mtl_primitive_type(renderer->renderMethod());
   _currentCommandEncoder->setFragmentTexture(nullptr, 0);
   _currentCommandEncoder->setVertexBuffer(_vertexBuffer, 0, 0);
-  _currentCommandEncoder->setVertexBuffer(texCoordBuffer, 0, 1);
+  _currentCommandEncoder->setVertexBuffer(_emptyTexCoordBuffer, 0, 1);
   _currentCommandEncoder->setVertexBuffer(uniformBuffer, 0, 2);
 
   _currentCommandEncoder->drawPrimitives(primitiveType, NS::UInteger(0), NS::UInteger(4));
@@ -182,8 +199,8 @@ void MetalRendererManager::renderView(grumble::Transform transform, std::shared_
 
 void MetalRendererManager::renderImageView(grumble::Transform transform, std::shared_ptr<grumble::ImageRenderer> renderer) {
   MTL::Buffer* uniformBuffer = _uniformBuffers[_activeFrameIndex][_instanceIndex];
-  MTL::Buffer* texCoordBuffer = _texCoordBuffers[_activeFrameIndex][_instanceIndex];
-  MTL::Texture* texture = _textureBuffers[renderer->sprite()->atlas()];
+  MTL::Buffer* texCoordBuffer = _texCoordBuffers[renderer->sprite()->id()];
+  MTL::Texture* texture = _textureBuffers.at(renderer->sprite()->atlas());
   
   UniformData* uniformData = reinterpret_cast<UniformData*>(uniformBuffer->contents());
   simd::float4x4 modelMatrix = MetalUtil::to_simd_float4x4(transform.modelMatrix(renderScale()));
@@ -192,15 +209,6 @@ void MetalRendererManager::renderImageView(grumble::Transform transform, std::sh
   uniformData->tint = MetalUtil::to_simd_float4(renderer->tint());
   uniformBuffer->didModifyRange(NS::Range::Make(0, sizeof(UniformData)));
   
-  simd::float2 texCoords[4] = {
-    MetalUtil::to_simd_float2(renderer->sprite()->region().topLeft),
-    MetalUtil::to_simd_float2(renderer->sprite()->region().topRight),
-    MetalUtil::to_simd_float2(renderer->sprite()->region().bottomLeft),
-    MetalUtil::to_simd_float2(renderer->sprite()->region().bottomRight)
-  };
-  const size_t texCoordDataSize = 4 * sizeof(TexCoordData);
-  memcpy(texCoordBuffer->contents(), texCoords, texCoordDataSize);
-  texCoordBuffer->didModifyRange(NS::Range::Make(0, texCoordBuffer->length()));
   
   MTL::PrimitiveType primitiveType = MetalUtil::to_mtl_primitive_type(renderer->renderMethod());
   _currentCommandEncoder->setFragmentTexture(texture, 0);

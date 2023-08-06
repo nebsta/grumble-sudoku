@@ -28,6 +28,7 @@
 
 #define MAX_FRAMES_IN_FLIGHT 3
 #define MAX_INSTANCES 500
+#define VERTEX_COUNT 4
 
 class MetalRendererManager: public grumble::RendererManager {
   typedef std::array<MTL::Buffer*, MAX_INSTANCES> InstanceBuffers;
@@ -64,11 +65,12 @@ private:
   MTL::RenderPipelineState* _pipelineState;
   MTL::Library* _shaderLibrary;
 
+  MTL::Buffer* _emptyTexCoordBuffer;
   MTL::Buffer* _vertexBuffer;
   
   std::array<InstanceBuffers, MAX_FRAMES_IN_FLIGHT> _uniformBuffers;
-  std::array<InstanceBuffers, MAX_FRAMES_IN_FLIGHT> _texCoordBuffers;
   std::map<std::string, MTL::Texture*> _textureBuffers;
+  std::map<std::string, MTL::Buffer*> _texCoordBuffers;
   
   int _activeFrameIndex;
   int _instanceIndex;
