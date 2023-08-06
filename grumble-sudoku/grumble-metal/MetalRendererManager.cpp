@@ -126,7 +126,7 @@ void MetalRendererManager::buildTextures() {
   _emptyTexCoordBuffer->didModifyRange(NS::Range::Make(0, _emptyTexCoordBuffer->length()));
   
   std::vector<std::shared_ptr<grumble::SpriteAtlas>> allAtlases = _spriteManager->allAtlases();
-  grumble::SpriteAtlas::Iterator iterator = allAtlases.begin();
+  grumble::SpriteAtlas::iterator iterator = allAtlases.begin();
   for (; iterator != allAtlases.end(); iterator++) {
     std::shared_ptr<grumble::SpriteAtlas> atlas = (*iterator);
     
