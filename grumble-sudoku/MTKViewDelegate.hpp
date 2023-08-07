@@ -18,7 +18,6 @@
 #include <grumble/core/Game.hpp>
 
 #include "MetalRendererManager.hpp"
-#include "utils/IOSUtils.hpp"
 
 class MTKViewDelegate : public MTK::ViewDelegate {
   public:

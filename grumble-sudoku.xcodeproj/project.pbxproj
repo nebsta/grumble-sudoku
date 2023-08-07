@@ -14,7 +14,6 @@
 		D917F9142A66D34600DCD0CC /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D917F9122A66D34600DCD0CC /* AppDelegate.cpp */; };
 		D917F9172A66D40400DCD0CC /* MTKViewDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D917F9152A66D40400DCD0CC /* MTKViewDelegate.cpp */; };
 		D917F91A2A66D9EA00DCD0CC /* ViewShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = D917F9192A66D9EA00DCD0CC /* ViewShader.metal */; };
-		D91D8A422A694A4D00E5B2A8 /* IOSUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D91D8A402A694A4D00E5B2A8 /* IOSUtils.cpp */; };
 		D927AA8C2A6C5E81002D5F0D /* MetalRendererManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D927AA8A2A6C5E81002D5F0D /* MetalRendererManager.cpp */; };
 		D930446D2A7D932100D5E04D /* cat.png in Resources */ = {isa = PBXBuildFile; fileRef = D930446C2A7D932100D5E04D /* cat.png */; };
 		D93D0BA62A74599C00828E07 /* sanic.png in Resources */ = {isa = PBXBuildFile; fileRef = D93D0BA52A74599C00828E07 /* sanic.png */; };
@@ -55,8 +54,6 @@
 		D917F9152A66D40400DCD0CC /* MTKViewDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MTKViewDelegate.cpp; sourceTree = "<group>"; };
 		D917F9162A66D40400DCD0CC /* MTKViewDelegate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MTKViewDelegate.hpp; sourceTree = "<group>"; };
 		D917F9192A66D9EA00DCD0CC /* ViewShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ViewShader.metal; sourceTree = "<group>"; };
-		D91D8A402A694A4D00E5B2A8 /* IOSUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IOSUtils.cpp; sourceTree = "<group>"; };
-		D91D8A412A694A4D00E5B2A8 /* IOSUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IOSUtils.hpp; sourceTree = "<group>"; };
 		D927AA8A2A6C5E81002D5F0D /* MetalRendererManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MetalRendererManager.cpp; sourceTree = "<group>"; };
 		D927AA8B2A6C5E81002D5F0D /* MetalRendererManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetalRendererManager.hpp; sourceTree = "<group>"; };
 		D92D77C52A6D82C100E5F178 /* UniformData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UniformData.hpp; sourceTree = "<group>"; };
@@ -125,7 +122,6 @@
 				D9A08D202A6FE1C900DBA3E5 /* Resources */,
 				D9CE62972A6D4E8500D9477F /* grumble-metal */,
 				D917F84A2A642A7C00DCD0CC /* grumble_sudoku.entitlements */,
-				D91D8A3F2A694A2B00E5B2A8 /* utils */,
 				D917F9182A66D9D800DCD0CC /* Shaders */,
 				D917F9032A66971B00DCD0CC /* main.cpp */,
 				D917F9132A66D34600DCD0CC /* AppDelegate.hpp */,
@@ -172,15 +168,6 @@
 				D917F9192A66D9EA00DCD0CC /* ViewShader.metal */,
 			);
 			path = Shaders;
-			sourceTree = "<group>";
-		};
-		D91D8A3F2A694A2B00E5B2A8 /* utils */ = {
-			isa = PBXGroup;
-			children = (
-				D91D8A412A694A4D00E5B2A8 /* IOSUtils.hpp */,
-				D91D8A402A694A4D00E5B2A8 /* IOSUtils.cpp */,
-			);
-			path = utils;
 			sourceTree = "<group>";
 		};
 		D92D77C42A6D82A000E5F178 /* Buffers */ = {
@@ -380,7 +367,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D917F91A2A66D9EA00DCD0CC /* ViewShader.metal in Sources */,
-				D91D8A422A694A4D00E5B2A8 /* IOSUtils.cpp in Sources */,
 				D917F9172A66D40400DCD0CC /* MTKViewDelegate.cpp in Sources */,
 				D917F9142A66D34600DCD0CC /* AppDelegate.cpp in Sources */,
 				D917F9052A66971C00DCD0CC /* main.cpp in Sources */,

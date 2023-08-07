@@ -34,9 +34,11 @@ class MetalRendererManager: public grumble::RendererManager {
   typedef std::array<MTL::Buffer*, MAX_INSTANCES> InstanceBuffers;
   
 public:
+  typedef std::shared_ptr<MetalRendererManager> shared_ptr;
+  
   MetalRendererManager(MTL::Device* device,
                        MTK::View *mtkView,
-                       std::shared_ptr<grumble::SpriteManager> spriteManager);
+                       grumble::SpriteManager::shared_ptr spriteManager);
   ~MetalRendererManager() override;
   
   void buildShaders();
@@ -49,12 +51,12 @@ public:
   void setup() override;
   
   void setActiveFrame(int index);
-  void renderView(grumble::Transform transform, std::shared_ptr<grumble::Renderer>) override;
-  void renderImageView(grumble::Transform transform, std::shared_ptr<grumble::ImageRenderer>) override;
+  void renderView(grumble::Transform::shared_ptr transform, grumble::Renderer::shared_ptr) override;
+  void renderImageView(grumble::Transform::shared_ptr transform, grumble::ImageRenderer::shared_ptr) override;
   void screenSizeUpdated(CGSize size);
   
 private:
-  std::shared_ptr<grumble::SpriteManager> _spriteManager;
+  grumble::SpriteManager::shared_ptr _spriteManager;
   
   MTK::View* _mtkView;
   MTL::CommandBuffer* _currentCommandBuffer;

@@ -1,20 +1,36 @@
 {"frames": [
 
 {
-	"filename": "sanic.png",
-	"frame": {"x":0,"y":0,"w":920,"h":1003},
+	"filename": "goku.png",
+	"frame": {"x":0,"y":0,"w":48,"h":48},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":920,"h":1003},
-	"sourceSize": {"w":920,"h":1003}
+	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
+	"sourceSize": {"w":48,"h":48}
+},
+{
+	"filename": "jake.png",
+	"frame": {"x":48,"y":0,"w":48,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
+	"sourceSize": {"w":48,"h":48}
+},
+{
+	"filename": "woody.png",
+	"frame": {"x":96,"y":0,"w":48,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":48},
+	"sourceSize": {"w":48,"h":48}
 }],
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "MainAtlas-sheet.png",
 	"format": "RGBA8888",
-	"size": {"w":920,"h":1003},
+	"size": {"w":144,"h":48},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:2ff6a40a1f6e1b943ba3e44be389725f:852b8baa51685c69793b5d0ffa56caa8:d9f07e51b3303de3063cae7e6b90035c$"
+	"smartupdate": "$TexturePacker:SmartUpdate:4853e6d81afb390efa36719de64598e2:b28250149dc121c0ad3a00291ba11ad1:d9f07e51b3303de3063cae7e6b90035c$"
 }
 }

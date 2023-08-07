@@ -9,7 +9,7 @@
 
 MetalRendererManager::MetalRendererManager(MTL::Device* device,
                                            MTK::View* mtkView,
-                                           std::shared_ptr<grumble::SpriteManager> spriteManager) :
+                                           grumble::SpriteManager::shared_ptr spriteManager) :
   _spriteManager(spriteManager) {
   _device = device->retain();
   _mtkView = mtkView->retain();
@@ -92,8 +92,7 @@ void MetalRendererManager::buildShaders() {
 }
 
 void MetalRendererManager::buildBuffers() {
-  VertexData vertexData[VERTEX_COUNT] =
-  {
+  VertexData vertexData[VERTEX_COUNT] = {
     {{ -1.0f,  1.0f, 0.0f }},
     {{ 1.0f,  1.0f, 0.0f }},
     {{  -1.0f, -1.0f, 0.0f }},
@@ -176,11 +175,12 @@ void MetalRendererManager::setActiveFrame(int index) {
   _activeFrameIndex = index;
 }
 
-void MetalRendererManager::renderView(grumble::Transform transform, std::shared_ptr<grumble::Renderer> renderer) {
+void MetalRendererManager::renderView(grumble::Transform::shared_ptr transform,
+                                      grumble::Renderer::shared_ptr renderer) {
   MTL::Buffer* uniformBuffer = _uniformBuffers[_activeFrameIndex][_instanceIndex];
   
   UniformData* uniformData = reinterpret_cast<UniformData*>(uniformBuffer->contents());
-  simd::float4x4 modelMatrix = MetalUtil::to_simd_float4x4(transform.modelMatrix(renderScale()));
+  simd::float4x4 modelMatrix = MetalUtil::to_simd_float4x4(transform->modelMatrix(renderScale()));
   uniformData->modelMatrix = modelMatrix;
   uniformData->projectionMatrix = _projectionMatrix;
   uniformData->tint = MetalUtil::to_simd_float4(renderer->tint());
@@ -197,13 +197,14 @@ void MetalRendererManager::renderView(grumble::Transform transform, std::shared_
   _instanceIndex++;
 }
 
-void MetalRendererManager::renderImageView(grumble::Transform transform, std::shared_ptr<grumble::ImageRenderer> renderer) {
+void MetalRendererManager::renderImageView(grumble::Transform::shared_ptr transform,
+                                           grumble::ImageRenderer::shared_ptr renderer) {
   MTL::Buffer* uniformBuffer = _uniformBuffers[_activeFrameIndex][_instanceIndex];
   MTL::Buffer* texCoordBuffer = _texCoordBuffers[renderer->sprite()->id()];
   MTL::Texture* texture = _textureBuffers.at(renderer->sprite()->atlas());
   
   UniformData* uniformData = reinterpret_cast<UniformData*>(uniformBuffer->contents());
-  simd::float4x4 modelMatrix = MetalUtil::to_simd_float4x4(transform.modelMatrix(renderScale()));
+  simd::float4x4 modelMatrix = MetalUtil::to_simd_float4x4(transform->modelMatrix(renderScale()));
   uniformData->modelMatrix = modelMatrix;
   uniformData->projectionMatrix = _projectionMatrix;
   uniformData->tint = MetalUtil::to_simd_float4(renderer->tint());

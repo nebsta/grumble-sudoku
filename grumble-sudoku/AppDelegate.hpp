@@ -35,7 +35,7 @@ class AppDelegate : public NS::ApplicationDelegate
     virtual bool applicationShouldTerminateAfterLastWindowClosed(NS::Application* sender) override;
 
   private:
-    std::shared_ptr<grumble::Game> _game;
+    grumble::Game::shared_ptr _game;
   
     NS::Window* _window;
     MTK::View* _mtkView;

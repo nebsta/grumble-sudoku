@@ -81,12 +81,12 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   _mtkView = MTK::View::alloc()->init(frame, _device);
   
   std::string rootFilePath = NS::Bundle::mainBundle()->resourcePath()->cString(NS::StringEncoding::ASCIIStringEncoding);
-  std::shared_ptr<grumble::FileManager> fileManager = std::make_shared<grumble::FileManager>(rootFilePath);
+  grumble::FileManager::shared_ptr fileManager = std::make_shared<grumble::FileManager>(rootFilePath);
   
   grumble::SpriteManagerConfiguration config = { "", { "MainAtlas" } };
-  std::shared_ptr<grumble::SpriteManager> spriteManager = std::make_shared<grumble::SpriteManager>(config, fileManager);
+  grumble::SpriteManager::shared_ptr spriteManager = std::make_shared<grumble::SpriteManager>(config, fileManager);
   
-  std::shared_ptr<MetalRendererManager> metalRendererManager = std::make_shared<MetalRendererManager>(_device, _mtkView, spriteManager);
+  MetalRendererManager::shared_ptr metalRendererManager = std::make_shared<MetalRendererManager>(_device, _mtkView, spriteManager);
 
   _game = std::make_shared<grumble::Game>(metalRendererManager, fileManager, spriteManager, "waltographUI.ttf");
   _game->setup(2.0f); // Should eventually be read/updated from AppKit/UIKit
@@ -94,7 +94,7 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   // single sprite sample
   auto sprite = _game->spriteManager()->getSprite("sanic.png", "MainAtlas");
   auto imageView = _game->viewFactory()->createImageView(sprite);
-  imageView->transform().setSize({500, 500});
+  imageView->transform()->setSize({500, 500});
   _game->rootView()->addChild(imageView);
   
   // color square sample
