@@ -91,11 +91,23 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   _game = std::make_shared<grumble::Game>(metalRendererManager, fileManager, spriteManager, "waltographUI.ttf");
   _game->setup(2.0f); // Should eventually be read/updated from AppKit/UIKit
 
-  // single sprite sample
-  auto sprite = _game->spriteManager()->getSprite("sanic.png", "MainAtlas");
-  auto imageView = _game->viewFactory()->createImageView(sprite);
-  imageView->transform()->setSize({500, 500});
-  _game->rootView()->addChild(imageView);
+  // sprite sample
+  auto woodySprite = _game->spriteManager()->getSprite("woody.png", "MainAtlas");
+  auto woodyImageView = _game->viewFactory()->createImageView(woodySprite);
+  woodyImageView->transform()->setSize({48, 48});
+  _game->rootView()->addChild(woodyImageView);
+  
+  auto gokuSprite = _game->spriteManager()->getSprite("goku.png", "MainAtlas");
+  auto gokuImageView = _game->viewFactory()->createImageView(gokuSprite);
+  gokuImageView->transform()->setSize({48, 48});
+  gokuImageView->transform()->setLocalPosition({48, 0});
+  _game->rootView()->addChild(gokuImageView);
+  
+  auto jakeSprite = _game->spriteManager()->getSprite("jake.png", "MainAtlas");
+  auto jakeImageView = _game->viewFactory()->createImageView(jakeSprite);
+  jakeImageView->transform()->setSize({48, 48});
+  jakeImageView->transform()->setLocalPosition({96, 0});
+  _game->rootView()->addChild(jakeImageView);
   
   // color square sample
 //  glm::vec2 cellSize = { 32.0f, 32.0f };

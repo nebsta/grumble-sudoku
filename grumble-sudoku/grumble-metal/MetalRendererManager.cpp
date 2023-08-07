@@ -165,6 +165,8 @@ void MetalRendererManager::buildTextures() {
       memcpy(texCoordBuffer->contents(), texCoords, texCoordDataSize);
       texCoordBuffer->didModifyRange(NS::Range::Make(0, texCoordBuffer->length()));
       
+      logDebug("Setting up texCoord for sprite: {}", sprite->toString());
+      
       std::pair<std::string,MTL::Buffer*> item = { sprite->id(), texCoordBuffer };
       _texCoordBuffers.insert(item);
     }
