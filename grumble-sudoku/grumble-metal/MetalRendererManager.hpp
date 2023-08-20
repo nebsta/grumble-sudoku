@@ -51,8 +51,9 @@ public:
   void setup() override;
   
   void setActiveFrame(int index);
-  void renderView(grumble::Transform::shared_ptr transform, grumble::Renderer::shared_ptr) override;
-  void renderImageView(grumble::Transform::shared_ptr transform, grumble::ImageRenderer::shared_ptr) override;
+  void renderView(grumble::Transform::shared_ptr transform, grumble::Renderer::shared_ptr renderer) override;
+  void renderImageView(grumble::Transform::shared_ptr transform, grumble::ImageRenderer::shared_ptr renderer) override;
+  void renderLabel(grumble::Transform::shared_ptr transform, grumble::Renderer::shared_ptr renderer) override;
   void screenSizeUpdated(CGSize size);
   
 private:

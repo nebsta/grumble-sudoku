@@ -224,6 +224,10 @@ void MetalRendererManager::renderImageView(grumble::Transform::shared_ptr transf
   _instanceIndex++;
 }
 
+void MetalRendererManager::renderLabel(grumble::Transform::shared_ptr transform, grumble::Renderer::shared_ptr renderer) {
+  
+}
+
 void MetalRendererManager::screenSizeUpdated(CGSize size) {
   glm::mat4 glmOrtho = submitScreenSize({size.width, size.height});
   _projectionMatrix = MetalUtil::to_simd_float4x4(glmOrtho);
