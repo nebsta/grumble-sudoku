@@ -86,9 +86,12 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   grumble::SpriteManagerConfiguration config = { "", { "MainAtlas" } };
   grumble::SpriteManager::shared_ptr spriteManager = std::make_shared<grumble::SpriteManager>(config, fileManager);
   
+  grumble::FontManagerConfiguration fontConfig = { "", "waltographUI.ttf", { "waltographUI.ttf" } };
+  grumble::FontManager::shared_ptr fontManager = std::make_shared<grumble::FontManager>(fontConfig, fileManager);
+  
   MetalRendererManager::shared_ptr metalRendererManager = std::make_shared<MetalRendererManager>(_device, _mtkView, spriteManager);
 
-  _game = std::make_shared<grumble::Game>(metalRendererManager, fileManager, spriteManager, "waltographUI.ttf");
+  _game = std::make_shared<grumble::Game>(metalRendererManager, fileManager, spriteManager, fontManager);
   _game->setup(2.0f); // Should eventually be read/updated from AppKit/UIKit
 
   // sprite sample
