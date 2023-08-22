@@ -9,8 +9,10 @@
 
 MetalRendererManager::MetalRendererManager(MTL::Device* device,
                                            MTK::View* mtkView,
-                                           grumble::SpriteManager::shared_ptr spriteManager) :
-  _spriteManager(spriteManager) {
+                                           grumble::SpriteManager::shared_ptr spriteManager,
+                                           grumble::FontManager::shared_ptr fontManager) :
+  _spriteManager(spriteManager),
+  _fontManager(fontManager) {
   _device = device->retain();
   _mtkView = mtkView->retain();
   _commandQueue = _device->newCommandQueue();
@@ -26,9 +28,14 @@ MetalRendererManager::~MetalRendererManager() {
   _vertexBuffer->release();
   _shaderLibrary->release();
   
-  std::map<std::string,MTL::Texture*>::iterator iterator = _textureBuffers.begin();
-  for (; iterator != _textureBuffers.end(); iterator++) {
-    (*iterator).second->release();
+  std::map<std::string,MTL::Texture*>::iterator textIter = _textureBuffers.begin();
+  for (; textIter != _textureBuffers.end(); textIter++) {
+    (*textIter).second->release();
+  }
+  
+  std::map<std::string,MTL::Texture*>::iterator fontIter = _fontBuffers.begin();
+  for (; fontIter != _fontBuffers.end(); fontIter++) {
+    (*fontIter).second->release();
   }
   
   for (int i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
@@ -36,9 +43,15 @@ MetalRendererManager::~MetalRendererManager() {
       _uniformBuffers[i][j]->release();
     }
   }
-  std::map<std::string, MTL::Buffer*>::iterator iter = _texCoordBuffers.begin();
-  for (; iter != _texCoordBuffers.end(); ++iter) {
-    (*iter).second->release();
+  
+  std::map<std::string, MTL::Buffer*>::iterator textCoordIter = _texCoordBuffers.begin();
+  for (; textCoordIter != _texCoordBuffers.end(); ++textCoordIter) {
+    (*textCoordIter).second->release();
+  }
+  
+  std::map<std::string, MTL::Buffer*>::iterator fontCoordIter = _fontCoordBuffers.begin();
+  for (; fontCoordIter != _fontCoordBuffers.end(); ++fontCoordIter) {
+    (*fontCoordIter).second->release();
   }
   
   _emptyTexCoordBuffer->release();
@@ -48,6 +61,7 @@ void MetalRendererManager::setup() {
   buildShaders();
   buildBuffers();
   buildTextures();
+  buildFonts();
 }
 
 MTL::CommandBuffer* MetalRendererManager::generateCommandBuffer() {
@@ -129,7 +143,7 @@ void MetalRendererManager::buildTextures() {
   for (; iterator != allAtlases.end(); iterator++) {
     std::shared_ptr<grumble::SpriteAtlas> atlas = (*iterator);
     
-    logInfo("Setting up atlas in MetalRenderManager: {}", atlas->toString());
+//    logInfo("Setting up atlas in MetalRenderManager: {}", atlas->toString());
     
     MTL::TextureDescriptor* textureDesc = MTL::TextureDescriptor::alloc()->init();
     textureDesc->setWidth(atlas->file()->width());
@@ -165,10 +179,62 @@ void MetalRendererManager::buildTextures() {
       memcpy(texCoordBuffer->contents(), texCoords, texCoordDataSize);
       texCoordBuffer->didModifyRange(NS::Range::Make(0, texCoordBuffer->length()));
       
-      logDebug("Setting up texCoord for sprite: {}", sprite->toString());
+//      logDebug("Setting up texCoord for sprite: {}", sprite->toString());
       
       std::pair<std::string,MTL::Buffer*> item = { sprite->id(), texCoordBuffer };
       _texCoordBuffers.insert(item);
+    }
+  }
+}
+
+void MetalRendererManager::buildFonts() {
+  const size_t texCoordDataSize = VERTEX_COUNT * sizeof(TexCoordData);
+  
+  grumble::Font::vector allFonts = _fontManager->allFonts();
+  grumble::Font::iterator iterator = allFonts.begin();
+  for (; iterator != allFonts.end(); iterator++) {
+    
+    std::shared_ptr<grumble::Font> font = (*iterator);
+    
+    logInfo("Setting up font in MetalRenderManager: {}", font->toString());
+    
+    MTL::TextureDescriptor* textureDesc = MTL::TextureDescriptor::alloc()->init();
+    textureDesc->setWidth(font->atlasWidth());
+    textureDesc->setHeight(font->atlasHeight());
+    textureDesc->setPixelFormat(MTL::PixelFormatRGBA8Unorm);
+    textureDesc->setTextureType(MTL::TextureType2D);
+    textureDesc->setStorageMode(MTL::StorageModeManaged);
+    textureDesc->setUsage(MTL::ResourceUsageSample | MTL::ResourceUsageRead);
+    
+    MTL::Texture* texture = _device->newTexture(textureDesc);
+    MTL::Region region = MTL::Region(0, 0, 0, font->atlasWidth(), font->atlasHeight(), 1);
+    
+    texture->replaceRegion(region, 0, font->data().get(), 1024);
+    
+    textureDesc->release();
+    
+    _fontBuffers[font->name()] = texture;
+
+    grumble::FontCharacter::vector characters = font->allCharacters();
+    grumble::FontCharacter::iterator charIter = characters.begin();
+    for (; charIter != characters.end(); charIter++) {
+      grumble::FontCharacter::shared_ptr character = (*charIter);
+      MTL::Buffer* texCoordBuffer = _device->newBuffer(texCoordDataSize, MTL::ResourceStorageModeManaged);
+
+      simd::float2 texCoords[VERTEX_COUNT] = {
+        MetalUtil::to_simd_float2(character->region().topLeft),
+        MetalUtil::to_simd_float2(character->region().topRight),
+        MetalUtil::to_simd_float2(character->region().bottomLeft),
+        MetalUtil::to_simd_float2(character->region().bottomRight)
+      };
+
+      memcpy(texCoordBuffer->contents(), texCoords, texCoordDataSize);
+      texCoordBuffer->didModifyRange(NS::Range::Make(0, texCoordBuffer->length()));
+
+      logDebug("Setting up character for sprite: {}", character->toString());
+
+      std::pair<std::string,MTL::Buffer*> item = { character->id(), texCoordBuffer };
+      _fontCoordBuffers.insert(item);
     }
   }
 }
@@ -224,8 +290,28 @@ void MetalRendererManager::renderImageView(grumble::Transform::shared_ptr transf
   _instanceIndex++;
 }
 
-void MetalRendererManager::renderLabel(grumble::Transform::shared_ptr transform, grumble::Renderer::shared_ptr renderer) {
-  
+void MetalRendererManager::renderLabel(grumble::Transform::shared_ptr transform, grumble::TextRenderer::shared_ptr renderer) {
+  MTL::Buffer* uniformBuffer = _uniformBuffers[_activeFrameIndex][_instanceIndex];
+  MTL::Buffer* texCoordBuffer = _fontCoordBuffers.at("waltographUI.ttf-48");
+  MTL::Texture* texture = _fontBuffers.at(renderer->font()->name());
+
+  UniformData* uniformData = reinterpret_cast<UniformData*>(uniformBuffer->contents());
+  simd::float4x4 modelMatrix = MetalUtil::to_simd_float4x4(transform->modelMatrix(renderScale()));
+  uniformData->modelMatrix = modelMatrix;
+  uniformData->projectionMatrix = _projectionMatrix;
+  uniformData->tint = MetalUtil::to_simd_float4(renderer->tint());
+  uniformBuffer->didModifyRange(NS::Range::Make(0, sizeof(UniformData)));
+
+
+  MTL::PrimitiveType primitiveType = MetalUtil::to_mtl_primitive_type(renderer->renderMethod());
+  _currentCommandEncoder->setFragmentTexture(texture, 0);
+  _currentCommandEncoder->setVertexBuffer(_vertexBuffer, 0, 0);
+  _currentCommandEncoder->setVertexBuffer(texCoordBuffer, 0, 1);
+  _currentCommandEncoder->setVertexBuffer(uniformBuffer, 0, 2);
+
+  _currentCommandEncoder->drawPrimitives(primitiveType, NS::UInteger(0), NS::UInteger(4));
+
+  _instanceIndex++;
 }
 
 void MetalRendererManager::screenSizeUpdated(CGSize size) {

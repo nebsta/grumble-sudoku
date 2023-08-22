@@ -18,6 +18,7 @@
 #include <grumble/render/RendererManager.hpp>
 #include <grumble/render/ImageRenderer.hpp>
 #include <grumble/sprite/SpriteManager.hpp>
+#include <grumble/font/FontManager.hpp>
 #include <grumble/io/ImageFile.hpp>
 
 #include "Buffers/UniformData.hpp"
@@ -38,12 +39,14 @@ public:
   
   MetalRendererManager(MTL::Device* device,
                        MTK::View *mtkView,
-                       grumble::SpriteManager::shared_ptr spriteManager);
+                       grumble::SpriteManager::shared_ptr spriteManager,
+                       grumble::FontManager::shared_ptr fontManager);
   ~MetalRendererManager() override;
   
   void buildShaders();
   void buildBuffers();
   void buildTextures();
+  void buildFonts();
   
   MTL::CommandBuffer* generateCommandBuffer();
   void finishFrame();
@@ -53,11 +56,12 @@ public:
   void setActiveFrame(int index);
   void renderView(grumble::Transform::shared_ptr transform, grumble::Renderer::shared_ptr renderer) override;
   void renderImageView(grumble::Transform::shared_ptr transform, grumble::ImageRenderer::shared_ptr renderer) override;
-  void renderLabel(grumble::Transform::shared_ptr transform, grumble::Renderer::shared_ptr renderer) override;
+  void renderLabel(grumble::Transform::shared_ptr transform, grumble::TextRenderer::shared_ptr renderer) override;
   void screenSizeUpdated(CGSize size);
   
 private:
   grumble::SpriteManager::shared_ptr _spriteManager;
+  grumble::FontManager::shared_ptr _fontManager;
   
   MTK::View* _mtkView;
   MTL::CommandBuffer* _currentCommandBuffer;
@@ -73,7 +77,9 @@ private:
   
   std::array<InstanceBuffers, MAX_FRAMES_IN_FLIGHT> _uniformBuffers;
   std::map<std::string, MTL::Texture*> _textureBuffers;
+  std::map<std::string, MTL::Texture*> _fontBuffers;
   std::map<std::string, MTL::Buffer*> _texCoordBuffers;
+  std::map<std::string, MTL::Buffer*> _fontCoordBuffers;
   
   int _activeFrameIndex;
   int _instanceIndex;

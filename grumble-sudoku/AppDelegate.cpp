@@ -70,8 +70,7 @@ void AppDelegate::applicationWillFinishLaunching(NS::Notification* pNotification
 void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification) {
   CGRect frame = (CGRect){ {100.0, 100.0}, {512.0, 512.0} };
   
-  _window = NS::Window::alloc()->init(
-                                      frame,
+  _window = NS::Window::alloc()->init(frame,
                                       NS::WindowStyleMaskClosable|NS::WindowStyleMaskTitled|NS::WindowStyleMaskResizable,
                                       NS::BackingStoreBuffered,
                                       false);
@@ -80,8 +79,9 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   
   _mtkView = MTK::View::alloc()->init(frame, _device);
   
-  std::string rootFilePath = NS::Bundle::mainBundle()->resourcePath()->cString(NS::StringEncoding::ASCIIStringEncoding);
-  grumble::FileManager::shared_ptr fileManager = std::make_shared<grumble::FileManager>(rootFilePath);
+  std::string rootReadPath = NS::Bundle::mainBundle()->resourcePath()->cString(NS::StringEncoding::ASCIIStringEncoding);
+  grumble::FileManagerConfiguration fileManagerConfig = { rootReadPath, "/Users/bewa/Desktop" };
+  grumble::FileManager::shared_ptr fileManager = std::make_shared<grumble::FileManager>(fileManagerConfig);
   
   grumble::SpriteManagerConfiguration config = { "", { "MainAtlas" } };
   grumble::SpriteManager::shared_ptr spriteManager = std::make_shared<grumble::SpriteManager>(config, fileManager);
@@ -89,28 +89,41 @@ void AppDelegate::applicationDidFinishLaunching(NS::Notification* pNotification)
   grumble::FontManagerConfiguration fontConfig = { "", "waltographUI.ttf", { "waltographUI.ttf" } };
   grumble::FontManager::shared_ptr fontManager = std::make_shared<grumble::FontManager>(fontConfig, fileManager);
   
-  MetalRendererManager::shared_ptr metalRendererManager = std::make_shared<MetalRendererManager>(_device, _mtkView, spriteManager);
+  MetalRendererManager::shared_ptr metalRendererManager = std::make_shared<MetalRendererManager>(_device,
+                                                                                                 _mtkView,
+                                                                                                 spriteManager,
+                                                                                                 fontManager);
 
   _game = std::make_shared<grumble::Game>(metalRendererManager, fileManager, spriteManager, fontManager);
   _game->setup(2.0f); // Should eventually be read/updated from AppKit/UIKit
-
+  _game->rootView()->renderer()->setTint(COLOR_RED);
+  
+  auto atlasFile = _game->fontManager()->getMainFont()->generateAtlasImage();
+//  _game->fileManager()->writePNG("test-atlas.png", atlasFile);
+  
   // sprite sample
-  auto woodySprite = _game->spriteManager()->getSprite("woody.png", "MainAtlas");
-  auto woodyImageView = _game->viewFactory()->createImageView(woodySprite);
-  woodyImageView->transform()->setSize({48, 48});
-  _game->rootView()->addChild(woodyImageView);
+//  auto woodySprite = _game->spriteManager()->getSprite("woody.png", "MainAtlas");
+//  auto woodyImageView = _game->viewFactory()->createImageView(woodySprite);
+//  woodyImageView->transform()->setSize({48, 48});
+//  _game->rootView()->addChild(woodyImageView);
+//
+//  auto gokuSprite = _game->spriteManager()->getSprite("goku.png", "MainAtlas");
+//  auto gokuImageView = _game->viewFactory()->createImageView(gokuSprite);
+//  gokuImageView->transform()->setSize({48, 48});
+//  gokuImageView->transform()->setLocalPosition({48, 0});
+//  _game->rootView()->addChild(gokuImageView);
+//
+//  auto jakeSprite = _game->spriteManager()->getSprite("jake.png", "MainAtlas");
+//  auto jakeImageView = _game->viewFactory()->createImageView(jakeSprite);
+//  jakeImageView->transform()->setSize({48, 48});
+//  jakeImageView->transform()->setLocalPosition({96, 0});
+//  _game->rootView()->addChild(jakeImageView);
   
-  auto gokuSprite = _game->spriteManager()->getSprite("goku.png", "MainAtlas");
-  auto gokuImageView = _game->viewFactory()->createImageView(gokuSprite);
-  gokuImageView->transform()->setSize({48, 48});
-  gokuImageView->transform()->setLocalPosition({48, 0});
-  _game->rootView()->addChild(gokuImageView);
+  // label sample
+  auto font = _game->fontManager()->getFont("waltographUI.ttf");
+  auto label = _game->viewFactory()->createLabel("Hello World", font);
+  _game->rootView()->addChild(label);
   
-  auto jakeSprite = _game->spriteManager()->getSprite("jake.png", "MainAtlas");
-  auto jakeImageView = _game->viewFactory()->createImageView(jakeSprite);
-  jakeImageView->transform()->setSize({48, 48});
-  jakeImageView->transform()->setLocalPosition({96, 0});
-  _game->rootView()->addChild(jakeImageView);
   
   // color square sample
 //  glm::vec2 cellSize = { 32.0f, 32.0f };
